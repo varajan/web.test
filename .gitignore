@@ -3,3 +3,6 @@
 Callculator/obj/*
 Callculator/bin/*
 packages/*
+Calculator.Tests/.vs/*
+Calculator.Tests/Calculator.Tests/bin/*
+Calculator.Tests/Calculator.Tests/obj/*
