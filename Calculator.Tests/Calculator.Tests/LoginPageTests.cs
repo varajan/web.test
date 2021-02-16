@@ -24,5 +24,18 @@ namespace Calculator.Tests
             browser.Quit ();
 
         }
+        [Test]
+        public void IncorrectLoginTest()
+        {
+            IWebDriver browser = new ChromeDriver();
+            browser.Url = "http://127.0.0.1:8080";
+            browser.FindElement(By.Id("login")).SendKeys("test1");
+            browser.FindElement(By.Id("password")).SendKeys("newyork1");
+            browser.FindElements(By.Id("login"))[1].Click();
+            string actual = browser.FindElement(By.Id("errorMessage")).Text;
+            Assert.AreEqual("Incorrect user name!", actual);
+            browser.Quit();
+            
+        }
     }
 }
