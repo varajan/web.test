@@ -1,6 +1,7 @@
 using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium.Support.UI;
 using System;
 using System.Linq;
 
@@ -126,5 +127,19 @@ namespace web.test.tests
             Assert.IsTrue(driver.FindElement(By.Id("amount")).Displayed);
         }
 
+        [Test]
+        public void Button_Remind_Is_Present()
+        {
+
+            try
+            {
+                new WebDriverWait(driver, TimeSpan.FromMilliseconds(2000))
+                .Until(ExpectedConditions.VisibilityOfAllElementsLocatedBy(By.Id("remindBtn")));
+            }
+            catch { }
+
+            Assert.IsTrue(driver.FindElement(By.Id("remindBtn")).Displayed);
+
+        }
     }
 }
