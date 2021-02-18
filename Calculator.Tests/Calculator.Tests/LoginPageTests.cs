@@ -37,5 +37,21 @@ namespace Calculator.Tests
             browser.Quit();
             
         }
+        [Test]
+        public void IncorrectPasswordTest()
+        {
+            IWebDriver browser = new ChromeDriver();
+            browser.Url = "http://127.0.0.1:8080";
+            browser.FindElement(By.Id("login")).SendKeys("test");
+            browser.FindElement(By.Id("password")).SendKeys("newyork11");
+            browser.FindElements(By.Id("login"))[1].Click();
+            string actual = browser.FindElement(By.Id("errorMessage")).Text;
+            Assert.AreEqual("Incorrect password!", actual);
+            browser.Quit();
+
+        }
+
     }
-}
+    
+
+    }
