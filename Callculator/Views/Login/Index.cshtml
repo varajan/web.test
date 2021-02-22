@@ -12,7 +12,7 @@
 				<tr>
 					<th class="user">Login:</th>
 					<td>
-						<input id="login"/>
+						<input id="login" />
 					</td>
 				</tr>
 				<tr>
@@ -32,6 +32,11 @@
 				<tr>
 					<th style="color: red" id="errorMessage" colspan="3"></th>
 				</tr>
+				<tr>
+					<td colspan="3">
+						<iframe id="remindPasswordView" hidden src="~/Static/RemindPassword.html" style="height:130px"></iframe>
+					</td>
+				</tr>
 			</table>
 		</div>
 	</div>
@@ -39,6 +44,10 @@
 </html>
 
 <script type="text/javascript">
+	RemindPassword = function () {
+		document.getElementById('remindPasswordView').hidden = false;
+	}
+
     Login = function () {
         var correctPass = 'newyork1';
         var correctUser = 'test';
