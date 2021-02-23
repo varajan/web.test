@@ -116,16 +116,16 @@ namespace web.test.tests
         public void Selected_Month_Name()
         {
             //Arrange
-            int month_number = 1;
             string[] month_name = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
-            
-            
-            //Act
-            driver.FindElement(By.XPath("//*[@id='month']/option[" + month_number + "]")).Click();
 
+            for (int i = 1; i <= 12; i++)
+            {
+                //Act
+                driver.FindElement(By.XPath("//*[@id='month']/option[" + i + "]")).Click();
 
-            //Assert
-            Assert.AreEqual(month_name[month_number-1], driver.FindElement(By.Id("month")).GetAttribute("value"));
+                //Assert
+                Assert.AreEqual(month_name[i - 1], driver.FindElement(By.Id("month")).GetAttribute("value"));
+            }
         }
     }
 }
