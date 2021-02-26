@@ -12,10 +12,11 @@ namespace calculatorTest
         }
 
         [Test]
-        public void Test_Incorrect_User_Login_And_Password()
+        public void Test_Invalid_Values_User_Login_And_Password()
         {
             IWebDriver browser = new ChromeDriver();
-            browser.Url = "http://localhost:64177/Login";
+            string url = "http://localhost:64177/";
+            browser.Url = (url + "Login");
             IWebElement loginfield = browser.FindElement(By.Id("login"));
             string name = "1234";
             loginfield.SendKeys(name);
@@ -31,17 +32,18 @@ namespace calculatorTest
 
         }
         [Test]
-        public void Test_Incorrect_User_Login_And_Password_Incorrect_Error()
+        public void Test_Valide_Values_User_Login_And_Password()
         {
             IWebDriver browser = new ChromeDriver();
-            browser.Url = "http://localhost:64177/Login";
+            string url = "http://localhost:64177/";
+            browser.Url = (url + "Login");
             IWebElement loginfield = browser.FindElement(By.Id("login"));
             string name = "test";
             loginfield.SendKeys(name);
             IWebElement passwordfield = browser.FindElement(By.Id("password"));
             passwordfield.SendKeys("newyork1");
             browser.FindElements(By.Id("login"))[1].Click();
-            Assert.AreEqual("http://localhost:64177/Deposit", browser.Url);
+            Assert.AreEqual(url + "Deposit", browser.Url);
             browser.Quit();
         }
     }
