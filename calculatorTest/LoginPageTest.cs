@@ -90,5 +90,20 @@ namespace calculatorTest
             Assert.AreEqual("Incorrect user name!", error.Text);
             browser.Quit();
         }
+        [Test]
+        public void Test_User_Login_And_Password_Negative_Tests()
+        {
+            IWebDriver browser = new ChromeDriver();
+            browser.Url = (BASEURL + "Login");
+            IWebElement loginfield = browser.FindElement(By.Id("login"));
+            string name = "testt";
+            loginfield.SendKeys(name);
+            IWebElement passwordfield = browser.FindElement(By.Id("password"));
+            passwordfield.SendKeys("newyork1");
+            browser.FindElements(By.Id("login"))[1].Click();
+            IWebElement error = browser.FindElement(By.Id("errorMessage"));
+            Assert.AreEqual("Incorrect user name!", error.Text);
+            browser.Quit();
+        }
     }
 }
