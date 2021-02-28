@@ -91,7 +91,7 @@ namespace calculatorTest
             browser.Quit();
         }
         [Test]
-        public void Test_User_Login_And_Password_Add_t_After_User_Correct_Password()
+        public void Test_User_Login_And_Password_Add_t_After_User_Password_Correct()
         {
             IWebDriver browser = new ChromeDriver();
             browser.Url = (BASEURL + "Login");
@@ -106,7 +106,7 @@ namespace calculatorTest
             browser.Quit();
         }
         [Test]
-        public void Test_User_Login_And_Password_User_Uppercase_TEST_And_Correct_Password()
+        public void Test_User_Login_And_Password_User_Uppercase_And_Password_Correct()
         {
             IWebDriver browser = new ChromeDriver();
             browser.Url = (BASEURL + "Login");
@@ -118,7 +118,7 @@ namespace calculatorTest
             browser.FindElements(By.Id("login"))[1].Click();
             IWebElement error = browser.FindElement(By.Id("errorMessage"));
             Assert.AreEqual("Incorrect user name!", error.Text);
-            browser.Quit();
+            browser.Quit(); 
         }
         [Test]
         public void Test_User_Login_And_Password_Valid_User_And_Upper_Password()
