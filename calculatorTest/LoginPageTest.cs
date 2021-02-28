@@ -51,13 +51,43 @@ namespace calculatorTest
             IWebDriver browser = new ChromeDriver();
             browser.Url = (BASEURL + "Login");
             IWebElement loginfield = browser.FindElement(By.Id("login"));
-            string name = "";
+            string name = " ";
             loginfield.SendKeys(name);
             IWebElement passwordfield = browser.FindElement(By.Id("password"));
-            passwordfield.SendKeys("");
+            passwordfield.SendKeys(" ");
             browser.FindElements(By.Id("login"))[1].Click();
             IWebElement error = browser.FindElement(By.Id("errorMessage"));
             Assert.AreEqual("User name and password cannot be empty!", error.Text);
+            browser.Quit();
+        }
+        [Test]
+        public void Test_User_Login_And_Password_Admin_Admin()
+        {
+            IWebDriver browser = new ChromeDriver();
+            browser.Url = (BASEURL + "Login");
+            IWebElement loginfield = browser.FindElement(By.Id("login"));
+            string name = "Admin";
+            loginfield.SendKeys(name);
+            IWebElement passwordfield = browser.FindElement(By.Id("password"));
+            passwordfield.SendKeys("Admin");
+            browser.FindElements(By.Id("login"))[1].Click();
+            IWebElement error = browser.FindElement(By.Id("errorMessage"));
+            Assert.AreEqual("'" + name + "' user doesn't exist!", error.Text);
+            browser.Quit();
+        }
+        [Test]
+        public void Test_User_Login_And_Password_Space_In_User()
+        {
+            IWebDriver browser = new ChromeDriver();
+            browser.Url = (BASEURL + "Login");
+            IWebElement loginfield = browser.FindElement(By.Id("login"));
+            string name = "_test";
+            loginfield.SendKeys(name);
+            IWebElement passwordfield = browser.FindElement(By.Id("password"));
+            passwordfield.SendKeys("newyork1");
+            browser.FindElements(By.Id("login"))[1].Click();
+            IWebElement error = browser.FindElement(By.Id("errorMessage"));
+            Assert.AreEqual("Incorrect user name!", error.Text);
             browser.Quit();
         }
     }
