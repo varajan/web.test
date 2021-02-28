@@ -6,15 +6,16 @@ namespace calculatorTest
 {
     public class LoginPageTest
     {
-        
-        const string BASEURL = "http://localhost:64177/"; 
+
+        const string BASEURL = "http://localhost:64177/";
         [SetUp]
         public void Setup()
         {
         }
 
         [Test]
-        public void Test_Invalid_Values_User_Login_And_Password()
+
+        public void Test_User_Login_And_Password_Invalid_Values()
         {
             IWebDriver browser = new ChromeDriver();
             browser.Url = (BASEURL + "Login");
@@ -31,7 +32,7 @@ namespace calculatorTest
 
         }
         [Test]
-        public void Test_Valide_Values_User_Login_And_Password()
+        public void Test_User_Login_And_Password_Valide_Values()
         {
             IWebDriver browser = new ChromeDriver();
             browser.Url = (BASEURL + "Login");
@@ -42,6 +43,21 @@ namespace calculatorTest
             passwordfield.SendKeys("newyork1");
             browser.FindElements(By.Id("login"))[1].Click();
             Assert.AreEqual(BASEURL + "Deposit", browser.Url);
+            browser.Quit();
+        }
+        [Test]
+        public void Test_User_Login_And_Password_Both_Blanck()
+        {
+            IWebDriver browser = new ChromeDriver();
+            browser.Url = (BASEURL + "Login");
+            IWebElement loginfield = browser.FindElement(By.Id("login"));
+            string name = "";
+            loginfield.SendKeys(name);
+            IWebElement passwordfield = browser.FindElement(By.Id("password"));
+            passwordfield.SendKeys("");
+            browser.FindElements(By.Id("login"))[1].Click();
+            IWebElement error = browser.FindElement(By.Id("errorMessage"));
+            Assert.AreEqual("User name and password cannot be empty!", error.Text);
             browser.Quit();
         }
     }
