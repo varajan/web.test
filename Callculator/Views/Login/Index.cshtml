@@ -12,15 +12,13 @@
 				<tr>
 					<th class="user" align="left">User</th>
 					<td>
-						<input id="login" />
+						<input id="login" style="width: 166px"/>
 					</td>
 				</tr>
 				<tr>
 					<th class="pass" align="left">Password</th>
 					<td>
-						<input type="password" id="password" />
-					</td>
-					<td style="width: 100px">
+						<input type="password" id="password" style="width: 166px"/>
 					</td>
 				</tr>
 				<tr>
@@ -92,7 +90,7 @@
                 '<button onclick="Login()" title="Login" id="loginBtn">Login</button>');
 
             document.getElementById('buttons').insertAdjacentHTML('beforeEnd',
-	            '<button onclick="RemindPassword()" title="remind" id="remindBtn" style="display:none">Remind pasword</button>');
+	            '<button onclick="RemindPassword()" title="remind" id="remindBtn" style="display:none">Remind password</button>');
 
             sleep(500).then(() => document.getElementById('remindBtn').style.display = "initial");
 		});
