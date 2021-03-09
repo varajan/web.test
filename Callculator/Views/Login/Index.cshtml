@@ -12,25 +12,26 @@
 				<tr>
 					<th class="user" align="left">User</th>
 					<td>
-						<input id="login" style="width: 166px"/>
+						<input id="login" style="width: 97%"/>
 					</td>
 				</tr>
 				<tr>
 					<th class="pass" align="left">Password</th>
 					<td>
-						<input type="password" id="password" style="width: 166px"/>
+						<input type="password" id="password" style="width: 97%"/>
 					</td>
 				</tr>
+                <tr>
+                    <th/>
+                    <td align="right" style="white-space: nowrap;" id="buttons">
+                    </td>
+                </tr>
 				<tr>
-					<td colspan="2" align="right" style="width: 100px" id="buttons">
-					</td>
+					<th style="color: red" id="errorMessage" colspan="2"></th>
 				</tr>
 				<tr>
-					<th style="color: red" id="errorMessage" colspan="3"></th>
-				</tr>
-				<tr>
-					<td colspan="3">
-						<iframe id="remindPasswordView" hidden src="~/Static/RemindPassword.html" style="height:130px"></iframe>
+					<td colspan="2">
+						<iframe id="remindPasswordView" hidden src="~/Static/RemindPassword.html" style="height:120px"></iframe>
 					</td>
 				</tr>
 			</table>
@@ -88,6 +89,8 @@
         sleep(500).then(() => {
             document.getElementById('buttons').insertAdjacentHTML('afterBegin',
                 '<button onclick="Login()" title="Login" id="loginBtn">Login</button>');
+
+            document.getElementById('buttons').insertAdjacentHTML('beforeEnd', "&nbsp;");
 
             document.getElementById('buttons').insertAdjacentHTML('beforeEnd',
 	            '<button onclick="RemindPassword()" title="remind" id="remindBtn" style="display:none">Remind password</button>');
