@@ -2,6 +2,7 @@ using System;
 using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium.Support.UI;
 
 namespace Calculator.Tests
 {
@@ -134,11 +135,21 @@ namespace Calculator.Tests
             Assert.AreEqual("Incorrect user name!", actual);
 
         }
-        
-       
+        [Test]
+        public void RemindPassBtnIsDisplayedTest()
+        {
+            // new WebDriverWait(browser, TimeSpan.FromSeconds(10))
+           // .Until(ExpectedConditions.VisibilityOfAllElementsLocatedBy(By.Id("remindBtn")));
+            IWebElement btn = browser.FindElement(By.Id("remindBtn"));
+            string actual = btn.Text;
+            Assert.AreEqual("Remind password", actual);
+
+        }
 
 
-        
+
+
+
 
     }
     
