@@ -22,8 +22,7 @@ namespace Calculator.Tests
             browser.FindElement(By.Id("password")).SendKeys("newyork1");
             browser.FindElement(By.Id("loginBtn")).Click();
 
-            // NEED HELP: is it ok to find Settings btn like this?
-            browser.FindElement(By.XPath("/html/body/div/div/div")).Click();
+            browser.FindElement(By.XPath("//button[text() = 'Settings']")).Click();
         }
 
         [TearDown]
@@ -44,9 +43,9 @@ namespace Calculator.Tests
         [Test]
         public void PositiveTestLogoutBtnWork()
         {
-            browser.FindElement(By.XPath("/html/body/div/div/div")).Click();
+            browser.FindElement(By.XPath("//div[text() = 'Logout']")).Click();
             string actual = browser.Url;
-            // NEED HELP: actual result consists '/' is it ok? or a bug
+        
             Assert.AreEqual("http://127.0.0.1:8080/", actual);
         }
 

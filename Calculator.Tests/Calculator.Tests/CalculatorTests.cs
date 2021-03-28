@@ -35,7 +35,7 @@ namespace Calculator.Tests
             browser.FindElement(By.Id("amount")).SendKeys("100");
             browser.FindElement(By.Id("percent")).SendKeys("10");
             browser.FindElement(By.Id("term")).SendKeys("365");
-            browser.FindElement(By.Id("d365")).Click();
+            browser.FindElement(By.XPath("//input[@type][2]")).Click();
             string actualIncome = browser.FindElement(By.Id("income")).GetAttribute("value");
 
             Assert.AreEqual("110.00", actualIncome);
@@ -49,7 +49,7 @@ namespace Calculator.Tests
             browser.FindElement(By.Id("amount")).SendKeys("100");
             browser.FindElement(By.Id("percent")).SendKeys("10");
             browser.FindElement(By.Id("term")).SendKeys("360");
-            browser.FindElement(By.Id("d360")).Click();
+            browser.FindElement(By.XPath("//input[@type][1]")).Click();
             string actualIncome = browser.FindElement(By.Id("income")).GetAttribute("value");
 
             Assert.AreEqual("110.00", actualIncome);
@@ -63,7 +63,7 @@ namespace Calculator.Tests
             browser.FindElement(By.Id("amount")).SendKeys(" ");
             browser.FindElement(By.Id("percent")).SendKeys("10");
             browser.FindElement(By.Id("term")).SendKeys("365");
-            browser.FindElement(By.Id("d365")).Click();
+            browser.FindElement(By.XPath("//input[@type][2]")).Click();
             string actualIncome = browser.FindElement(By.Id("income")).GetAttribute("value");
 
             Assert.AreEqual("0.00", actualIncome);
@@ -77,7 +77,7 @@ namespace Calculator.Tests
             browser.FindElement(By.Id("amount")).SendKeys("100");
             browser.FindElement(By.Id("percent")).SendKeys(" ");
             browser.FindElement(By.Id("term")).SendKeys("365");
-            browser.FindElement(By.Id("d365")).Click();
+            browser.FindElement(By.XPath("//input[@type][2]")).Click();
             string actualIncome = browser.FindElement(By.Id("income")).GetAttribute("value");
 
             Assert.AreEqual("100.00", actualIncome);
@@ -91,7 +91,7 @@ namespace Calculator.Tests
             browser.FindElement(By.Id("amount")).SendKeys("100");
             browser.FindElement(By.Id("percent")).SendKeys("10");
             browser.FindElement(By.Id("term")).SendKeys(" ");
-            browser.FindElement(By.Id("d365")).Click();
+            browser.FindElement(By.XPath("//input[@type][2]")).Click();
             string actualIncome = browser.FindElement(By.Id("income")).GetAttribute("value");
 
             Assert.AreEqual("100.00", actualIncome);
@@ -138,8 +138,8 @@ namespace Calculator.Tests
         [Test]
         public void TestFinancialYearIsMandatoryField()
         {
-            bool d365 = browser.FindElement(By.Id("d365")).Selected;
-            bool d360 = browser.FindElement(By.Id("d360")).Selected;
+            bool d365 = browser.FindElement(By.XPath("//input[@type][2]")).Selected;
+            bool d360 = browser.FindElement(By.XPath("//input[@type][1]")).Selected;
 
             Assert.IsTrue(d365 || d360); //"At least one option should be selected."
             Assert.IsFalse(d365 && d360); //"Only one option should be selected."
@@ -187,7 +187,7 @@ namespace Calculator.Tests
             browser.FindElement(By.Id("amount")).SendKeys("100000");
             browser.FindElement(By.Id("percent")).SendKeys("10");
             browser.FindElement(By.Id("term")).SendKeys("365");
-            browser.FindElement(By.Id("d365")).Click();
+            browser.FindElement(By.XPath("//input[@type][2]")).Click();
             string actualIncome = browser.FindElement(By.Id("income")).GetAttribute("value");
 
             Assert.AreEqual("110000.00", actualIncome);
@@ -201,7 +201,7 @@ namespace Calculator.Tests
             browser.FindElement(By.Id("amount")).SendKeys("100000");
             browser.FindElement(By.Id("percent")).SendKeys("100");
             browser.FindElement(By.Id("term")).SendKeys("365");
-            browser.FindElement(By.Id("d365")).Click();
+            browser.FindElement(By.XPath("//input[@type][2]")).Click();
             string actualIncome = browser.FindElement(By.Id("income")).GetAttribute("value");
 
             Assert.AreEqual("200000.00", actualIncome);
