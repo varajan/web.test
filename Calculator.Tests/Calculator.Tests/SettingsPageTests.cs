@@ -34,7 +34,7 @@ namespace Calculator.Tests
         [Test]
         public void PositiveTestCancelBtnWork()
         {
-            browser.FindElement(By.Id("cancel")).Click();
+            browser.FindElement(By.XPath("//button[@id = 'cancel']")).Click();
             string actual = browser.Url;
 
             Assert.AreEqual("http://127.0.0.1:8080/Deposit", actual);
