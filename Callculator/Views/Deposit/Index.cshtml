@@ -46,11 +46,11 @@
 						<select id="year" onchange="CalculateDate()"></select>
 					</td>
 				</tr>
-				<tr>
+				<tr id="finYear">
 					<td>Financial year: *</td>
                     <td>
-                        <input type="radio" onchange="Calculate(360)">360 days</input><br>
-                        <input type="radio" onchange="Calculate(365)">365 days</input>
+                        <input type="radio" onchange="SetYear(360); Calculate();">360 days</input><br>
+                        <input type="radio" onchange="SetYear(365); Calculate();" checked="checked">365 days</input>
                     </td>
 				</tr>
 				<tr>
@@ -155,9 +155,17 @@
 		}
 	}
 
-    Calculate = function (year) {
-        year = year === undefined ? 365 : year;
-		var amount = Number(document.getElementById('amount').value);
+    SetYear = function(year) {
+        if (year == 360) {
+            document.querySelector("#finYear input[type=radio]:nth-child(3)").checked = false;
+        } else {
+            document.querySelector("#finYear input[type=radio]:nth-child(1)").checked = false;
+        }
+    }
+
+    Calculate = function () {
+        var year = document.querySelector('#finYear input').checked ? 360 : 365;
+        var amount = Number(document.getElementById('amount').value);
 		var days = Number(document.getElementById('term').value);
 		var percent = Number(document.getElementById('percent').value);
 		var interest = amount * percent * days / (year * 100);
