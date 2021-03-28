@@ -102,15 +102,15 @@ namespace Calculator.Tests
         [Test]
         public void TestStartDateIsToday()
         {
-            browser.FindElement(By.Id("amount")).SendKeys("100");
-            browser.FindElement(By.Id("percent")).SendKeys("10");
-            browser.FindElement(By.Id("term")).SendKeys("365");
+            browser.FindElement(By.XPath("//td//input[@id]")).SendKeys("100");
+            browser.FindElement(By.XPath("//tr[2]//td[2]//input[@id]")).SendKeys("10");
+            browser.FindElement(By.XPath("//tr[3]//td[2]//input[@id]")).SendKeys("365");
 
-            SelectElement daySelect = new SelectElement(element:browser.FindElement(By.Id("day")));
+            SelectElement daySelect = new SelectElement(element:browser.FindElement(By.XPath("//tr[4]//td[2]//select[1]")));
             string day = daySelect.SelectedOption.Text;
-            SelectElement monthSelect = new SelectElement(element: browser.FindElement(By.Id("month")));
+            SelectElement monthSelect = new SelectElement(element: browser.FindElement(By.XPath("//tr[4]//td[2]//select[2]")));
             string month = monthSelect.SelectedOption.Text;
-            SelectElement yearSelect = new SelectElement(element: browser.FindElement(By.Id("year")));
+            SelectElement yearSelect = new SelectElement(element: browser.FindElement(By.XPath("//tr[4]//td[2]//select[3]")));
             string year = yearSelect.SelectedOption.Text;
             string actualDate = day + "/" + month + "/" + year;
             string expectedDate = DateTime.Today.ToString("d/MMMM/yyyy");
@@ -122,11 +122,11 @@ namespace Calculator.Tests
         [Test]
         public void TestSelectAnyStart()
         { 
-            SelectElement daySelect = new SelectElement(element: browser.FindElement(By.Id("day")));
+            SelectElement daySelect = new SelectElement(element: browser.FindElement(By.XPath("//tr[4]//td[2]//select[1]")));
             
-            SelectElement monthSelect = new SelectElement(element: browser.FindElement(By.Id("month")));
+            SelectElement monthSelect = new SelectElement(element: browser.FindElement(By.XPath("//tr[4]//td[2]//select[2]")));
             
-            SelectElement yearSelect = new SelectElement(element: browser.FindElement(By.Id("year")));
+            SelectElement yearSelect = new SelectElement(element: browser.FindElement(By.XPath("//tr[4]//td[2]//select[3]")));
             daySelect.SelectByText("2");
             monthSelect.SelectByText("April");
             yearSelect.SelectByText("2022");
@@ -148,7 +148,7 @@ namespace Calculator.Tests
         [Test]
         public void TestIncomeIsDisplayed()
         {
-            string Income = browser.FindElement(By.Id("income")).GetAttribute("value");
+            string Income = browser.FindElement(By.XPath("//tr[6]//th[2]//input[@id]")).GetAttribute("value");
 
             Assert.AreEqual("0.00", Income);
         }
@@ -156,7 +156,7 @@ namespace Calculator.Tests
         [Test]
         public void TestInterestEarnedIsDisplayed()
         {
-            string InterestEarned = browser.FindElement(By.Id("interest")).GetAttribute("value");
+            string InterestEarned = browser.FindElement(By.XPath("//tr[7]//th[2]//input[@id]")).GetAttribute("value");
 
             Assert.AreEqual("0.00", InterestEarned);
         }
@@ -168,7 +168,7 @@ namespace Calculator.Tests
             browser.FindElement(By.Id("term")).SendKeys("7");
             DateTime expected = DateTime.Today.AddDays(+7);
            
-            string EndDate = browser.FindElement(By.Id("endDate")).GetAttribute("value");
+            string EndDate = browser.FindElement(By.XPath("//tr[8]//th[2]//input[@id]")).GetAttribute("value");
 
             Assert.AreEqual(expected.ToString("dd/MM/yyyy"), EndDate);
         }
@@ -184,28 +184,28 @@ namespace Calculator.Tests
         [Test]
         public void PositiveTestMaxDepositAmount100000()
         {
-            browser.FindElement(By.Id("amount")).SendKeys("100000");
-            browser.FindElement(By.Id("percent")).SendKeys("10");
-            browser.FindElement(By.Id("term")).SendKeys("365");
+            browser.FindElement(By.XPath("//td//input[@id]")).SendKeys("100000");
+            browser.FindElement(By.XPath("//tr[2]//td[2]//input[@id]")).SendKeys("10");
+            browser.FindElement(By.XPath("//tr[3]//td[2]//input[@id]")).SendKeys("365");
             browser.FindElement(By.XPath("//input[@type][2]")).Click();
-            string actualIncome = browser.FindElement(By.Id("income")).GetAttribute("value");
+            string actualIncome = browser.FindElement(By.XPath("//tr[6]//th[2]//input[@id]")).GetAttribute("value");
 
             Assert.AreEqual("110000.00", actualIncome);
-            string actualInterest = browser.FindElement(By.Id("interest")).GetAttribute("value");
+            string actualInterest = browser.FindElement(By.XPath("//tr[7]//th[2]//input[@id]")).GetAttribute("value");
             Assert.AreEqual("10000.00", actualInterest);
         }
 
         [Test]
         public void PositiveTestMaxInterestRate100()
         {
-            browser.FindElement(By.Id("amount")).SendKeys("100000");
-            browser.FindElement(By.Id("percent")).SendKeys("100");
-            browser.FindElement(By.Id("term")).SendKeys("365");
+            browser.FindElement(By.XPath("//td//input[@id]")).SendKeys("100000");
+            browser.FindElement(By.XPath("//tr[2]//td[2]//input[@id]")).SendKeys("100");
+            browser.FindElement(By.XPath("//tr[3]//td[2]//input[@id]")).SendKeys("365");
             browser.FindElement(By.XPath("//input[@type][2]")).Click();
-            string actualIncome = browser.FindElement(By.Id("income")).GetAttribute("value");
+            string actualIncome = browser.FindElement(By.XPath("//tr[6]//th[2]//input[@id]")).GetAttribute("value");
 
             Assert.AreEqual("200000.00", actualIncome);
-            string actualInterest = browser.FindElement(By.Id("interest")).GetAttribute("value");
+            string actualInterest = browser.FindElement(By.XPath("//tr[7]//th[2]//input[@id]")).GetAttribute("value");
             Assert.AreEqual("100000.00", actualInterest);
         }
         
