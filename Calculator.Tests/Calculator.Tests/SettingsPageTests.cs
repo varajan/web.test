@@ -49,5 +49,16 @@ namespace Calculator.Tests
             Assert.AreEqual("http://127.0.0.1:8080/", actual);
         }
 
+        [Test]
+        public void TestDateFormatSelection()
+        {
+            SelectElement dateFormatSelect = new SelectElement(element: browser.FindElement(By.XPath("//table//td//select//option[1]")));
+            dateFormatSelect.SelectByText("DD-MM-YYYY");
+            browser.FindElement(By.XPath("//button[text()='Save']")).Click();
+            //NEED HELP IDK how to find OK button on alert "Changes are saved!"
+            //Assert.IsTrue("");
+           
+        }
+
     }
 }
