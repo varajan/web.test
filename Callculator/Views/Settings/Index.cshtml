@@ -8,24 +8,24 @@
 <body>
 	<div align="center">
 		<div style="width: 500px; height: 250px; border: double">
-			<div style="text-align: right; cursor: pointer" onclick="window.location = '@Url.Action("Index","Login")'">Logout</div>
+			<button style="text-align: right; cursor: pointer; float: right; margin: 2px" onclick="logout()">Logout</button>
 
 			<table>
 				<tr>
 					<th>Date format:</th>
 					<td>
-						<select>
-							<option>DD-MM-YYYY</option>
-							<option>DD/MM/YYYY</option>
-							<option>MM/DD/YYYY</option>
-							<option>MMM DD YYYY</option>
-						</select>
+                        <select id="dateFormat">
+                            <option>dd/MM/yyyy</option>
+                            <option>dd-MM-yyyy</option>
+                            <option>MM/dd/yyyy</option>
+                            <option>MM dd yyyy</option>
+                        </select>
 					</td>
 				</tr>
 				<tr>
 					<th>Number format:</th>
 					<td>
-						<select>
+						<select id="numberFormat">
 							<option>123,456,789.00</option>
 							<option>123.456.789,00</option>
 							<option>123 456 789.00</option>
@@ -36,7 +36,7 @@
 				<tr>
 					<th>Defalut currency:</th>
 					<td>
-						<select>
+						<select id="currency">
 							<option>$ - US dollar</option>
 							<option>&euro; - euro</option>
 							<option>&pound; - Great Britain Pound</option>
@@ -47,27 +47,75 @@
 			</table>
 
 			<div align="center">
-				<button onclick="alert('Changes are saved!'); window.location = '@Url.Action("Index", "Deposit")';" title="Save" id="save">Save</button>
+				<button onclick="save(); window.location = '@Url.Action("Index", "Deposit")';" title="Save" id="save">Save</button>
 				<button onclick="window.location = '@Url.Action("Index", "Deposit")'" title="Save" id="cancel">Cancel</button>
 			</div>
 		</div>
 	</div>
 
-	<script>
-		function sleep (time) {
-			return new Promise((resolve) => setTimeout(resolve, time));
-		}
+<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+<script>
+    var dateFormat = document.getElementById('dateFormat');
+    var numberFormat = document.getElementById('numberFormat');
+    var currency = document.getElementById('currency');
 
-		function show(id) { document.getElementById(id).style.display = "initial"; }
-        function hide(id) { document.getElementById(id).style.display = "none"; }
+    function save() {
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("Save", "Settings")',
+            data: {
+                'dateFormat' : dateFormat.options[dateFormat.selectedIndex].textContent,
+                'numberFormat' : numberFormat.options[numberFormat.selectedIndex].textContent,
+                'currency' : currency.options[currency.selectedIndex].textContent
+            },
+            dataType: 'json',
+            success: function (response) {
+                alert('Changes are saved!');
+            }
+        });
+    }
+    function select(dropdown, value) {
+        for (var i = 0; i < dropdown.options.length; i++) {
+            if (dropdown.options[i].text === value) {
+                dropdown.selectedIndex = i;
+                break;
+            }
+        }
+    }
+    function get () {
+        $.ajax({
+            type: 'GET',
+            url: '@Url.Action("Get", "Settings")',
+            dataType: 'json',
+            success: function (response) {
+                select(dateFormat, response.DateFormat);
+                select(numberFormat, response.NumberFormat);
+                select(currency, response.Currency);
+            }
+        });
+    }
 
-		hide('save');
-		hide('cancel');
+    function sleep (time) {
+        return new Promise((resolve) => setTimeout(resolve, time));
+    }
 
-		sleep(500).then(() => {
-			show('save');
-			sleep(500).then(() => show('cancel'));
-		});
-	</script>
+    function show(id) { document.getElementById(id).style.display = "initial"; }
+    function hide(id) { document.getElementById(id).style.display = "none"; }
+
+    function logout() {
+        if (confirm("Are you sure want to logout?")) {
+            window.location = '@Url.Action("Index","Login")';
+        }
+    }
+
+    get();
+    hide('save');
+    hide('cancel');
+
+    sleep(500).then(() => {
+        show('save');
+        sleep(500).then(() => show('cancel'));
+    });
+</script>
 </body>
 </html>
