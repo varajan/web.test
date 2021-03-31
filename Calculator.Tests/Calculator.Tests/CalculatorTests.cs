@@ -103,12 +103,12 @@ namespace Calculator.Tests
         public void TestStartDateIsToday()
         {
             browser.FindElement(By.XPath("//td//input[@id]")).SendKeys("100");
-            browser.FindElement(By.XPath("//tr[2]//td[2]//input[@id]")).SendKeys("10");
+            browser.FindElement(By.XPath("//tr[contains(string(), 'Rate of interest')]//input")).SendKeys("10");
             browser.FindElement(By.XPath("//tr[3]//td[2]//input[@id]")).SendKeys("365");
 
-            SelectElement daySelect = new SelectElement(element:browser.FindElement(By.XPath("//tr[4]//td[2]//select[1]")));
+            SelectElement daySelect = new SelectElement(element:browser.FindElement(By.XPath("//tr[contains (string(), 'Start date']//select[1]")));
             string day = daySelect.SelectedOption.Text;
-            SelectElement monthSelect = new SelectElement(element: browser.FindElement(By.XPath("//tr[4]//td[2]//select[2]")));
+            SelectElement monthSelect = new SelectElement(element: browser.FindElement(By.XPath("//td[contains (string(), 'Start date')]/..//select[2]")));
             string month = monthSelect.SelectedOption.Text;
             SelectElement yearSelect = new SelectElement(element: browser.FindElement(By.XPath("//tr[4]//td[2]//select[3]")));
             string year = yearSelect.SelectedOption.Text;
