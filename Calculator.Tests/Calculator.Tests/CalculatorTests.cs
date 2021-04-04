@@ -18,9 +18,9 @@ namespace Calculator.Tests
             browser.Manage().Timeouts().PageLoad = TimeSpan.FromSeconds(60);
             browser.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
 
-            browser.FindElement(By.XPath("//td//input[@id]")).SendKeys("test");
-            browser.FindElement(By.XPath("//td//input[@type]")).SendKeys("newyork1");
-            browser.FindElement(By.XPath("//td//button [text()='Login']")).Click();
+            browser.FindElement(By.XPath("//input[@id = 'login']")).SendKeys("test");
+            browser.FindElement(By.XPath("//input[@id = 'password']")).SendKeys("newyork1");
+            browser.FindElement(By.XPath("//button [@id = 'loginBtn']")).Click();
         }
 
         [TearDown]
@@ -32,9 +32,9 @@ namespace Calculator.Tests
         [Test]
         public void PositiveTestCalculator365days()
         {
-            browser.FindElement(By.XPath("//td//input[@id]")).SendKeys("100");
-            browser.FindElement(By.XPath("//tr[2]//td[2]//input[@id]")).SendKeys("10");
-            browser.FindElement(By.XPath("//tr[3]//td[2]//input[@id]")).SendKeys("365");
+            browser.FindElement(By.XPath("//td[2]//input[@id = 'amount']")).SendKeys("100");
+            browser.FindElement(By.XPath("//input [@id = 'percent']")).SendKeys("10");
+            browser.FindElement(By.XPath("//input [@id = 'term']")).SendKeys("365");
             browser.FindElement(By.XPath("//input[@type][2]")).Click();
             string actualIncome = browser.FindElement(By.XPath("//tr[6]//th[2]//input[@id]")).GetAttribute("value");
 
@@ -46,9 +46,9 @@ namespace Calculator.Tests
         [Test]
         public void PositiveTestCalculator360days()
         {
-            browser.FindElement(By.XPath("//td//input[@id]")).SendKeys("100");
-            browser.FindElement(By.XPath("//tr[2]//td[2]//input[@id]")).SendKeys("10");
-            browser.FindElement(By.XPath("//tr[3]//td[2]//input[@id]")).SendKeys("360");
+            browser.FindElement(By.XPath("//td[2]//input[@id = 'amount']")).SendKeys("100");
+            browser.FindElement(By.XPath("//input [@id = 'percent']")).SendKeys("10");
+            browser.FindElement(By.XPath("//input [@id = 'term']")).SendKeys("360");
             browser.FindElement(By.XPath("//input[@type][1]")).Click();
             string actualIncome = browser.FindElement(By.XPath("//tr[6]//th[2]//input[@id]")).GetAttribute("value");
 
@@ -60,9 +60,9 @@ namespace Calculator.Tests
         [Test]
         public void PositiveTestDepositAmountIsMandatoryField()
         {
-            browser.FindElement(By.XPath("//td//input[@id]")).SendKeys(" ");
-            browser.FindElement(By.XPath("//tr[2]//td[2]//input[@id]")).SendKeys("10");
-            browser.FindElement(By.XPath("//tr[3]//td[2]//input[@id]")).SendKeys("365");
+            browser.FindElement(By.XPath("//td[2]//input[@id = 'amount']")).SendKeys(" ");
+            browser.FindElement(By.XPath("//input [@id = 'percent']")).SendKeys("10");
+            browser.FindElement(By.XPath("//input [@id = 'term']")).SendKeys("365");
             browser.FindElement(By.XPath("//input[@type][2]")).Click();
             string actualIncome = browser.FindElement(By.XPath("//tr[6]//th[2]//input[@id]")).GetAttribute("value");
 
@@ -74,9 +74,9 @@ namespace Calculator.Tests
         [Test]
         public void PositiveTestRateOfInterestIsMandatoryField()
         {
-            browser.FindElement(By.XPath("//td//input[@id]")).SendKeys("100");
-            browser.FindElement(By.XPath("//tr[2]//td[2]//input[@id]")).SendKeys(" ");
-            browser.FindElement(By.XPath("//tr[3]//td[2]//input[@id]")).SendKeys("365");
+            browser.FindElement(By.XPath("//td[2]//input[@id = 'amount']")).SendKeys("100");
+            browser.FindElement(By.XPath("//input [@id = 'percent']")).SendKeys(" ");
+            browser.FindElement(By.XPath("//input [@id = 'term']")).SendKeys("365");
             browser.FindElement(By.XPath("//input[@type][2]")).Click();
             string actualIncome = browser.FindElement(By.XPath("//tr[6]//th[2]//input[@id]")).GetAttribute("value");
 
@@ -88,9 +88,9 @@ namespace Calculator.Tests
         [Test]
         public void PositiveTestInvestmentTermIsMandatoryField()
         {
-            browser.FindElement(By.XPath("//td//input[@id]")).SendKeys("100");
-            browser.FindElement(By.XPath("//tr[2]//td[2]//input[@id]")).SendKeys("10");
-            browser.FindElement(By.XPath("//tr[3]//td[2]//input[@id]")).SendKeys(" ");
+            browser.FindElement(By.XPath("//td[2]//input[@id = 'amount']")).SendKeys("100");
+            browser.FindElement(By.XPath("//input [@id = 'percent']")).SendKeys("10");
+            browser.FindElement(By.XPath("//input [@id = 'term']")).SendKeys(" ");
             browser.FindElement(By.XPath("//input[@type][2]")).Click();
             string actualIncome = browser.FindElement(By.XPath("//tr[6]//th[2]//input[@id]")).GetAttribute("value");
 
@@ -102,9 +102,9 @@ namespace Calculator.Tests
         [Test]
         public void TestStartDateIsToday()
         {
-            browser.FindElement(By.XPath("//td//input[@id]")).SendKeys("100");
-            browser.FindElement(By.XPath("//tr[contains(string(), 'Rate of interest')]//input")).SendKeys("10");
-            browser.FindElement(By.XPath("//tr[3]//td[2]//input[@id]")).SendKeys("365");
+            browser.FindElement(By.XPath("//td[2]//input[@id = 'amount']")).SendKeys("100");
+            browser.FindElement(By.XPath("//input [@id = ‘percent’]")).SendKeys("10");
+            browser.FindElement(By.XPath("//input [@id = 'term']")).SendKeys("365");
 
             SelectElement daySelect = new SelectElement(element:browser.FindElement(By.XPath("//tr[contains (string(), 'Start date']//select[1]")));
             string day = daySelect.SelectedOption.Text;
@@ -184,9 +184,9 @@ namespace Calculator.Tests
         [Test]
         public void PositiveTestMaxDepositAmount100000()
         {
-            browser.FindElement(By.XPath("//td//input[@id]")).SendKeys("100000");
-            browser.FindElement(By.XPath("//tr[2]//td[2]//input[@id]")).SendKeys("10");
-            browser.FindElement(By.XPath("//tr[3]//td[2]//input[@id]")).SendKeys("365");
+            browser.FindElement(By.XPath("//td[2]//input[@id = 'amount']")).SendKeys("100000");
+            browser.FindElement(By.XPath("//input [@id = 'percent']")).SendKeys("10");
+            browser.FindElement(By.XPath("//input [@id = 'term']")).SendKeys("365");
             browser.FindElement(By.XPath("//input[@type][2]")).Click();
             string actualIncome = browser.FindElement(By.XPath("//tr[6]//th[2]//input[@id]")).GetAttribute("value");
 
@@ -198,9 +198,9 @@ namespace Calculator.Tests
         [Test]
         public void PositiveTestMaxInterestRate100()
         {
-            browser.FindElement(By.XPath("//td//input[@id]")).SendKeys("100000");
-            browser.FindElement(By.XPath("//tr[2]//td[2]//input[@id]")).SendKeys("100");
-            browser.FindElement(By.XPath("//tr[3]//td[2]//input[@id]")).SendKeys("365");
+            browser.FindElement(By.XPath("//td[2]//input[@id = 'amount']")).SendKeys("100000");
+            browser.FindElement(By.XPath("//input [@id = 'percent']")).SendKeys("100");
+            browser.FindElement(By.XPath("//input [@id = 'term']")).SendKeys("365");
             browser.FindElement(By.XPath("//input[@type][2]")).Click();
             string actualIncome = browser.FindElement(By.XPath("//tr[6]//th[2]//input[@id]")).GetAttribute("value");
 
