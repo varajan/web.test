@@ -29,9 +29,9 @@ namespace Calculator.Tests
         [Test]
         public void PositiveTest()
         {
-            browser.FindElement(By.XPath("//td//input[@id]")).SendKeys("test");
-            browser.FindElement(By.XPath("//td//input[@type]")).SendKeys("newyork1");
-            browser.FindElement(By.XPath("//td//button [text()='Login']")).Click();
+            browser.FindElement(By.XPath("//input[@id = 'login']")).SendKeys("test");
+            browser.FindElement(By.XPath("//input[@id = 'password']")).SendKeys("newyork1");
+            browser.FindElement(By.XPath("//button [@id = 'loginBtn']")).Click();
             string actual = browser.Url;
 
             Assert.AreEqual("http://127.0.0.1:8080/Deposit", actual);
@@ -40,10 +40,10 @@ namespace Calculator.Tests
         [Test]
         public void IncorrectLoginTest()
         {
-            browser.FindElement(By.XPath("//td//input[@id]")).SendKeys("test1");
-            browser.FindElement(By.XPath("//td//input[@type]")).SendKeys("newyork1");
-            browser.FindElement(By.XPath("//td//button [text()='Login']")).Click();
-            string actual = browser.FindElement(By.XPath("//tr[4]//th")).Text;
+            browser.FindElement(By.XPath("//input[@id = 'login']")).SendKeys("test1");
+            browser.FindElement(By.XPath("//input[@id = 'password']")).SendKeys("newyork1");
+            browser.FindElement(By.XPath("//button [@id = 'loginBtn']")).Click();
+            string actual = browser.FindElement(By.XPath("//tr[4]//th[contains(text(), 'Incorrect user name!')]")).Text;
 
             Assert.AreEqual("Incorrect user name!", actual);
         }
@@ -51,10 +51,10 @@ namespace Calculator.Tests
         [Test]
         public void IncorrectPasswordTest()
         {
-            browser.FindElement(By.XPath("//td//input[@id]")).SendKeys("test");
-            browser.FindElement(By.XPath("//td//input[@type]")).SendKeys("newyork11");
-            browser.FindElement(By.XPath("//td//button [text()='Login']")).Click();
-            string actual = browser.FindElement(By.XPath("//tr[4]//th")).Text;
+            browser.FindElement(By.XPath("//input[@id = 'login']")).SendKeys("test");
+            browser.FindElement(By.XPath("//input[@id = 'password']")).SendKeys("newyork11");
+            browser.FindElement(By.XPath("//button [@id = 'loginBtn']")).Click();
+            string actual = browser.FindElement(By.XPath("//tr[4]//th[contains (text(), 'Incorrect password!')]")).Text;
 
             Assert.AreEqual("Incorrect password!", actual);
         }
@@ -62,21 +62,23 @@ namespace Calculator.Tests
         [Test]
         public void IncorrectLoginPasswordTest()
         {
-            browser.FindElement(By.XPath("//td//input[@id]")).SendKeys("test1");
-            browser.FindElement(By.XPath("//td//input[@type]")).SendKeys("newyork11");
-            browser.FindElement(By.XPath("//td//button [text()='Login']")).Click();
-            string actual = browser.FindElement(By.XPath("//tr[4]//th")).Text;
+            browser.FindElement(By.XPath("//input[@id = 'login']")).SendKeys("test1");
+            browser.FindElement(By.XPath("//input[@id = 'password']")).SendKeys("newyork11");
+            browser.FindElement(By.XPath("//button [@id = 'loginBtn']")).Click();
+            string actual = browser.FindElement(By.XPath("//tr[4]//th[@id = 'errorMessage']")).Text;
 
             Assert.AreEqual("'test1' user doesn't exist!", actual);
+            //NEED HELP in line 68: I could not find it by //tr[4]//th[contains (text(), ''test1' user doesn't exist!')]
+            //is it because of 'test1' signs or what do you think?
         }
 
         [Test]
         public void EmptyLoginPasswordTest()
         {
-            browser.FindElement(By.XPath("//td//input[@id]")).SendKeys(" ");
-            browser.FindElement(By.XPath("//td//input[@type]")).SendKeys(" ");
-            browser.FindElement(By.XPath("//td//button [text()='Login']")).Click();
-            string actual = browser.FindElement(By.XPath("//tr[4]//th")).Text;
+            browser.FindElement(By.XPath("//input[@id = 'login']")).SendKeys(" ");
+            browser.FindElement(By.XPath("//input[@id = 'password']")).SendKeys(" ");
+            browser.FindElement(By.XPath("//button [@id = 'loginBtn']")).Click();
+            string actual = browser.FindElement(By.XPath("//tr[4]//th[contains (text(), 'User name and password cannot be empty!')]")).Text;
 
             Assert.AreEqual("User name and password cannot be empty!", actual);
         }
@@ -84,10 +86,10 @@ namespace Calculator.Tests
         [Test]
         public void EmptyLoginTest()
         {
-            browser.FindElement(By.XPath("//td//input[@id]")).SendKeys(" ");
-            browser.FindElement(By.XPath("//td//input[@type]")).SendKeys("newyork1");
-            browser.FindElement(By.XPath("//td//button [text()='Login']")).Click();
-            string actual = browser.FindElement(By.XPath("//tr[4]//th")).Text;
+            browser.FindElement(By.XPath("//input[@id = 'login']")).SendKeys(" ");
+            browser.FindElement(By.XPath("//input[@id = 'password']")).SendKeys("newyork1");
+            browser.FindElement(By.XPath("//button [@id = 'loginBtn']")).Click();
+            string actual = browser.FindElement(By.XPath("//tr[4]//th[contains (text(), 'User name and password cannot be empty!')]")).Text;
 
             Assert.AreEqual("User name and password cannot be empty!", actual);
         }
@@ -95,10 +97,10 @@ namespace Calculator.Tests
         [Test]
         public void EmptyPasswordTest()
         {
-            browser.FindElement(By.XPath("//td//input[@id]")).SendKeys("test");
-            browser.FindElement(By.XPath("//td//input[@type]")).SendKeys(" ");
-            browser.FindElement(By.XPath("//td//button [text()='Login']")).Click();
-            string actual = browser.FindElement(By.XPath("//tr[4]//th")).Text;
+            browser.FindElement(By.XPath("//input[@id = 'login']")).SendKeys("test");
+            browser.FindElement(By.XPath("//input[@id = 'password']")).SendKeys(" ");
+            browser.FindElement(By.XPath("//button [@id = 'loginBtn']")).Click();
+            string actual = browser.FindElement(By.XPath("//tr[4]//th[contains (text(), 'User name and password cannot be empty!')]")).Text;
 
             Assert.AreEqual("User name and password cannot be empty!", actual);
         }
@@ -106,10 +108,10 @@ namespace Calculator.Tests
         [Test]
         public void UpperCaseLoginTest()
         {
-            browser.FindElement(By.XPath("//td//input[@id]")).SendKeys("TEST");
-            browser.FindElement(By.XPath("//td//input[@type]")).SendKeys("newyork1");
-            browser.FindElement(By.XPath("//td//button [text()='Login']")).Click();
-            string actual = browser.FindElement(By.XPath("//tr[4]//th")).Text;
+            browser.FindElement(By.XPath("//input[@id = 'login']")).SendKeys("TEST");
+            browser.FindElement(By.XPath("//input[@id = 'password']")).SendKeys("newyork1");
+            browser.FindElement(By.XPath("//button [@id = 'loginBtn']")).Click();
+            string actual = browser.FindElement(By.XPath("//tr[4]//th[contains(text(), 'Incorrect user name!')]")).Text;
 
             Assert.AreEqual("Incorrect user name!", actual);
         }
@@ -117,10 +119,10 @@ namespace Calculator.Tests
         [Test]
         public void UpperCasePasswordTest()
         {
-            browser.FindElement(By.XPath("//td//input[@id]")).SendKeys("test");
-            browser.FindElement(By.XPath("//td//input[@type]")).SendKeys("NEWYORK1");
-            browser.FindElement(By.XPath("//td//button [text()='Login']")).Click();
-            string actual = browser.FindElement(By.XPath("//tr[4]//th")).Text;
+            browser.FindElement(By.XPath("//input[@id = 'login']")).SendKeys("test");
+            browser.FindElement(By.XPath("//input[@id = 'password']")).SendKeys("NEWYORK1");
+            browser.FindElement(By.XPath("//button [@id = 'loginBtn']")).Click();
+            string actual = browser.FindElement(By.XPath("//tr[4]//th[contains (text(), 'Incorrect password!')]")).Text;
 
             Assert.AreEqual("Incorrect password!", actual);
         }
@@ -128,10 +130,10 @@ namespace Calculator.Tests
         [Test]
         public void SpaceInLoginTest()
         {
-            browser.FindElement(By.XPath("//td//input[@id]")).SendKeys(" test");
-            browser.FindElement(By.XPath("//td//input[@type]")).SendKeys("newyork1");
-            browser.FindElement(By.XPath("//td//button [text()='Login']")).Click();
-            string actual = browser.FindElement(By.XPath("//tr[4]//th")).Text;
+            browser.FindElement(By.XPath("//input[@id = 'login']")).SendKeys(" test");
+            browser.FindElement(By.XPath("//input[@id = 'password']")).SendKeys("newyork1");
+            browser.FindElement(By.XPath("//button [@id = 'loginBtn']")).Click();
+            string actual = browser.FindElement(By.XPath("//tr[4]//th[contains(text(), 'Incorrect user name!')]")).Text;
 
             Assert.AreEqual("Incorrect user name!", actual);
         }
