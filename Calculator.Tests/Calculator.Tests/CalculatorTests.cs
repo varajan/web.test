@@ -36,10 +36,11 @@ namespace Calculator.Tests
             browser.FindElement(By.XPath("//input [@id = 'percent']")).SendKeys("10");
             browser.FindElement(By.XPath("//input [@id = 'term']")).SendKeys("365");
             browser.FindElement(By.XPath("//input[@type][2]")).Click();
-            string actualIncome = browser.FindElement(By.XPath("//tr[6]//th[2]//input[@id]")).GetAttribute("value");
+            // NEED HELP could not find radiobutton using //input [(text(), '365 days')]. is there a mistake? line 38
+            string actualIncome = browser.FindElement(By.XPath("//input [@id = 'income']")).GetAttribute("value");
 
             Assert.AreEqual("110.00", actualIncome);
-            string actualInterest = browser.FindElement(By.XPath("//tr[7]//th[2]//input[@id]")).GetAttribute("value");
+            string actualInterest = browser.FindElement(By.XPath("//input [@id = 'interest']")).GetAttribute("value");
             Assert.AreEqual("10.00", actualInterest);
         }
 
@@ -50,10 +51,10 @@ namespace Calculator.Tests
             browser.FindElement(By.XPath("//input [@id = 'percent']")).SendKeys("10");
             browser.FindElement(By.XPath("//input [@id = 'term']")).SendKeys("360");
             browser.FindElement(By.XPath("//input[@type][1]")).Click();
-            string actualIncome = browser.FindElement(By.XPath("//tr[6]//th[2]//input[@id]")).GetAttribute("value");
+            string actualIncome = browser.FindElement(By.XPath("//input [@id = 'income']")).GetAttribute("value");
 
             Assert.AreEqual("110.00", actualIncome);
-            string actualInterest = browser.FindElement(By.XPath("//tr[7]//th[2]//input[@id]")).GetAttribute("value");
+            string actualInterest = browser.FindElement(By.XPath("//input [@id = 'interest']")).GetAttribute("value");
             Assert.AreEqual("10.00", actualInterest);
         }
 
@@ -64,10 +65,10 @@ namespace Calculator.Tests
             browser.FindElement(By.XPath("//input [@id = 'percent']")).SendKeys("10");
             browser.FindElement(By.XPath("//input [@id = 'term']")).SendKeys("365");
             browser.FindElement(By.XPath("//input[@type][2]")).Click();
-            string actualIncome = browser.FindElement(By.XPath("//tr[6]//th[2]//input[@id]")).GetAttribute("value");
+            string actualIncome = browser.FindElement(By.XPath("//input [@id = 'income']")).GetAttribute("value");
 
             Assert.AreEqual("0.00", actualIncome);
-            string actualInterest = browser.FindElement(By.XPath("//tr[7]//th[2]//input[@id]")).GetAttribute("value");
+            string actualInterest = browser.FindElement(By.XPath("//input [@id = 'interest']")).GetAttribute("value");
             Assert.AreEqual("0.00", actualInterest);
         }
 
@@ -78,10 +79,10 @@ namespace Calculator.Tests
             browser.FindElement(By.XPath("//input [@id = 'percent']")).SendKeys(" ");
             browser.FindElement(By.XPath("//input [@id = 'term']")).SendKeys("365");
             browser.FindElement(By.XPath("//input[@type][2]")).Click();
-            string actualIncome = browser.FindElement(By.XPath("//tr[6]//th[2]//input[@id]")).GetAttribute("value");
+            string actualIncome = browser.FindElement(By.XPath("//input [@id = 'income']")).GetAttribute("value");
 
             Assert.AreEqual("100.00", actualIncome);
-            string actualInterest = browser.FindElement(By.XPath("//tr[7]//th[2]//input[@id]")).GetAttribute("value");
+            string actualInterest = browser.FindElement(By.XPath("//input [@id = 'interest']")).GetAttribute("value");
             Assert.AreEqual("0.00", actualInterest);
         }
 
@@ -92,10 +93,10 @@ namespace Calculator.Tests
             browser.FindElement(By.XPath("//input [@id = 'percent']")).SendKeys("10");
             browser.FindElement(By.XPath("//input [@id = 'term']")).SendKeys(" ");
             browser.FindElement(By.XPath("//input[@type][2]")).Click();
-            string actualIncome = browser.FindElement(By.XPath("//tr[6]//th[2]//input[@id]")).GetAttribute("value");
+            string actualIncome = browser.FindElement(By.XPath("//input [@id = 'income']")).GetAttribute("value");
 
             Assert.AreEqual("100.00", actualIncome);
-            string actualInterest = browser.FindElement(By.XPath("//tr[7]//th[2]//input[@id]")).GetAttribute("value");
+            string actualInterest = browser.FindElement(By.XPath("//input [@id = 'interest']")).GetAttribute("value");
             Assert.AreEqual("0.00", actualInterest);
         }
 
@@ -103,14 +104,14 @@ namespace Calculator.Tests
         public void TestStartDateIsToday()
         {
             browser.FindElement(By.XPath("//td[2]//input[@id = 'amount']")).SendKeys("100");
-            browser.FindElement(By.XPath("//input [@id = ‘percent’]")).SendKeys("10");
+            browser.FindElement(By.XPath("//input [@id = 'percent']")).SendKeys("10");
             browser.FindElement(By.XPath("//input [@id = 'term']")).SendKeys("365");
 
-            SelectElement daySelect = new SelectElement(element:browser.FindElement(By.XPath("//tr[contains (string(), 'Start date']//select[1]")));
+            SelectElement daySelect = new SelectElement(element:browser.FindElement(By.XPath("//select [@id = 'day']")));
             string day = daySelect.SelectedOption.Text;
-            SelectElement monthSelect = new SelectElement(element: browser.FindElement(By.XPath("//td[contains (string(), 'Start date')]/..//select[2]")));
+            SelectElement monthSelect = new SelectElement(element: browser.FindElement(By.XPath("//select [@id = 'month']")));
             string month = monthSelect.SelectedOption.Text;
-            SelectElement yearSelect = new SelectElement(element: browser.FindElement(By.XPath("//tr[4]//td[2]//select[3]")));
+            SelectElement yearSelect = new SelectElement(element: browser.FindElement(By.XPath("//select [@id = 'year']")));
             string year = yearSelect.SelectedOption.Text;
             string actualDate = day + "/" + month + "/" + year;
             string expectedDate = DateTime.Today.ToString("d/MMMM/yyyy");
@@ -122,11 +123,11 @@ namespace Calculator.Tests
         [Test]
         public void TestSelectAnyStart()
         { 
-            SelectElement daySelect = new SelectElement(element: browser.FindElement(By.XPath("//tr[4]//td[2]//select[1]")));
+            SelectElement daySelect = new SelectElement(element: browser.FindElement(By.XPath("//select [@id = 'day']")));
             
-            SelectElement monthSelect = new SelectElement(element: browser.FindElement(By.XPath("//tr[4]//td[2]//select[2]")));
+            SelectElement monthSelect = new SelectElement(element: browser.FindElement(By.XPath("//select [@id = 'month']")));
             
-            SelectElement yearSelect = new SelectElement(element: browser.FindElement(By.XPath("//tr[4]//td[2]//select[3]")));
+            SelectElement yearSelect = new SelectElement(element: browser.FindElement(By.XPath("//select [@id = 'year']")));
             daySelect.SelectByText("2");
             monthSelect.SelectByText("April");
             yearSelect.SelectByText("2022");
@@ -148,7 +149,7 @@ namespace Calculator.Tests
         [Test]
         public void TestIncomeIsDisplayed()
         {
-            string Income = browser.FindElement(By.XPath("//tr[6]//th[2]//input[@id]")).GetAttribute("value");
+            string Income = browser.FindElement(By.XPath("//input [@id = 'income']")).GetAttribute("value");
 
             Assert.AreEqual("0.00", Income);
         }
@@ -156,7 +157,7 @@ namespace Calculator.Tests
         [Test]
         public void TestInterestEarnedIsDisplayed()
         {
-            string InterestEarned = browser.FindElement(By.XPath("//tr[7]//th[2]//input[@id]")).GetAttribute("value");
+            string InterestEarned = browser.FindElement(By.XPath("//input [@id = 'interest']")).GetAttribute("value");
 
             Assert.AreEqual("0.00", InterestEarned);
         }
@@ -165,10 +166,10 @@ namespace Calculator.Tests
         public void TestEndDateDataIsCorrect()
 
         {
-            browser.FindElement(By.Id("term")).SendKeys("7");
+            browser.FindElement(By.XPath("//input [@id = 'term']")).SendKeys("7");
             DateTime expected = DateTime.Today.AddDays(+7);
            
-            string EndDate = browser.FindElement(By.XPath("//tr[8]//th[2]//input[@id]")).GetAttribute("value");
+            string EndDate = browser.FindElement(By.XPath("//input [@id = 'endDate']")).GetAttribute("value");
 
             Assert.AreEqual(expected.ToString("dd/MM/yyyy"), EndDate);
         }
@@ -176,7 +177,7 @@ namespace Calculator.Tests
         [Test]
         public void TestInterestEarnedLayout()
         {          
-            string actual = browser.FindElement(By.XPath("/html/body/div/div/table/tbody/tr[7]/th[1]")).GetAttribute("align");
+            string actual = browser.FindElement(By.XPath("//tr[7]//th [contains(text ), 'Interest earned')]")).GetAttribute("align");
 
             Assert.AreEqual("left", actual);
         }
@@ -188,10 +189,10 @@ namespace Calculator.Tests
             browser.FindElement(By.XPath("//input [@id = 'percent']")).SendKeys("10");
             browser.FindElement(By.XPath("//input [@id = 'term']")).SendKeys("365");
             browser.FindElement(By.XPath("//input[@type][2]")).Click();
-            string actualIncome = browser.FindElement(By.XPath("//tr[6]//th[2]//input[@id]")).GetAttribute("value");
+            string actualIncome = browser.FindElement(By.XPath("//input [@id = 'income']")).GetAttribute("value");
 
             Assert.AreEqual("110000.00", actualIncome);
-            string actualInterest = browser.FindElement(By.XPath("//tr[7]//th[2]//input[@id]")).GetAttribute("value");
+            string actualInterest = browser.FindElement(By.XPath("//input [@id = 'interest']")).GetAttribute("value");
             Assert.AreEqual("10000.00", actualInterest);
         }
 
@@ -202,10 +203,10 @@ namespace Calculator.Tests
             browser.FindElement(By.XPath("//input [@id = 'percent']")).SendKeys("100");
             browser.FindElement(By.XPath("//input [@id = 'term']")).SendKeys("365");
             browser.FindElement(By.XPath("//input[@type][2]")).Click();
-            string actualIncome = browser.FindElement(By.XPath("//tr[6]//th[2]//input[@id]")).GetAttribute("value");
+            string actualIncome = browser.FindElement(By.XPath("//input [@id = 'income']")).GetAttribute("value");
 
-            Assert.AreEqual("200000.00", actualIncome);
-            string actualInterest = browser.FindElement(By.XPath("//tr[7]//th[2]//input[@id]")).GetAttribute("value");
+            Assert.AreEqual("200 000.00", actualIncome);
+            string actualInterest = browser.FindElement(By.XPath("//input [@id = 'interest']")).GetAttribute("value");
             Assert.AreEqual("100000.00", actualInterest);
         }
         
