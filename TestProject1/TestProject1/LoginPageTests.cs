@@ -1,6 +1,8 @@
 using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium.Support.UI;
+using System;
 
 namespace TestProject1
 {
@@ -12,6 +14,8 @@ namespace TestProject1
         public void Setup()
         {
             driver = new ChromeDriver();
+            driver.Manage().Timeouts().PageLoad = TimeSpan.FromSeconds(60);
+            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
             driver.Url = "http://localhost:64177/Login";
         }
         [TearDown]
@@ -28,7 +32,7 @@ namespace TestProject1
             // Act
             driver.FindElement(By.Id("login")).SendKeys("test");
             driver.FindElement(By.Id("password")).SendKeys("newyork1");
-            driver.FindElement(By.XPath("//button[@id='login']")).Click();
+            driver.FindElement(By.XPath("//*[@id='loginBtn']")).Click();
 
             // Assert
             string actualurl = driver.Url;
@@ -42,7 +46,7 @@ namespace TestProject1
         {
 
             // Act
-            driver.FindElement(By.XPath("//button[@id='login']")).Click();
+            driver.FindElement(By.XPath("//*[@id='loginBtn']")).Click();
 
             //Assert
             string actualurl = driver.Url;
@@ -60,7 +64,7 @@ namespace TestProject1
             // Act
             driver.FindElement(By.Id("login")).SendKeys("test");
             driver.FindElement(By.Id("password")).SendKeys("newyork2");
-            driver.FindElement(By.XPath("//button[@id='login']")).Click();
+            driver.FindElement(By.XPath("//*[@id='loginBtn']")).Click();
 
             //Assert
             string actualurl = driver.Url;
@@ -78,7 +82,7 @@ namespace TestProject1
             // Act
             driver.FindElement(By.Id("login")).SendKeys("test1");
             driver.FindElement(By.Id("password")).SendKeys("newyork1");
-            driver.FindElement(By.XPath("//button[@id='login']")).Click();
+            driver.FindElement(By.XPath("//*[@id='loginBtn']")).Click();
 
             //Assert
             string actualurl = driver.Url;
@@ -95,7 +99,7 @@ namespace TestProject1
 
             // Act
             driver.FindElement(By.Id("password")).SendKeys("newyork1");
-            driver.FindElement(By.XPath("//button[@id='login']")).Click();
+            driver.FindElement(By.XPath("//*[@id='loginBtn']")).Click();
 
             //Assert
             string actualurl = driver.Url;
@@ -112,7 +116,7 @@ namespace TestProject1
 
             // Act
             driver.FindElement(By.Id("login")).SendKeys("test");
-            driver.FindElement(By.XPath("//button[@id='login']")).Click();
+            driver.FindElement(By.XPath("//*[@id='loginBtn']")).Click();
 
             //Assert
             string actualurl = driver.Url;
@@ -130,7 +134,7 @@ namespace TestProject1
             // Act
             driver.FindElement(By.Id("login")).SendKeys("newyork1");
             driver.FindElement(By.Id("password")).SendKeys("test");
-            driver.FindElement(By.XPath("//button[@id='login']")).Click();
+            driver.FindElement(By.XPath("//*[@id='loginBtn']")).Click();
 
             //Assert
             string actualurl = driver.Url;
@@ -144,9 +148,10 @@ namespace TestProject1
         // Verify Remind Button exist
         public void RemindButtonTest()
         {
-
+            new WebDriverWait(driver, TimeSpan.FromSeconds(10))
+            .Until(SeleniumExtras.WaitHelpers.ExpectedConditions.VisibilityOfAllElementsLocatedBy(By.Id("remindBtn")));
             // Act
-           driver.FindElement(By.XPath("//*[@id='remind']")).Click();
+            driver.FindElement(By.XPath("//*[@id='remindBtn']")).Click();
 
             //Assert
             string actualurl = driver.Url;
