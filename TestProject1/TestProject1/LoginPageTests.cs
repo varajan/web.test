@@ -40,6 +40,7 @@ namespace TestProject1
             
         }
 
+
         [Test]
         // Login with Empty login an password fields
         public void LoginNegativeEmptyLoginPasswordTest()
@@ -55,6 +56,27 @@ namespace TestProject1
             Assert.AreEqual("User name and password cannot be empty!", actualerror);
            
         }
+
+        [TestCase("","", "User name and password cannot be empty!")]
+        [TestCase("test", "newyork2", "Incorrect password!")]
+        // Login with Empty login an password fields
+        public void LoginNegativeTest(string login,string password,string error)
+        {
+
+            // Act
+            driver.FindElement(By.Id("login")).SendKeys(login);
+            driver.FindElement(By.Id("password")).SendKeys(password);
+            driver.FindElement(By.XPath("//*[@id='loginBtn']")).Click();
+
+            //Assert
+            string actualurl = driver.Url;
+            string actualerror = driver.FindElement(By.Id("errorMessage")).Text;
+            Assert.AreEqual("http://localhost:64177/Login", actualurl);
+            Assert.AreEqual(error, actualerror);
+
+        }
+
+
 
         [Test]
         // Login with Valid login and Invalid password

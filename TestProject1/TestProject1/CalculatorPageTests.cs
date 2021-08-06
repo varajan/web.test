@@ -1,8 +1,10 @@
 ﻿using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium.Support.UI;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -103,7 +105,10 @@ namespace TestProject1
             driver.FindElement(By.Id("percent")).SendKeys("10");
             driver.FindElement(By.Id("term")).SendKeys("360");
             driver.FindElement(By.Id("d360")).Click();
-            driver.FindElement(By.XPath("//*[@id='day']/option[1]")).Click();
+            IWebElement day = driver.FindElement(By.Id("day"));
+            SelectElement dayselect = new SelectElement(day);
+            dayselect.SelectByText("1");
+            //driver.FindElement(By.XPath("//*[@id='day']/option[1]")).Click();
             driver.FindElement(By.XPath("//*[@id='month']/option[8]")).Click();
             driver.FindElement(By.XPath("//*[@id='year']/option[12]")).Click();
 
@@ -118,6 +123,48 @@ namespace TestProject1
 
 
         }
+
+        [Test]
+        // Positive Test Date360
+        public void Month()
+        {
+
+            // Act
+        
+            IWebElement month = driver.FindElement(By.Id("month"));
+            SelectElement monthselect = new SelectElement(month);
+            List<string> months = new List<string>();
+            List<string> expectedMonths = new List<string>()
+            {
+             "January",
+             "February",
+            };
+            foreach (IWebElement option in monthselect.Options)
+            {
+                months.Add(option.Text);
+            }
+            
+            // Assert
+            Assert.AreEqual(expectedMonths, months);
+        }
+
+        [Test]
+        // Positive Test Date360
+        public void ActualDate()
+        {
+
+            // Act
+
+            IWebElement month = driver.FindElement(By.Id("month"));
+            SelectElement monthselect = new SelectElement(month);
+            string actualmonth = monthselect.SelectedOption.Text;
+            string expectedmonth = DateTime.Today.ToString("MMMM",CultureInfo.InvariantCulture);
+
+            // Assert
+            Assert.AreEqual(expectedmonth, actualmonth);
+        }
+
+
 
         [Test]
         // Negative Mandatory field Deposit Ammount Test 365
