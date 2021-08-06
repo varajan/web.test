@@ -31,8 +31,8 @@ namespace TestProject1
         }
 
         [Test]
-        // Login with Valid login an password
-        public void LoginPositiveTest()
+        // Positive Test 365
+        public void CalculatorPositiveTest365()
         {
 
             // Act
@@ -41,7 +41,7 @@ namespace TestProject1
             driver.FindElement(By.Id("term")).SendKeys("365");
             driver.FindElement(By.Id("d365")).Click();
             // Assert
-            string actualIncome  = driver.FindElement(By.Id("income")).GetAttribute("value");
+            string actualIncome = driver.FindElement(By.Id("income")).GetAttribute("value");
             string actualInterest = driver.FindElement(By.Id("interest")).GetAttribute("value");
 
             Assert.AreEqual("110.00", actualIncome);
@@ -49,5 +49,110 @@ namespace TestProject1
 
 
         }
+        [Test]
+        // Positive Test 360
+        public void CalculatorPositiveTes360()
+        {
+
+            // Act
+            driver.FindElement(By.Id("amount")).SendKeys("100");
+            driver.FindElement(By.Id("percent")).SendKeys("10");
+            driver.FindElement(By.Id("term")).SendKeys("360");
+            driver.FindElement(By.Id("d360")).Click();
+            // Assert
+            string actualIncome = driver.FindElement(By.Id("income")).GetAttribute("value");
+            string actualInterest = driver.FindElement(By.Id("interest")).GetAttribute("value");
+
+            Assert.AreEqual("110.00", actualIncome);
+            Assert.AreEqual("10.00", actualInterest);
+
+
+        }
+        [Test]
+        // Positive Test Date365
+        public void CalculatorPositiveTestDate365()
+        {
+
+            // Act
+            driver.FindElement(By.Id("amount")).SendKeys("100");
+            driver.FindElement(By.Id("percent")).SendKeys("10");
+            driver.FindElement(By.Id("term")).SendKeys("365");
+            driver.FindElement(By.Id("d365")).Click();
+            driver.FindElement(By.XPath("//*[@id='day']/option[1]")).Click();
+            driver.FindElement(By.XPath("//*[@id='month']/option[8]")).Click();
+            driver.FindElement(By.XPath("//*[@id='year']/option[12]")).Click();
+
+            // Assert
+            string actualIncome = driver.FindElement(By.Id("income")).GetAttribute("value");
+            string actualInterest = driver.FindElement(By.Id("interest")).GetAttribute("value");
+            string actualDate = driver.FindElement(By.Id("endDate")).GetAttribute("value");
+            Assert.AreEqual("110.00", actualIncome);
+            Assert.AreEqual("10.00", actualInterest);
+            Assert.AreEqual("32/07/2022", actualDate);
+
+
+
+        }
+        [Test]
+        // Positive Test Date360
+        public void CalculatorPositiveTestDate360()
+        {
+
+            // Act
+            driver.FindElement(By.Id("amount")).SendKeys("100");
+            driver.FindElement(By.Id("percent")).SendKeys("10");
+            driver.FindElement(By.Id("term")).SendKeys("360");
+            driver.FindElement(By.Id("d360")).Click();
+            driver.FindElement(By.XPath("//*[@id='day']/option[1]")).Click();
+            driver.FindElement(By.XPath("//*[@id='month']/option[8]")).Click();
+            driver.FindElement(By.XPath("//*[@id='year']/option[12]")).Click();
+
+            // Assert
+            string actualIncome = driver.FindElement(By.Id("income")).GetAttribute("value");
+            string actualInterest = driver.FindElement(By.Id("interest")).GetAttribute("value");
+            string actualDate = driver.FindElement(By.Id("endDate")).GetAttribute("value");
+            Assert.AreEqual("110.00", actualIncome);
+            Assert.AreEqual("10.00", actualInterest);
+            Assert.AreEqual("27/07/2022", actualDate);
+
+
+
+        }
+        [Test]
+        // Settings
+        public void CalculatorPositiveTestSettings()
+        {
+            // Act
+            driver.FindElement(By.CssSelector("body > div > div > div")).Click();
+           
+
+            // Assert
+            string actualurl = driver.Url;
+            Assert.AreEqual("http://localhost:64177/Settings", actualurl);
+           
+
+
+
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     }
 }
