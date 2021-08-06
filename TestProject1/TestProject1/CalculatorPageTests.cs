@@ -118,7 +118,125 @@ namespace TestProject1
 
 
         }
+
         [Test]
+        // Negative Mandatory field Deposit Ammount Test 365
+        public void CalculatorNegativeMDepositAmmoundTest365()
+        {
+
+            // Act
+            driver.FindElement(By.Id("amount"));
+            driver.FindElement(By.Id("percent")).SendKeys("10");
+            driver.FindElement(By.Id("term")).SendKeys("365");
+            driver.FindElement(By.Id("d365")).Click();
+            // Assert
+            string actualIncome = driver.FindElement(By.Id("income")).GetAttribute("value");
+            string actualInterest = driver.FindElement(By.Id("interest")).GetAttribute("value");
+
+            Assert.AreEqual("0.00", actualIncome);
+            Assert.AreEqual("0.00", actualInterest);
+
+
+        }
+
+        [Test]
+        // Negative Mandatory field Deposit Ammount Test 360
+        public void CalculatorNegativeMDepositAmmoundTest360()
+        {
+
+            // Act
+            driver.FindElement(By.Id("amount"));
+            driver.FindElement(By.Id("percent")).SendKeys("10");
+            driver.FindElement(By.Id("term")).SendKeys("360");
+            driver.FindElement(By.Id("d360")).Click();
+            // Assert
+            string actualIncome = driver.FindElement(By.Id("income")).GetAttribute("value");
+            string actualInterest = driver.FindElement(By.Id("interest")).GetAttribute("value");
+
+            Assert.AreEqual("0.00", actualIncome);
+            Assert.AreEqual("0.00", actualInterest);
+
+
+        }
+
+        [Test]
+        // Negative Mandatory field Rate of intereset Test 365
+        public void CalculatorNegativeMRateofinteresetTest365()
+        {
+
+            // Act
+            driver.FindElement(By.Id("amount")).SendKeys("100");
+            driver.FindElement(By.Id("percent"));
+            driver.FindElement(By.Id("term")).SendKeys("365");
+            driver.FindElement(By.Id("d365")).Click();
+            // Assert
+            string actualIncome = driver.FindElement(By.Id("income")).GetAttribute("value");
+            string actualInterest = driver.FindElement(By.Id("interest")).GetAttribute("value");
+
+            Assert.AreEqual("100.00", actualIncome);
+            Assert.AreEqual("0.00", actualInterest);
+
+
+        }
+
+        [Test]
+        // Negative Mandatory field Rate of intereset Test 360
+        public void CalculatorNegativeMRateofinteresetTest360()
+        {
+
+            // Act
+            driver.FindElement(By.Id("amount")).SendKeys("100");
+            driver.FindElement(By.Id("percent"));
+            driver.FindElement(By.Id("term")).SendKeys("360");
+            driver.FindElement(By.Id("d360")).Click();
+            // Assert
+            string actualIncome = driver.FindElement(By.Id("income")).GetAttribute("value");
+            string actualInterest = driver.FindElement(By.Id("interest")).GetAttribute("value");
+
+            Assert.AreEqual("100.00", actualIncome);
+            Assert.AreEqual("0.00", actualInterest);
+
+
+        }
+
+        [Test]
+        // Negative Mandatory field Investment Term Test 365
+        public void CalculatorNegativeMInvestmentTermTest365()
+        {
+
+            // Act
+            driver.FindElement(By.Id("amount")).SendKeys("100");
+            driver.FindElement(By.Id("percent")).SendKeys("10");
+            driver.FindElement(By.Id("term"));
+            driver.FindElement(By.Id("d365")).Click();
+            // Assert
+            string actualIncome = driver.FindElement(By.Id("income")).GetAttribute("value");
+            string actualInterest = driver.FindElement(By.Id("interest")).GetAttribute("value");
+
+            Assert.AreEqual("100.00", actualIncome);
+            Assert.AreEqual("0.00", actualInterest);
+        }
+
+        [Test]
+        // Negative Mandatory field Investment Term Test 360
+        public void CalculatorNegativeMInvestmentTermTest360()
+        {
+
+            // Act
+            driver.FindElement(By.Id("amount")).SendKeys("100");
+            driver.FindElement(By.Id("percent")).SendKeys("10");
+            driver.FindElement(By.Id("term"));
+            driver.FindElement(By.Id("d360")).Click();
+            // Assert
+            string actualIncome = driver.FindElement(By.Id("income")).GetAttribute("value");
+            string actualInterest = driver.FindElement(By.Id("interest")).GetAttribute("value");
+
+            Assert.AreEqual("100.00", actualIncome);
+            Assert.AreEqual("0.00", actualInterest);
+        }
+
+        [Test]
+
         // Settings
         public void CalculatorPositiveTestSettings()
         {
