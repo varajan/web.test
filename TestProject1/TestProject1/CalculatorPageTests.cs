@@ -40,6 +40,7 @@ namespace TestProject1
             driver.FindElement(By.Id("percent")).SendKeys("10");
             driver.FindElement(By.Id("term")).SendKeys("365");
             driver.FindElement(By.Id("d365")).Click();
+
             // Assert
             string actualIncome = driver.FindElement(By.Id("income")).GetAttribute("value");
             string actualInterest = driver.FindElement(By.Id("interest")).GetAttribute("value");
