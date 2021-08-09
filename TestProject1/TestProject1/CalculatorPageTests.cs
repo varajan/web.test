@@ -26,6 +26,8 @@ namespace TestProject1
             driver.FindElement(By.Id("password")).SendKeys("newyork1");
             driver.FindElement(By.XPath("//*[@id='loginBtn']")).Click();
         }
+
+
         [TearDown]
         public void CleanUP()
         {
@@ -36,12 +38,12 @@ namespace TestProject1
         // Positive Test 365
         public void CalculatorPositiveTest365()
         {
-
             // Act
             driver.FindElement(By.Id("amount")).SendKeys("100");
             driver.FindElement(By.Id("percent")).SendKeys("10");
             driver.FindElement(By.Id("term")).SendKeys("365");
             driver.FindElement(By.Id("d365")).Click();
+
             // Assert
             string actualIncome = driver.FindElement(By.Id("income")).GetAttribute("value");
             string actualInterest = driver.FindElement(By.Id("interest")).GetAttribute("value");
@@ -51,16 +53,17 @@ namespace TestProject1
 
 
         }
+
         [Test]
         // Positive Test 360
         public void CalculatorPositiveTes360()
         {
-
-            // Act
+               // Act
             driver.FindElement(By.Id("amount")).SendKeys("100");
             driver.FindElement(By.Id("percent")).SendKeys("10");
             driver.FindElement(By.Id("term")).SendKeys("360");
             driver.FindElement(By.Id("d360")).Click();
+
             // Assert
             string actualIncome = driver.FindElement(By.Id("income")).GetAttribute("value");
             string actualInterest = driver.FindElement(By.Id("interest")).GetAttribute("value");
@@ -70,6 +73,7 @@ namespace TestProject1
 
 
         }
+
         [Test]
         // Positive Test Date365
         public void CalculatorPositiveTestDate365()
@@ -95,6 +99,7 @@ namespace TestProject1
 
 
         }
+
         [Test]
         // Positive Test Date360
         public void CalculatorPositiveTestDate360()
@@ -158,15 +163,13 @@ namespace TestProject1
             IWebElement month = driver.FindElement(By.Id("month"));
             SelectElement monthselect = new SelectElement(month);
             string actualmonth = monthselect.SelectedOption.Text;
-            string expectedmonth = DateTime.Today.ToString("MMMM",CultureInfo.InvariantCulture);
+            string expectedmonth = DateTime.Today.ToString("MMMM", CultureInfo.InvariantCulture);
 
             // Assert
             Assert.AreEqual(expectedmonth, actualmonth);
         }
 
-
-
-        [Test]
+       [Test]
         // Negative Mandatory field Deposit Ammount Test 365
         public void CalculatorNegativeMDepositAmmoundTest365()
         {
@@ -176,6 +179,7 @@ namespace TestProject1
             driver.FindElement(By.Id("percent")).SendKeys("10");
             driver.FindElement(By.Id("term")).SendKeys("365");
             driver.FindElement(By.Id("d365")).Click();
+
             // Assert
             string actualIncome = driver.FindElement(By.Id("income")).GetAttribute("value");
             string actualInterest = driver.FindElement(By.Id("interest")).GetAttribute("value");
@@ -196,6 +200,7 @@ namespace TestProject1
             driver.FindElement(By.Id("percent")).SendKeys("10");
             driver.FindElement(By.Id("term")).SendKeys("360");
             driver.FindElement(By.Id("d360")).Click();
+
             // Assert
             string actualIncome = driver.FindElement(By.Id("income")).GetAttribute("value");
             string actualInterest = driver.FindElement(By.Id("interest")).GetAttribute("value");
@@ -216,6 +221,7 @@ namespace TestProject1
             driver.FindElement(By.Id("percent"));
             driver.FindElement(By.Id("term")).SendKeys("365");
             driver.FindElement(By.Id("d365")).Click();
+
             // Assert
             string actualIncome = driver.FindElement(By.Id("income")).GetAttribute("value");
             string actualInterest = driver.FindElement(By.Id("interest")).GetAttribute("value");
@@ -236,6 +242,7 @@ namespace TestProject1
             driver.FindElement(By.Id("percent"));
             driver.FindElement(By.Id("term")).SendKeys("360");
             driver.FindElement(By.Id("d360")).Click();
+
             // Assert
             string actualIncome = driver.FindElement(By.Id("income")).GetAttribute("value");
             string actualInterest = driver.FindElement(By.Id("interest")).GetAttribute("value");
@@ -256,6 +263,7 @@ namespace TestProject1
             driver.FindElement(By.Id("percent")).SendKeys("10");
             driver.FindElement(By.Id("term"));
             driver.FindElement(By.Id("d365")).Click();
+
             // Assert
             string actualIncome = driver.FindElement(By.Id("income")).GetAttribute("value");
             string actualInterest = driver.FindElement(By.Id("interest")).GetAttribute("value");
@@ -274,6 +282,7 @@ namespace TestProject1
             driver.FindElement(By.Id("percent")).SendKeys("10");
             driver.FindElement(By.Id("term"));
             driver.FindElement(By.Id("d360")).Click();
+
             // Assert
             string actualIncome = driver.FindElement(By.Id("income")).GetAttribute("value");
             string actualInterest = driver.FindElement(By.Id("interest")).GetAttribute("value");
