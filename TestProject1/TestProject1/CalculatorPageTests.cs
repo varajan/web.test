@@ -24,6 +24,7 @@ namespace TestProject1
             driver.FindElement(By.Id("password")).SendKeys("newyork1");
             driver.FindElement(By.XPath("//*[@id='loginBtn']")).Click();
         }
+        
         [TearDown]
         public void CleanUP()
         {
