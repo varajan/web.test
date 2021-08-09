@@ -27,7 +27,6 @@ namespace TestProject1
             driver.FindElement(By.XPath("//*[@id='loginBtn']")).Click();
         }
 
-
         [TearDown]
         public void CleanUP()
         {
@@ -50,8 +49,6 @@ namespace TestProject1
 
             Assert.AreEqual("110.00", actualIncome);
             Assert.AreEqual("10.00", actualInterest);
-
-
         }
 
         [Test]
