@@ -46,9 +46,8 @@ namespace TestProject1
 
             Assert.AreEqual("110.00", actualIncome);
             Assert.AreEqual("10.00", actualInterest);
-
-
         }
+        
         [Test]
         // Positive Test 360
         public void CalculatorPositiveTes360()
