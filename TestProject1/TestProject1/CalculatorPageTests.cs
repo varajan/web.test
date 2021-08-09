@@ -35,7 +35,6 @@ namespace TestProject1
         // Positive Test 365
         public void CalculatorPositiveTest365()
         {
-
             // Act
             driver.FindElement(By.Id("amount")).SendKeys("100");
             driver.FindElement(By.Id("percent")).SendKeys("10");
