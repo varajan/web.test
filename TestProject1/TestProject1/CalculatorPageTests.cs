@@ -32,24 +32,20 @@ namespace TestProject1
         {
             driver.Quit();
         }
-
-        [Test]
+        
         // Positive Test 365
-        public void CalculatorPositiveTest365()
-        {
+        //[TestCase("100.00", "10.00", "365","110.00","10.00")]
+        //public void CalculatorPositiveTest365(string amount, string persent, string term, string actualIncome, string actualInterest)
+       // {
             // Act
-            driver.FindElement(By.Id("amount")).SendKeys("100");
-            driver.FindElement(By.Id("percent")).SendKeys("10");
-            driver.FindElement(By.Id("term")).SendKeys("365");
-            driver.FindElement(By.Id("d365")).Click();
+           // driver.FindElement(By.Id("amount")).SendKeys("amount");
+            //driver.FindElement(By.Id("percent")).SendKeys("persent");
+           // driver.FindElement(By.Id("term")).SendKeys("term");
+            //driver.FindElement(By.Id("d365")).Click();
 
             // Assert
-            string actualIncome = driver.FindElement(By.Id("income")).GetAttribute("value");
-            string actualInterest = driver.FindElement(By.Id("interest")).GetAttribute("value");
-
-            Assert.AreEqual("110.00", actualIncome);
-            Assert.AreEqual("10.00", actualInterest);
-        }
+           // Assert.AreEqual(actualIncome, actualInterest);
+       // }
 
         [Test]
         // Positive Test 360
@@ -93,8 +89,6 @@ namespace TestProject1
             Assert.AreEqual("10.00", actualInterest);
             Assert.AreEqual("32/07/2022", actualDate);
 
-
-
         }
 
         [Test]
@@ -122,8 +116,6 @@ namespace TestProject1
             Assert.AreEqual("10.00", actualInterest);
             Assert.AreEqual("27/07/2022", actualDate);
 
-
-
         }
 
         [Test]
@@ -132,7 +124,6 @@ namespace TestProject1
         {
 
             // Act
-        
             IWebElement month = driver.FindElement(By.Id("month"));
             SelectElement monthselect = new SelectElement(month);
             List<string> months = new List<string>();
@@ -140,6 +131,16 @@ namespace TestProject1
             {
              "January",
              "February",
+             "March",
+             "April",
+             "May",
+             "June",
+             "July",
+             "August",
+             "September",
+             "October",
+             "November",
+             "December"
             };
             foreach (IWebElement option in monthselect.Options)
             {
@@ -149,6 +150,59 @@ namespace TestProject1
             // Assert
             Assert.AreEqual(expectedMonths, months);
         }
+
+        [Test]
+        // Days
+        public void Day()
+        {
+
+            // Act
+            IWebElement day = driver.FindElement(By.Id("day"));
+            SelectElement dayselect = new SelectElement(day);
+            List<string> days = new List<string>();
+            List<string> expectedDays = new List<string>()
+            {
+             "1",
+             "2",
+             "3",
+             "4",
+             "5",
+             "6",
+             "7",
+             "8",
+             "9",
+             "10",
+             "11",
+             "12",
+             "13",
+             "14",
+             "15",
+             "16",
+             "17",
+             "18",
+             "19",
+             "20",
+             "21",
+             "22",
+             "23",
+             "24",
+             "25",
+             "26",
+             "27",
+             "28",
+             "29",
+             "30",
+             "31"
+            };
+            foreach (IWebElement option in dayselect.Options)
+            {
+                days.Add(option.Text);
+            }
+
+            // Assert
+            Assert.AreEqual(expectedDays, days);
+        }
+
 
         [Test]
         // Positive Test Date360
