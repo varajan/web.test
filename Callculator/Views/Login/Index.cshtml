@@ -8,34 +8,35 @@
 <body>
 	<div align="center">
 		<div style="width:500px; height:230px; border:double">
-			<table>
-				<tr>
-					<th class="user">Login:</th>
-					<td>
-						<input id="login"/>
-					</td>
-				</tr>
-				<tr>
-					<th class="pass">Password:</th>
-					<td>
-						<input type="password" id="password" />
-					</td>
-					<td style="width: 100px">
-					</td>
-				</tr>
+            <table>
+                <tr>
+                    <th class="user">Login:</th>
+                    <td>
+                        <input id="login" />
+                    </td>
+                </tr>
+                <tr>
+                    <th class="pass">Password:</th>
+                    <td>
+                        <input type="password" id="password" />
+                    </td>
+                    <td style="width: 100px">
+                    </td>
+                </tr>
+                <tr><th style="color: red" id="errorMessage" colspan="3"></th></tr>
+                <tr>
+                    <td colspan="2" align="right" style="width: 100px" id="buttons">
+                        @*<button onclick="RemindPassword()" title="remind" id="remindBtn">Remind pasword</button>*@
+                    </td>
 
-				<tr>
-					<td colspan="2" align="right" style="width: 100px" id="buttons">
-						@*<button onclick="RemindPassword()" title="remind" id="remindBtn">Remind pasword</button>*@
-					</td>
-				</tr>
+                </tr>
 
-				<tr>
-					<td colspan="3">
-						<iframe id="remindPasswordView" hidden src="~/Static/RemindPassword.html" style="height:130px"></iframe>
-					</td>
-				</tr>
-			</table>
+                <tr>
+                    <td colspan="3">
+                        <iframe id="remindPasswordView" hidden src="~/Static/RemindPassword.html" style="height:130px"></iframe>
+                    </td>
+                </tr>
+            </table>
 		</div>
 	</div>
 	<img hidden src="https://media.news24online.com/static_dev/static_root/uploads/froala_editor/images/SamplePNGImage_10mbmb.png"/>
