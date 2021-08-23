@@ -20,7 +20,7 @@ namespace TestsCalculator
             IWebElement loginFld = driver.FindElement(By.Id("login"));
             IWebElement passFld = driver.FindElement(By.Id("password"));
             IWebElement loginBtn = driver.FindElements(By.Id("login"))[1];
-                 
+
             // Act 
             loginFld.SendKeys("test");
             passFld.SendKeys("newyork1");
