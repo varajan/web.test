@@ -17,10 +17,12 @@ namespace TestsCalculator
         {
             // Arrange
             IWebDriver driver = new ChromeDriver();
+            driver.Manage().Timeouts().PageLoad = TimeSpan.FromSeconds(30);
+            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
             driver.Url = "http://localhost:64177/Login";
             IWebElement loginFld = driver.FindElement(By.Id("login"));
             IWebElement passFld = driver.FindElement(By.Id("password"));
-            IWebElement loginBtn = driver.FindElements(By.Id("login"))[1];
+            IWebElement loginBtn = driver.FindElement(By.Id("loginBtn"));
 
             // Act 
             loginFld.SendKeys("test");
@@ -39,10 +41,12 @@ namespace TestsCalculator
         {
             // Arrange
             IWebDriver driver = new ChromeDriver();
+            driver.Manage().Timeouts().PageLoad = TimeSpan.FromSeconds(30);
+            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
             driver.Url = "http://localhost:64177/Login";
             IWebElement loginFld = driver.FindElement(By.Id("login"));
             IWebElement passFld = driver.FindElement(By.Id("password"));
-            IWebElement loginBtn = driver.FindElements(By.Id("login"))[1];
+            IWebElement loginBtn = driver.FindElement(By.Id("loginBtn"));
 
             // Act
             loginFld.SendKeys("negativeTest");
@@ -61,10 +65,12 @@ namespace TestsCalculator
         {
             // Arrange 
             IWebDriver driver = new ChromeDriver();
+            driver.Manage().Timeouts().PageLoad = TimeSpan.FromSeconds(30);
+            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
             driver.Url = "http://localhost:64177/login";
             IWebElement loginFld = driver.FindElement(By.Id("login"));
             IWebElement passFld = driver.FindElement(By.Id("password"));
-            IWebElement loginBtn = driver.FindElements(By.Id("login"))[1];
+            IWebElement loginBtn = driver.FindElement(By.Id("loginBtn"));
 
             // Act
             loginFld.SendKeys("test");
@@ -108,7 +114,9 @@ namespace TestsCalculator
             // Arrange
             IWebDriver driver = new ChromeDriver();
             driver.Url = "http://localhost:64177/login";
-            IWebElement remindBtn = driver.FindElement(By.Id("remind"));
+            driver.Manage().Timeouts().PageLoad = TimeSpan.FromSeconds(30);
+            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
+            IWebElement remindBtn = driver.FindElement(By.Id("remindBtn"));
 
             // Act 
             // remindBtn.Click();
