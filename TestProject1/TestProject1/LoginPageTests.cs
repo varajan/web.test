@@ -37,16 +37,22 @@ namespace TestProject1
 
             // Assert
             string actualurl = driver.Url;
-            Assert.AreEqual("http://localhost:64177/Deposit", actualurl);
-            
+            Assert.AreEqual("http://localhost:64177/Deposit", actualurl);    
         }
-
+        // Negative Test Login and Password fields - Empty
         [TestCase("","", "User name and password cannot be empty!")]
+        // Negative Test Login - Empty
         [TestCase("", "newyork1", "User name and password cannot be empty!")]
+        // Negative Test Password - Empty
         [TestCase("test", "", "User name and password cannot be empty!")]
-        [TestCase("test", "newyork2", "Incorrect password!")]
-        [TestCase("test1", "newyork1", "Incorrect user name!")]
-        [TestCase("newyork1", "test", "'newyork1' user doesn't exist!")]
+        // Negative Test Login - Correct and Password - Incorrect
+        [TestCase("test", "newyork2", "Incorrect user name or password")]
+        // Negative Test Login - Incorrect and Password - Correct
+        [TestCase("test1", "newyork1", "Incorrect user name or password")]
+        // Negative Test Login - Incorrect and Password - Incorrect
+        [TestCase("test1", "newyork2", "Incorrect user name or password")]
+        // Negative Test Login - (Correct Password value) and Password - (Correct Login value)
+        [TestCase("newyork1", "test", "Incorrect user name or password")]
         
         public void LoginNegativeTest(string login,string password,string error)
         {
@@ -61,22 +67,24 @@ namespace TestProject1
             string actualerror = driver.FindElement(By.Id("errorMessage")).Text;
             Assert.AreEqual("http://localhost:64177/Login", actualurl);
             Assert.AreEqual(error, actualerror);
-
         }
 
         [Test]
-        // Verify Remind Button exist
+        // OnClick Remind Button - iframe 
         public void RemindButtonTest()
         {
             new WebDriverWait(driver, TimeSpan.FromSeconds(10))
             .Until(SeleniumExtras.WaitHelpers.ExpectedConditions.VisibilityOfAllElementsLocatedBy(By.Id("remindBtn")));
             // Act
+            IWebElement remindbutton = driver.FindElement(By.XPath("//*[@id='remindBtn']"));
             driver.FindElement(By.XPath("//*[@id='remindBtn']")).Click();
 
-            //Assert
-            string actualurl = driver.Url;
-            Assert.AreEqual("http://localhost:64177/Login", actualurl);
-           
+            // Assert
+            new WebDriverWait(driver, TimeSpan.FromSeconds(10))
+            .Until(SeleniumExtras.WaitHelpers.ExpectedConditions.VisibilityOfAllElementsLocatedBy(By.Id("remindPasswordView")));
+            IWebElement remindpasswordview = driver.FindElement(By.XPath("//*[@id='remindPasswordView']"));
+            
+
         }
     }
 
