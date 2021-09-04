@@ -61,20 +61,7 @@
 			return;
 		}
 
-		if (login === correctUser && password !== correctPass) {
-            ShowError("Incorrect user name or password!");
-			return;
-		}
-
-		if (login !== correctUser && password === correctPass) {
-            ShowError("Incorrect user name or password!");
-			return;
-		}
-
-		if (login !== correctUser && password !== correctPass) {
-			ShowError("'" + login + "' user doesn't exist!");
-			return;
-		}
+        ShowError("Incorrect user name or password!");
     }
 
     RemindPassword = function () {
