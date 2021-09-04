@@ -167,6 +167,11 @@
             income = 0;
         }
 
+        if (!document.getElementById('d360').checked && !document.getElementById('d365').checked) {
+            income = 0;
+            interest = 0;
+        }
+
         document.getElementById('interest').value = interest.toFixed(2);
         document.getElementById('income').value = income.toFixed(2);
 
