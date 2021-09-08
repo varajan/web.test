@@ -32,40 +32,26 @@ namespace TestProject1
         {
             driver.Quit();
         }
-        
-        // Positive Test 365
-        //[TestCase("100.00", "10.00", "365","110.00","10.00")]
-        //public void CalculatorPositiveTest365(string amount, string persent, string term, string actualIncome, string actualInterest)
-       // {
-            // Act
-           // driver.FindElement(By.Id("amount")).SendKeys("amount");
-            //driver.FindElement(By.Id("percent")).SendKeys("persent");
-           // driver.FindElement(By.Id("term")).SendKeys("term");
-            //driver.FindElement(By.Id("d365")).Click();
 
-            // Assert
-           // Assert.AreEqual(actualIncome, actualInterest);
-       // }
-
-        [Test]
-        // Positive Test 360
-        public void CalculatorPositiveTes360()
+        //Positive Test 365 Calculation Income and Interest earned
+        [TestCase(365, "100.00", "10.00", "365", "110.00", "10.00")]
+        //Positive Test 360 Calculation Income and Interest earned
+        [TestCase(360, "100.00", "10.00", "360", "110.00", "10.00")]
+        public void CalculatorPositiveTest365(int year,string amount, string persent, string term, string expectedIncome, string expectedInterest)
         {
-               // Act
-            driver.FindElement(By.Id("amount")).SendKeys("100");
-            driver.FindElement(By.Id("percent")).SendKeys("10");
-            driver.FindElement(By.Id("term")).SendKeys("360");
-            driver.FindElement(By.Id("d360")).Click();
+            //Act
+            driver.FindElement(By.Id("amount")).SendKeys(amount);
+            driver.FindElement(By.Id("percent")).SendKeys(persent);
+            driver.FindElement(By.Id("term")).SendKeys(term);
+            driver.FindElement(By.Id("d"+year)).Click();
 
-            // Assert
+            //Asser
             string actualIncome = driver.FindElement(By.Id("income")).GetAttribute("value");
             string actualInterest = driver.FindElement(By.Id("interest")).GetAttribute("value");
-
-            Assert.AreEqual("110.00", actualIncome);
-            Assert.AreEqual("10.00", actualInterest);
-
-
+            Assert.AreEqual(expectedInterest, actualInterest);
+            Assert.AreEqual(expectedIncome, actualIncome);
         }
+
 
         [Test]
         // Positive Test Date365
@@ -119,7 +105,7 @@ namespace TestProject1
         }
 
         [Test]
-        // Positive Test Date360
+        // Month
         public void Month()
         {
 
@@ -160,40 +146,11 @@ namespace TestProject1
             IWebElement day = driver.FindElement(By.Id("day"));
             SelectElement dayselect = new SelectElement(day);
             List<string> days = new List<string>();
-            List<string> expectedDays = new List<string>()
+            List<string> expectedDays = new List<string>();
+            for(int i = 1; i<32; i++)
             {
-             "1",
-             "2",
-             "3",
-             "4",
-             "5",
-             "6",
-             "7",
-             "8",
-             "9",
-             "10",
-             "11",
-             "12",
-             "13",
-             "14",
-             "15",
-             "16",
-             "17",
-             "18",
-             "19",
-             "20",
-             "21",
-             "22",
-             "23",
-             "24",
-             "25",
-             "26",
-             "27",
-             "28",
-             "29",
-             "30",
-             "31"
-            };
+                expectedDays.Add(i.ToString());
+            }
             foreach (IWebElement option in dayselect.Options)
             {
                 days.Add(option.Text);
@@ -203,6 +160,28 @@ namespace TestProject1
             Assert.AreEqual(expectedDays, days);
         }
 
+        [Test]
+        // Years
+        public void Year()
+        {
+
+            // Act
+            IWebElement year = driver.FindElement(By.Id("year"));
+            SelectElement yearselect = new SelectElement(year);
+            List<string> years = new List<string>();
+            List<string> expectedYears = new List<string>();
+            for (int i = 2010; i < 2026; i++)
+            {
+                expectedYears.Add(i.ToString());
+            }
+            foreach (IWebElement option in yearselect.Options)
+            {
+                years.Add(option.Text);
+            }
+
+            // Assert
+            Assert.AreEqual(expectedYears, years);
+        }
 
         [Test]
         // Positive Test Date360
@@ -210,7 +189,6 @@ namespace TestProject1
         {
 
             // Act
-
             IWebElement month = driver.FindElement(By.Id("month"));
             SelectElement monthselect = new SelectElement(month);
             string actualmonth = monthselect.SelectedOption.Text;
@@ -220,126 +198,51 @@ namespace TestProject1
             Assert.AreEqual(expectedmonth, actualmonth);
         }
 
-       [Test]
-        // Negative Mandatory field Deposit Ammount Test 365
-        public void CalculatorNegativeMDepositAmmoundTest365()
+        // Negative Test Mandatory field Deposit Amount * - Empty
+        [TestCase(365, "", "10.00", "365", "0.00", "0.00")]
+
+        // Negative Test Mandatory field Rate of intereset: * - Empty
+        [TestCase(365, "100.00", "", "365", "0.00", "0.00")]
+
+        // Negative Test Mandatory field Investment Term: * - Empty
+        [TestCase(365, "100.00", "10.00", "", "0.00", "0.00")]
+
+        // Negative Test Mandatory field Financial year: * - Empty
+        [TestCase(null, "100.00", "10.00", "", "0.00", "0.00")]
+        public void CalculatorNegativeMandatoryFeildsEmpty(int? year, string amount, string persent, string term, string expectedIncome, string expectedInterest)
         {
 
             // Act
-            driver.FindElement(By.Id("amount"));
-            driver.FindElement(By.Id("percent")).SendKeys("10");
-            driver.FindElement(By.Id("term")).SendKeys("365");
-            driver.FindElement(By.Id("d365")).Click();
+            driver.FindElement(By.Id("amount")).SendKeys(amount);
+            driver.FindElement(By.Id("percent")).SendKeys(persent);
+            driver.FindElement(By.Id("term")).SendKeys(term);
+            if (year != null)driver.FindElement(By.Id("d" + year)).Click();
 
-            // Assert
+            //Asser
             string actualIncome = driver.FindElement(By.Id("income")).GetAttribute("value");
             string actualInterest = driver.FindElement(By.Id("interest")).GetAttribute("value");
-
-            Assert.AreEqual("0.00", actualIncome);
-            Assert.AreEqual("0.00", actualInterest);
-
+            Assert.AreEqual(expectedInterest, actualInterest);
+            Assert.AreEqual(expectedIncome, actualIncome);
+           
 
         }
 
-        [Test]
-        // Negative Mandatory field Deposit Ammount Test 360
-        public void CalculatorNegativeMDepositAmmoundTest360()
+        // Negative Test Mandatory field Financial year: * - Empty
+        [TestCase("100.00", "100.00", "100", "0.00", "0.00")]
+        public void CalculatorNegativeMandatoryRadioYearEmpty(string amount, string persent, string term, string expectedIncome, string expectedInterest)
         {
-
             // Act
-            driver.FindElement(By.Id("amount"));
-            driver.FindElement(By.Id("percent")).SendKeys("10");
-            driver.FindElement(By.Id("term")).SendKeys("360");
-            driver.FindElement(By.Id("d360")).Click();
+            driver.FindElement(By.Id("amount")).SendKeys(amount);
+            driver.FindElement(By.Id("percent")).SendKeys(persent);
+            driver.FindElement(By.Id("term")).SendKeys(term);
 
-            // Assert
+            //Asser
             string actualIncome = driver.FindElement(By.Id("income")).GetAttribute("value");
             string actualInterest = driver.FindElement(By.Id("interest")).GetAttribute("value");
+            Assert.AreEqual(expectedInterest, actualInterest);
+            Assert.AreEqual(expectedIncome, actualIncome);
+           
 
-            Assert.AreEqual("0.00", actualIncome);
-            Assert.AreEqual("0.00", actualInterest);
-
-
-        }
-
-        [Test]
-        // Negative Mandatory field Rate of intereset Test 365
-        public void CalculatorNegativeMRateofinteresetTest365()
-        {
-
-            // Act
-            driver.FindElement(By.Id("amount")).SendKeys("100");
-            driver.FindElement(By.Id("percent"));
-            driver.FindElement(By.Id("term")).SendKeys("365");
-            driver.FindElement(By.Id("d365")).Click();
-
-            // Assert
-            string actualIncome = driver.FindElement(By.Id("income")).GetAttribute("value");
-            string actualInterest = driver.FindElement(By.Id("interest")).GetAttribute("value");
-
-            Assert.AreEqual("100.00", actualIncome);
-            Assert.AreEqual("0.00", actualInterest);
-
-
-        }
-
-        [Test]
-        // Negative Mandatory field Rate of intereset Test 360
-        public void CalculatorNegativeMRateofinteresetTest360()
-        {
-
-            // Act
-            driver.FindElement(By.Id("amount")).SendKeys("100");
-            driver.FindElement(By.Id("percent"));
-            driver.FindElement(By.Id("term")).SendKeys("360");
-            driver.FindElement(By.Id("d360")).Click();
-
-            // Assert
-            string actualIncome = driver.FindElement(By.Id("income")).GetAttribute("value");
-            string actualInterest = driver.FindElement(By.Id("interest")).GetAttribute("value");
-
-            Assert.AreEqual("100.00", actualIncome);
-            Assert.AreEqual("0.00", actualInterest);
-
-
-        }
-
-        [Test]
-        // Negative Mandatory field Investment Term Test 365
-        public void CalculatorNegativeMInvestmentTermTest365()
-        {
-
-            // Act
-            driver.FindElement(By.Id("amount")).SendKeys("100");
-            driver.FindElement(By.Id("percent")).SendKeys("10");
-            driver.FindElement(By.Id("term"));
-            driver.FindElement(By.Id("d365")).Click();
-
-            // Assert
-            string actualIncome = driver.FindElement(By.Id("income")).GetAttribute("value");
-            string actualInterest = driver.FindElement(By.Id("interest")).GetAttribute("value");
-
-            Assert.AreEqual("100.00", actualIncome);
-            Assert.AreEqual("0.00", actualInterest);
-        }
-
-        [Test]
-        // Negative Mandatory field Investment Term Test 360
-        public void CalculatorNegativeMInvestmentTermTest360()
-        {
-
-            // Act
-            driver.FindElement(By.Id("amount")).SendKeys("100");
-            driver.FindElement(By.Id("percent")).SendKeys("10");
-            driver.FindElement(By.Id("term"));
-            driver.FindElement(By.Id("d360")).Click();
-
-            // Assert
-            string actualIncome = driver.FindElement(By.Id("income")).GetAttribute("value");
-            string actualInterest = driver.FindElement(By.Id("interest")).GetAttribute("value");
-
-            Assert.AreEqual("100.00", actualIncome);
-            Assert.AreEqual("0.00", actualInterest);
         }
 
         [Test]
@@ -355,8 +258,6 @@ namespace TestProject1
             string actualurl = driver.Url;
             Assert.AreEqual("http://localhost:64177/Settings", actualurl);
            
-
-
 
         }
 
