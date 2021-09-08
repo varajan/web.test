@@ -208,23 +208,22 @@ namespace TestProject1
         [TestCase(365, "100.00", "10.00", "", "0.00", "0.00")]
 
         // Negative Test Mandatory field Financial year: * - Empty
-        //[TestCase(null, "100.00", "10.00", "", "0.00", "0.00")]
-        public void CalculatorNegativeMandatoryFeildsEmpty(int year, string amount, string persent, string term, string expectedIncome, string expectedInterest)
+        [TestCase(null, "100.00", "10.00", "", "0.00", "0.00")]
+        public void CalculatorNegativeMandatoryFeildsEmpty(int? year, string amount, string persent, string term, string expectedIncome, string expectedInterest)
         {
 
             // Act
             driver.FindElement(By.Id("amount")).SendKeys(amount);
             driver.FindElement(By.Id("percent")).SendKeys(persent);
             driver.FindElement(By.Id("term")).SendKeys(term);
-            driver.FindElement(By.Id("d" + year)).Click();
+            if (year != null)driver.FindElement(By.Id("d" + year)).Click();
 
             //Asser
             string actualIncome = driver.FindElement(By.Id("income")).GetAttribute("value");
             string actualInterest = driver.FindElement(By.Id("interest")).GetAttribute("value");
             Assert.AreEqual(expectedInterest, actualInterest);
             Assert.AreEqual(expectedIncome, actualIncome);
-            Assert.AreEqual("0.00", actualIncome);
-            Assert.AreEqual("0.00", actualInterest);
+           
 
         }
 
@@ -242,8 +241,7 @@ namespace TestProject1
             string actualInterest = driver.FindElement(By.Id("interest")).GetAttribute("value");
             Assert.AreEqual(expectedInterest, actualInterest);
             Assert.AreEqual(expectedIncome, actualIncome);
-            Assert.AreEqual("0.00", actualIncome);
-            Assert.AreEqual("0.00", actualInterest);
+           
 
         }
 
@@ -260,8 +258,6 @@ namespace TestProject1
             string actualurl = driver.Url;
             Assert.AreEqual("http://localhost:64177/Settings", actualurl);
            
-
-
 
         }
 
