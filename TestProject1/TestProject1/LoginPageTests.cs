@@ -47,13 +47,13 @@ namespace TestProject1
         // Negative Test Password - Empty
         [TestCase("test", "", "User name and password cannot be empty!")]
         // Negative Test Login - Correct and Password - Incorrect
-        [TestCase("test", "newyork2", "Incorrect user name or password")]
+        [TestCase("test", "newyork2", "Incorrect user name or password!")]
         // Negative Test Login - Incorrect and Password - Correct
-        [TestCase("test1", "newyork1", "Incorrect user name or password")]
+        [TestCase("test1", "newyork1", "Incorrect user name or password!")]
         // Negative Test Login - Incorrect and Password - Incorrect
-        [TestCase("test1", "newyork2", "Incorrect user name or password")]
+        [TestCase("test1", "newyork2", "Incorrect user name or password!")]
         // Negative Test Login - (Correct Password value) and Password - (Correct Login value)
-        [TestCase("newyork1", "test", "Incorrect user name or password")]
+        [TestCase("newyork1", "test", "Incorrect user name or password!")]
         
         public void LoginNegativeTest(string login,string password,string error)
         {
