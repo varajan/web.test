@@ -61,7 +61,9 @@
 			return;
 		}
 
-        ShowError("Incorrect user name or password!");
+        if (login !== correctUser || password !== correctPass) {
+            ShowError("Incorrect user name or password!");
+        }
     }
 
     RemindPassword = function () {
