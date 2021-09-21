@@ -1,6 +1,7 @@
 using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium.Support.UI;
 using System;
 
 namespace TestsCalculator
@@ -114,17 +115,16 @@ namespace TestsCalculator
             // Arrange
             IWebDriver driver = new ChromeDriver();
             driver.Url = "http://127.0.0.1:8080/";
-            driver.Manage().Timeouts().PageLoad = TimeSpan.FromSeconds(300);
-            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(100);
+            driver.Manage().Timeouts().PageLoad = TimeSpan.FromSeconds(30);
+            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
             IWebElement remindBtn = driver.FindElement(By.Id("remindBtn"));
 
             // Act 
-            remindBtn.Click();
+            new WebDriverWait(driver, TimeSpan.FromSeconds(10))
+                .Until(SeleniumExtras.WaitHelpers.ExpectedConditions.VisibilityOfAllElementsLocatedBy(By.Id("remindBtn")));
 
             // Assert
-            IWebElement remindForm = driver.FindElement(By.Id("remindPasswordView"));
-            Assert.IsTrue(remindForm.Displayed);
-            // Assert.IsTrue(remindBtn.Displayed);
+            Assert.IsTrue(remindBtn.Displayed);
             driver.Close();
         }
     }
