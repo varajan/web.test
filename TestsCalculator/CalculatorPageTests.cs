@@ -436,5 +436,25 @@ namespace TestsCalculator
             int e = els.Count;
             Assert.Greater(e, 15);
         }
+
+        [Test]
+        public void SelectFeb29LeapYear()
+        {
+            //Arrange
+            IWebElement termField = driver.FindElement(By.Id("term"));
+            IWebElement dayDropdown = driver.FindElement(By.Id("day"));
+            IWebElement monthDropdown = driver.FindElement(By.Id("month"));
+            IWebElement yearDropdown = driver.FindElement(By.Id("year"));
+
+            //Act
+            termField.SendKeys("1");
+            dayDropdown.SendKeys("29"); 
+            monthDropdown.SendKeys("February");
+            yearDropdown.SendKeys("2024");
+
+            //Assert
+            IWebElement endDateField = driver.FindElement(By.Id("endDate"));
+            Assert.AreEqual("01/03/2024", endDateField.GetAttribute("value"), "Date is incorrect");
+        }
     }
 }
