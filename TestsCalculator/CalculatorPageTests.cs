@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
@@ -399,7 +399,7 @@ namespace TestsCalculator
             Assert.Greater(e, 30);
             for (int j = 0; j < e; j++)
             {
-               Console.WriteLine("Option at " + j + " is: " + els.ElementAt(j).Text);
+                Console.WriteLine("Option at " + j + " is: " + els.ElementAt(j).Text);
             }
         }
 
@@ -437,4 +437,4 @@ namespace TestsCalculator
             Assert.Greater(e, 15);
         }
     }
-    }
+}
