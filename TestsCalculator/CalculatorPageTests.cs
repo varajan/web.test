@@ -291,8 +291,6 @@ namespace TestsCalculator
             Assert.AreEqual("5.56", interestField.GetAttribute("value"));
         }
 
-        /*
-        How to check that a radio button is "checked"?
         [Test]
         public void CheckDefaultRadioBtnOption()
         {
@@ -300,36 +298,35 @@ namespace TestsCalculator
             IWebElement daysRadioBtn365 = driver.FindElement(By.Id("d365"));
 
             //Assert
-            Assert.True(daysRadioBtn365.checked);
+            Assert.True(daysRadioBtn365.Selected);
         }
-        */
 
         [Test]
         public void PositiveSelectFutureDate()
         {
             //Arrange
-            IWebElement amountField = driver.FindElement(By.Id("amount"));
-            IWebElement percentField = driver.FindElement(By.Id("percent"));
+            //IWebElement amountField = driver.FindElement(By.Id("amount"));
+            //IWebElement percentField = driver.FindElement(By.Id("percent"));
             IWebElement termField = driver.FindElement(By.Id("term"));
             IWebElement dayDropdown = driver.FindElement(By.Id("day"));
             IWebElement monthDropdown = driver.FindElement(By.Id("month"));
             IWebElement yearDropdown = driver.FindElement(By.Id("year"));
 
             //Act
-            amountField.SendKeys("1000");
-            percentField.SendKeys("10");
+            //amountField.SendKeys("1000");
+            //percentField.SendKeys("10");
             termField.SendKeys("20");
-            dayDropdown.SendKeys("7");
-            monthDropdown.SendKeys("Jun"); // why does not fail?
-            yearDropdown.SendKeys("2022");
+            new SelectElement(dayDropdown).SelectByText("7");
+            new SelectElement(monthDropdown).SelectByText("June");
+            new SelectElement(yearDropdown).SelectByText("2022");
 
             //Assert
-            IWebElement incomeField = driver.FindElement(By.Id("income"));
-            IWebElement interestField = driver.FindElement(By.Id("interest"));
+            //IWebElement incomeField = driver.FindElement(By.Id("income"));
+            //IWebElement interestField = driver.FindElement(By.Id("interest"));
             IWebElement endDateField = driver.FindElement(By.Id("endDate"));
             Assert.AreEqual("27/06/2022", endDateField.GetAttribute("value"));
-            Assert.AreEqual("1005.48", incomeField.GetAttribute("value"));
-            Assert.AreEqual("5.48", interestField.GetAttribute("value"));
+            //Assert.AreEqual("1005.48", incomeField.GetAttribute("value"));
+            //Assert.AreEqual("5.48", interestField.GetAttribute("value"));
         }
 
         [Test]
@@ -375,7 +372,7 @@ namespace TestsCalculator
             amountField.SendKeys("1000");
             percentField.SendKeys("10");
             termField.SendKeys("22");
-            dayDropdown.SendKeys("10"); // why does not work for value 1
+            dayDropdown.SendKeys("10"); 
             monthDropdown.SendKeys("October");
             yearDropdown.SendKeys("2022");
 
@@ -389,18 +386,24 @@ namespace TestsCalculator
         {
             //Arrange
             IWebElement dayDropdown = driver.FindElement(By.Id("day"));
-
-            //Act & Assert
-            SelectElement s = new SelectElement(dayDropdown);
-            //get all options
-            IList<IWebElement> els = s.Options;
-            //count options
-            int e = els.Count;
-            Assert.Greater(e, 30);
-            for (int j = 0; j < e; j++)
+            IWebElement monthDropdown = driver.FindElement(By.Id("month"));
+            IList<string> expectedDays = new List<string>();
+            for (int j = 1; j < 32; j++)
             {
-                Console.WriteLine("Option at " + j + " is: " + els.ElementAt(j).Text);
+                expectedDays.Add(j.ToString());
             }
+
+            //Act
+            new SelectElement(monthDropdown).SelectByText("October");
+            SelectElement s = new SelectElement(dayDropdown);
+            IList<string> actualDays = new List<string>();
+            for (int j = 0; j < s.Options.Count; j++)
+            {
+                actualDays.Add(s.Options.ElementAt(j).Text);
+            }
+            
+            //Assert
+            Assert.AreEqual(expectedDays, actualDays);
         }
 
         [Test]
@@ -448,13 +451,13 @@ namespace TestsCalculator
 
             //Act
             termField.SendKeys("1");
-            dayDropdown.SendKeys("29"); 
+            dayDropdown.SendKeys("28"); 
             monthDropdown.SendKeys("February");
             yearDropdown.SendKeys("2024");
 
             //Assert
             IWebElement endDateField = driver.FindElement(By.Id("endDate"));
-            Assert.AreEqual("01/03/2024", endDateField.GetAttribute("value"), "Date is incorrect");
+            Assert.AreEqual("29/02/2024", endDateField.GetAttribute("value"), "Date is incorrect");
         }
     }
 }
