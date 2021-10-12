@@ -108,8 +108,15 @@ namespace TestsCalculator
             Assert.AreEqual("5.56", interestField.GetAttribute("value"));
         }
 
-        [Test]
-        public void PositiveSelectFutureDate()
+        //select future date
+        [TestCase("20", "7", "June", "2022", "27/06/2022")]
+        //select past date
+        [TestCase("20", "21", "March", "2010", "10/04/2010")]
+        //end date is 1st day of the Month
+        [TestCase("22", "10", "October", "2022", "01/11/2022")]
+        //check Feb has 29 days in Leap Year
+        [TestCase("1", "28", "February", "2024", "29/02/2024")]
+        public void SelectTimePeriod(string term, string day, string month, string year, string endDate)
         {
             //Arrange
             IWebElement termField = driver.FindElement(By.Id("term"));
@@ -118,54 +125,14 @@ namespace TestsCalculator
             IWebElement yearDropdown = driver.FindElement(By.Id("year"));
 
             //Act
-            termField.SendKeys("20");
-            new SelectElement(dayDropdown).SelectByText("7");
-            new SelectElement(monthDropdown).SelectByText("June");
-            new SelectElement(yearDropdown).SelectByText("2022");
+            termField.SendKeys(term);
+            new SelectElement(dayDropdown).SelectByText(day);
+            new SelectElement(monthDropdown).SelectByText(month);
+            new SelectElement(yearDropdown).SelectByText(year);
 
             //Assert
             IWebElement endDateField = driver.FindElement(By.Id("endDate"));
-            Assert.AreEqual("27/06/2022", endDateField.GetAttribute("value"));
-        }
-
-        [Test]
-        public void PositiveSelectPastDate()
-        {
-            //Arrange
-            IWebElement termField = driver.FindElement(By.Id("term"));
-            IWebElement dayDropdown = driver.FindElement(By.Id("day"));
-            IWebElement monthDropdown = driver.FindElement(By.Id("month"));
-            IWebElement yearDropdown = driver.FindElement(By.Id("year"));
-
-            //Act
-            termField.SendKeys("20");
-            new SelectElement(dayDropdown).SelectByText("21");
-            new SelectElement(monthDropdown).SelectByText("March");
-            new SelectElement(yearDropdown).SelectByText("2010");
-
-            //Assert
-            IWebElement endDateField = driver.FindElement(By.Id("endDate"));
-            Assert.AreEqual("10/04/2010", endDateField.GetAttribute("value"));
-        }
-
-        [Test]
-        public void CheckBoundaryForDays()
-        {
-            //Arrange
-            IWebElement termField = driver.FindElement(By.Id("term"));
-            IWebElement dayDropdown = driver.FindElement(By.Id("day"));
-            IWebElement monthDropdown = driver.FindElement(By.Id("month"));
-            IWebElement yearDropdown = driver.FindElement(By.Id("year"));
-
-            //Act
-            termField.SendKeys("22");
-            new SelectElement(dayDropdown).SelectByText("10");
-            new SelectElement(monthDropdown).SelectByText("October");
-            new SelectElement(yearDropdown).SelectByText("2022");
-    
-            //Assert
-            IWebElement endDateField = driver.FindElement(By.Id("endDate"));
-            Assert.AreEqual("01/11/2022", endDateField.GetAttribute("value"), "Date is incorrect");
+            Assert.AreEqual(endDate, endDateField.GetAttribute("value"), "Date is incorrect");
         }
 
         [Test]
@@ -233,26 +200,6 @@ namespace TestsCalculator
 
             //Assert
             Assert.AreEqual(expectedYears, actualYears);
-        }
-
-        [Test]
-        public void SelectFeb29LeapYear()
-        {
-            //Arrange
-            IWebElement termField = driver.FindElement(By.Id("term"));
-            IWebElement dayDropdown = driver.FindElement(By.Id("day"));
-            IWebElement monthDropdown = driver.FindElement(By.Id("month"));
-            IWebElement yearDropdown = driver.FindElement(By.Id("year"));
-
-            //Act
-            termField.SendKeys("1");
-            new SelectElement(dayDropdown).SelectByText("28");
-            new SelectElement(monthDropdown).SelectByText("February");
-            new SelectElement(yearDropdown).SelectByText("2024");
-
-            //Assert
-            IWebElement endDateField = driver.FindElement(By.Id("endDate"));
-            Assert.AreEqual("29/02/2024", endDateField.GetAttribute("value"), "Date is incorrect");
         }
     }
 }
