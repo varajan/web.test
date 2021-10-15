@@ -3,3 +3,5 @@
 Callculator/obj/*
 Callculator/bin/*
 packages/*
+CalculatorTests/bin/*
+CalculatorTests/obj/*
