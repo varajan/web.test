@@ -7,7 +7,7 @@ using System.Threading;
 namespace CalculatorTests
 {
     public class LoginPageTests
-    {
+    { 
         [SetUp]
         public void Setup()
         {
@@ -50,8 +50,8 @@ namespace CalculatorTests
             Assert.AreEqual("Incorrect login or password!", error.Text);
 
             driver.Close();
-            //Не буду дублювати тест якщо тільки логін неправильний.
-            // Будо добре якби можна було зробити якісь ітерації одного тесту тільки з різними даними
+            //I won't dublicate test for incorrect login
+            //It will be good to use iterations for one test with different parameters
         }
 
         [Test]
@@ -71,7 +71,7 @@ namespace CalculatorTests
             Assert.AreEqual("User name and password cannot be empty!", error.Text);
 
             driver.Close();
-            //Так само не буду дублювати тести якщо тільки логін або пароль пусті.
+            //Same, won't dublicate test for empty login or password
 
         }
 
@@ -94,8 +94,7 @@ namespace CalculatorTests
             Assert.AreEqual("Failed logins more then 5 times. Please wait 15 min for next try.", error.Text);
 
             driver.Close();
-            // я думаю що треба ввести обмеження на кількість failed logins. Тут я перевіряю текст помилки після 5ої спроби.
-            // можливо треба додати перевірку що користувач не залогінився
+            // it may be necessary to add a check that the user has not logged in
         }
 
         [Test]
@@ -136,7 +135,7 @@ namespace CalculatorTests
 
 
             driver.Close();
-        } // логін не повинен бути чутливим до регістру(це з практики)
+        } // login should not be case sensitive (this is in practice)
 
         [Test]
         public void Login_Not_Existing_Account()
@@ -175,10 +174,10 @@ namespace CalculatorTests
 
             driver.Close();
 
-            //наче працює та якщо зовсім видалити елемент з коду видається ексепшн,
-            //може треба ввести якийсь зрозумілий месседж?
-            // я спробувала застосувати try catch, але використовуючи його тест проходить
-            // хоч єлемента немае зовсім в коді, як відобразити що тест впав?
+            //It seems it works but if  completely remove an element from the code, there is an exception,
+            //I want to use some clear message?
+            //I tried to apply try-catch, but using it the test passes
+            //even if there is no element at all in the code, how I can display that the test failed?
             //try
             //{
             //    bool remindBtn = driver.FindElement(By.Id("remind")).Displayed;
@@ -230,7 +229,7 @@ namespace CalculatorTests
             Assert.AreEqual("Invalid email", errorText);
 
             driver.Close();
-        } //Так само тут хотілося б додати якісь ітерації на різні валидації email, щоб не писати багато коду
+        } //Also here I would like to add some iterations to different email validations, so as not to write a lot of code
 
         [Test]
         public void Remind_Password_Email_Not_Exist()
@@ -274,6 +273,6 @@ namespace CalculatorTests
             Assert.AreEqual("", email);
 
             driver.Close();
-        }//Після відправки email треба очистити iframe від адреси та повідомлення
+        }//After sending the email, need to clear the iframe from the address and message
     }
 }
