@@ -7,38 +7,40 @@
 </head>
 <body>
 	<div align="center">
-		<div style="width:500px; height:230px; border:double">
-			<table>
-				<tr>
+        <div style="width:500px; height:280px; border:double">
+            <br>Login to the client calculator. Welcome!<br><br>
+            <table>
+                <tr>
                     <th class="user">User:</th>
-					<td>
-						<input id="login"/>
-					</td>
-				</tr>
-				<tr>
-					<th class="pass">Password:</th>
-					<td>
-						<input type="password" id="password" />
-					</td>
-                    <td style="width: 100px"><span onmouseover="show()" onmouseout="hide()">&#x1F441;</span>
-					</td>
-				</tr>
-				<tr>
-					<td colspan="2" align="right">
-						<button onclick="Login()" title="Login" id="loginBtn">Login</button>
-						<button onclick="RemindPassword()" title="remind" id="remindBtn">Remind pasword</button>
-					</td>
-				</tr>
-				<tr>
-					<th style="color: red" id="errorMessage" colspan="3"></th>
-				</tr>
-				<tr>
-					<td colspan="3">
-						<iframe id="remindPasswordView" hidden src="~/Static/RemindPassword.html" style="height:130px"></iframe>
-					</td>
-				</tr>
-			</table>
-		</div>
+                    <td>
+                        <input id="login" />
+                    </td>
+                </tr>
+                <tr>
+                    <th class="pass">Password:</th>
+                    <td>
+                        <input type="password" id="password" />
+                    </td>
+                    <td style="width: 100px">
+                        <span onmouseover="show()" onmouseout="hide()">&#x1F441;</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" align="right">
+                        <button onclick="Login()" title="Login" id="loginBtn">Login</button>
+                        <button onclick="RemindPassword()" title="remind" id="remindBtn">Remind pasword</button>
+                    </td>
+                </tr>
+                <tr>
+                    <th style="color: red" id="errorMessage" colspan="3"></th>
+                </tr>
+                <tr>
+                    <td colspan="3">
+                        <iframe id="remindPasswordView" hidden src="~/Static/RemindPassword.html" style="height:130px"></iframe>
+                    </td>
+                </tr>
+            </table>
+        </div>
 	</div>
 </body>
 </html>
