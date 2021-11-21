@@ -14,7 +14,15 @@ namespace CalculatorTests
         [SetUp]
         public void OpenLoginPage()
         {
-            driver = new ChromeDriver();
+            var options = new ChromeOptions
+            {
+                UnhandledPromptBehavior = UnhandledPromptBehavior.Ignore,
+                AcceptInsecureCertificates = true
+            };
+            options.AddArgument("--silent");
+            options.AddArgument("log-level=3");
+
+            driver = new ChromeDriver(options);
             driver.Url = BaseUrl;
         }
 

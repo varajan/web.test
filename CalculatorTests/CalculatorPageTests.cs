@@ -18,7 +18,15 @@ namespace CalculatorTests
         public void Logout()
         {
             // Arrange
-            IWebDriver driver = new ChromeDriver();
+            var options = new ChromeOptions
+            {
+                UnhandledPromptBehavior = UnhandledPromptBehavior.Ignore,
+                AcceptInsecureCertificates = true
+            };
+            options.AddArgument("--silent");
+            options.AddArgument("log-level=3");
+
+            IWebDriver driver = new ChromeDriver(options);
             driver.Url = BaseUrl;
 
             // Act
@@ -40,7 +48,15 @@ namespace CalculatorTests
         public void Deposit_Texts()
         {
             // Arrange
-            IWebDriver driver = new ChromeDriver();
+            var options = new ChromeOptions
+            {
+                UnhandledPromptBehavior = UnhandledPromptBehavior.Ignore,
+                AcceptInsecureCertificates = true
+            };
+            options.AddArgument("--silent");
+            options.AddArgument("log-level=3");
+
+            IWebDriver driver = new ChromeDriver(options);
             driver.Url = $"{BaseUrl}/Deposit";
 
             // Act
@@ -63,7 +79,15 @@ namespace CalculatorTests
         public void Mandatory_Fields()
         {
             // Arrange
-            IWebDriver driver = new ChromeDriver();
+            var options = new ChromeOptions
+            {
+                UnhandledPromptBehavior = UnhandledPromptBehavior.Ignore,
+                AcceptInsecureCertificates = true
+            };
+            options.AddArgument("--silent");
+            options.AddArgument("log-level=3");
+
+            IWebDriver driver = new ChromeDriver(options);
             driver.Url = $"{BaseUrl}/Deposit";
 
             // Act
@@ -91,7 +115,15 @@ namespace CalculatorTests
         public void Logout_pageback()
         {
             // Arrange
-            IWebDriver driver = new ChromeDriver();
+            var options = new ChromeOptions
+            {
+                UnhandledPromptBehavior = UnhandledPromptBehavior.Ignore,
+                AcceptInsecureCertificates = true
+            };
+            options.AddArgument("--silent");
+            options.AddArgument("log-level=3");
+
+            IWebDriver driver = new ChromeDriver(options);
             driver.Url = $"{BaseUrl}/Login";
 
             // Act
@@ -114,7 +146,15 @@ namespace CalculatorTests
         {
             // Arrange
             // Income = Amount/100*Rate * Term/FinYear
-            IWebDriver driver = new ChromeDriver();
+            var options = new ChromeOptions
+            {
+                UnhandledPromptBehavior = UnhandledPromptBehavior.Ignore,
+                AcceptInsecureCertificates = true
+            };
+            options.AddArgument("--silent");
+            options.AddArgument("log-level=3");
+
+            IWebDriver driver = new ChromeDriver(options);
             driver.Url = $"{BaseUrl}/Login";
 
             // Act
