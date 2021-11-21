@@ -14,6 +14,10 @@ namespace CalculatorTests
         [SetUp]
         public void OpenLoginPage()
         {
+            var chromeDriverService = ChromeDriverService.CreateDefaultService();
+            chromeDriverService.HideCommandPromptWindow = true;
+            chromeDriverService.SuppressInitialDiagnosticInformation = true;
+
             var options = new ChromeOptions
             {
                 UnhandledPromptBehavior = UnhandledPromptBehavior.Ignore,
@@ -22,7 +26,7 @@ namespace CalculatorTests
             options.AddArgument("--silent");
             options.AddArgument("log-level=3");
 
-            driver = new ChromeDriver(options);
+            driver = new ChromeDriver(chromeDriverService, options);
             driver.Url = BaseUrl;
         }
 
