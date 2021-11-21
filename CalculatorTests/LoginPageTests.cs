@@ -1,20 +1,21 @@
+using System.Configuration;
+using System.Reflection;
 using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
-using System;
-using System.Threading;
 
 namespace CalculatorTests
 {
     public class LoginPageTests
     {
         private IWebDriver driver;
+        private string BaseUrl => ConfigurationManager.OpenExeConfiguration(Assembly.GetExecutingAssembly().Location).AppSettings.Settings["BaseUrl"].Value;
 
         [SetUp]
         public void OpenLoginPage()
         {
             driver = new ChromeDriver();
-            driver.Url = "http://localhost:64177/Login";
+            driver.Url = BaseUrl;
         }
 
         [TearDown]
@@ -84,7 +85,7 @@ namespace CalculatorTests
 
             // Assert
             string currentURL = driver.Url;
-            Assert.AreEqual("http://localhost:64177/Deposit", currentURL);
+            Assert.AreEqual($"{BaseUrl}/Deposit", currentURL);
         }
 
         [Test]
@@ -97,7 +98,7 @@ namespace CalculatorTests
 
             // Assert
             string currentURL = driver.Url;
-            Assert.AreEqual("http://localhost:64177/Deposit", currentURL);
+            Assert.AreEqual($"{BaseUrl}/Deposit", currentURL);
 
         } // login should not be case sensitive (this is in practice)
 
@@ -117,7 +118,7 @@ namespace CalculatorTests
         public void Remind_Password_Success()
         {
             // Act
-            driver.FindElement(By.Id("remind")).Click();            
+            driver.FindElement(By.Id("remind")).Click();
             _ = driver.SwitchTo().Frame("remindPasswordView");
             string playerEmail = "test@test.com";
             driver.FindElement(By.Id("email")).SendKeys(playerEmail);
@@ -125,7 +126,7 @@ namespace CalculatorTests
             string alertText = driver.SwitchTo().Alert().Text;
 
             // Assert
-            Assert.AreEqual($"Email with instructions was sent to {playerEmail}", alertText);         
+            Assert.AreEqual($"Email with instructions was sent to {playerEmail}", alertText);
             driver.SwitchTo().Alert().Accept();
         }
 

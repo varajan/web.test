@@ -1,14 +1,15 @@
-﻿using NUnit.Framework;
+﻿using System.Configuration;
+using System.Reflection;
+using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace CalculatorTests
 {
     class CalculatorPageTests
     {
+        private string BaseUrl => ConfigurationManager.OpenExeConfiguration(Assembly.GetExecutingAssembly().Location).AppSettings.Settings["BaseUrl"].Value;
+
         [SetUp]
         public void Setup()
         {
@@ -18,29 +19,29 @@ namespace CalculatorTests
         {
             // Arrange
             IWebDriver driver = new ChromeDriver();
-            driver.Url = "http://localhost:64177/";
+            driver.Url = BaseUrl;
 
             // Act
             driver.FindElement(By.Id("login")).SendKeys("test");
             driver.FindElement(By.Id("password")).SendKeys("newyork1");
-            driver.FindElements(By.Id("login"))[1].Click();           
+            driver.FindElements(By.Id("login"))[1].Click();
             driver.FindElement(By.XPath("/html/body/div/div/div")).Click();
-            driver.FindElement(By.XPath("/html/body/div/div/div[1]")).Click();            
+            driver.FindElement(By.XPath("/html/body/div/div/div[1]")).Click();
 
             // Assert
             string currentURL = driver.Url;
-            Assert.AreEqual("http://localhost:64177/", currentURL);
+            Assert.AreEqual(BaseUrl, currentURL);
 
             driver.Close();
         }
-        // After Logout button is removed from Settings to "http://localhost:64177/Deposit", Test need to be update
+        // After Logout button is removed from Settings to $"{BaseUrl}/Deposit", Test need to be update
 
         [Test]
         public void Deposit_Texts()
         {
             // Arrange
             IWebDriver driver = new ChromeDriver();
-            driver.Url = "http://localhost:64177/Deposit";
+            driver.Url = $"{BaseUrl}/Deposit";
 
             // Act
 
@@ -63,7 +64,7 @@ namespace CalculatorTests
         {
             // Arrange
             IWebDriver driver = new ChromeDriver();
-            driver.Url = "http://localhost:64177/Deposit";
+            driver.Url = $"{BaseUrl}/Deposit";
 
             // Act
             //driver.FindElement(By.Id("login")).SendKeys("test");
@@ -91,7 +92,7 @@ namespace CalculatorTests
         {
             // Arrange
             IWebDriver driver = new ChromeDriver();
-            driver.Url = "http://localhost:64177/Login";
+            driver.Url = $"{BaseUrl}/Login";
 
             // Act
             driver.FindElement(By.Id("login")).SendKeys("test");
@@ -102,7 +103,7 @@ namespace CalculatorTests
 
             // Assert
             string currentURL = driver.Url;
-            Assert.AreEqual("http://localhost:64177/Deposit", currentURL);
+            Assert.AreEqual($"{BaseUrl}/Deposit", currentURL);
 
 
             driver.Close();
@@ -114,7 +115,7 @@ namespace CalculatorTests
             // Arrange
             // Income = Amount/100*Rate * Term/FinYear
             IWebDriver driver = new ChromeDriver();
-            driver.Url = "http://localhost:64177/Login";
+            driver.Url = $"{BaseUrl}/Login";
 
             // Act
             driver.FindElement(By.Id("login")).SendKeys("test");
