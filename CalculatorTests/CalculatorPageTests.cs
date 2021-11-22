@@ -45,7 +45,7 @@ namespace CalculatorTests
         }
         // After Logout button is removed from Settings to $"{BaseUrl}/Deposit", Test need to be update
 
-        [TestCase("Deposit Amount: *", "Deposit")]
+        [TestCase("Deposit Amount: *", "Amount")]
         [TestCase("Rate of interest: *", "Rate")]
         [TestCase("Investment Term: *", "Term")]
         [TestCase("Start date: *", "Start")]
@@ -62,7 +62,7 @@ namespace CalculatorTests
             // Act
 
             // Assert
-            Assert.AreEqual(expectedText, Driver.FindElement(By.XPath($"//td[contains (text(),'{actualText}')]")).Text);
+            Assert.AreEqual(expectedText, Driver.FindElement(By.XPath($"//*[contains (text(),'{actualText}')]")).Text);
 
             Driver.Close();
         }
