@@ -1,3 +1,4 @@
+using CalculatorTests.Pages;
 using NUnit.Framework;
 using OpenQA.Selenium;
 
@@ -33,6 +34,15 @@ namespace CalculatorTests
         public void Failed_Login_Error_Texts(string login, string password, string expectedError)
         {
             // Act
+            LoginPage loginPage = new LoginPage(Driver);
+            loginPage.LoginFld.SendKeys(login);
+            loginPage.PasswordFld.SendKeys(password);
+            loginPage.LoginBtn.Click();
+
+            loginPage.Login(login, password);
+
+            Assert.AreEqual(expectedError, loginPage.Error);
+
             Driver.FindElement(By.Id("login")).SendKeys(login);
             Driver.FindElement(By.Id("password")).SendKeys(password);
             Driver.FindElement(By.Id("loginBtn")).Click();

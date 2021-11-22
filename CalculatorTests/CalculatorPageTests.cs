@@ -1,21 +1,25 @@
-﻿using NUnit.Framework;
+﻿using CalculatorTests.Pages;
+using NUnit.Framework;
 using OpenQA.Selenium;
-using OpenQA.Selenium.Chrome;
-
 
 namespace CalculatorTests
 {
     class CalculatorPageTests : BaseTest
     {
+        private LoginPage loginPage;
+
         [SetUp]
         public void OpenLoginPage()
         {
             Driver = GetDriver();
             Driver.Url = BaseUrl;
 
-            Driver.FindElement(By.Id("login")).SendKeys("test");
-            Driver.FindElement(By.Id("password")).SendKeys("newyork1");
-            Driver.FindElement(By.Id("loginBtn")).Click();
+            loginPage = new LoginPage(Driver);
+            loginPage.Login("test", "newyork1");
+
+            //Driver.FindElement(By.Id("login")).SendKeys("test");
+            //Driver.FindElement(By.Id("password")).SendKeys("newyork1");
+            //Driver.FindElement(By.Id("loginBtn")).Click();
         }
 
         [Test]
