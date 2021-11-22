@@ -108,7 +108,7 @@ namespace CalculatorTests
             // Assert
             string currentURL = driver.Url;
             Assert.AreEqual($"{BaseUrl}/Deposit", currentURL);
-
+}
         [Test]
         public void Login_Buttons_Exist()
         {
