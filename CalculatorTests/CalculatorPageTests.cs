@@ -1,65 +1,41 @@
-﻿using System.Configuration;
-using System.Reflection;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 
 
 namespace CalculatorTests
 {
-    class CalculatorPageTests
+    class CalculatorPageTests : BaseTest
     {
-        private string BaseUrl => ConfigurationManager.OpenExeConfiguration(Assembly.GetExecutingAssembly().Location).AppSettings.Settings["BaseUrl"].Value;
-
-        private IWebDriver driver;
-
         [SetUp]
         public void OpenLoginPage()
         {
-            var chromeDriverService = ChromeDriverService.CreateDefaultService();
-            chromeDriverService.HideCommandPromptWindow = true;
-            chromeDriverService.SuppressInitialDiagnosticInformation = true;
+            Driver = GetDriver();
+            Driver.Url = BaseUrl;
 
-            var options = new ChromeOptions
-            {
-                UnhandledPromptBehavior = UnhandledPromptBehavior.Ignore,
-                AcceptInsecureCertificates = true
-            };
-            options.AddArgument("--silent");
-            options.AddArgument("log-level=3");
-
-            driver = new ChromeDriver(chromeDriverService, options);
-            driver.Url = BaseUrl;
-
-            driver.FindElement(By.Id("login")).SendKeys("test");
-            driver.FindElement(By.Id("password")).SendKeys("newyork1");
-            driver.FindElement(By.Id("loginBtn")).Click();
-        }
-
-        [TearDown]
-        public void Close()
-        {
-            driver.Quit();
+            Driver.FindElement(By.Id("login")).SendKeys("test");
+            Driver.FindElement(By.Id("password")).SendKeys("newyork1");
+            Driver.FindElement(By.Id("loginBtn")).Click();
         }
 
         [Test]
         public void Logout()
         {
             // Arrange
-            driver.Url = BaseUrl;
+            Driver.Url = BaseUrl;
 
             // Act
-            driver.FindElement(By.Id("login")).SendKeys("test");
-            driver.FindElement(By.Id("password")).SendKeys("newyork1");
-            driver.FindElements(By.Id("login"))[1].Click();
-            driver.FindElement(By.XPath("/html/body/div/div/div")).Click();
-            driver.FindElement(By.XPath("/html/body/div/div/div[1]")).Click();
+            Driver.FindElement(By.Id("login")).SendKeys("test");
+            Driver.FindElement(By.Id("password")).SendKeys("newyork1");
+            Driver.FindElements(By.Id("login"))[1].Click();
+            Driver.FindElement(By.XPath("/html/body/div/div/div")).Click();
+            Driver.FindElement(By.XPath("/html/body/div/div/div[1]")).Click();
             // Act        
-            driver.FindElement(By.XPath("//div[contains (text(),'Settings')]")).Click();
-            driver.FindElement(By.XPath("//div[contains (text(),'Logout')]")).Click();
+            Driver.FindElement(By.XPath("//div[contains (text(),'Settings')]")).Click();
+            Driver.FindElement(By.XPath("//div[contains (text(),'Logout')]")).Click();
 
             // Assert
-            string currentURL = driver.Url;
+            string currentURL = Driver.Url;
             Assert.AreEqual(BaseUrl, currentURL);
 
         }
@@ -77,32 +53,32 @@ namespace CalculatorTests
         public void Deposit_Texts(string expectedText, string actualText)
         {
             // Arrange
-            driver.Url = $"{BaseUrl}/Deposit";
+            Driver.Url = $"{BaseUrl}/Deposit";
 
             // Act
 
             // Assert
-            Assert.AreEqual(expectedText, driver.FindElement(By.XPath($"//td[contains (text(),'{actualText}')]")).Text);
+            Assert.AreEqual(expectedText, Driver.FindElement(By.XPath($"//td[contains (text(),'{actualText}')]")).Text);
 
-            driver.Close();
+            Driver.Close();
         }
 
         [Test]
         public void Logout_pageback()
         {
             // Arrange
-            driver.Url = $"{BaseUrl}/Login";
+            Driver.Url = $"{BaseUrl}/Login";
 
             // Act
-            driver.FindElement(By.LinkText("Settings")).Click();
-            driver.FindElement(By.LinkText("Logout")).Click();
+            Driver.FindElement(By.LinkText("Settings")).Click();
+            Driver.FindElement(By.LinkText("Logout")).Click();
 
             // Assert
-            string currentURL = driver.Url;
+            string currentURL = Driver.Url;
             Assert.AreEqual($"{BaseUrl}/Deposit", currentURL);
 
 
-            driver.Close();
+            Driver.Close();
         }
 
         [Test]
@@ -112,12 +88,12 @@ namespace CalculatorTests
             // Income = Amount/100*Rate * Term/FinYear
 
             // Act
-            driver.FindElement(By.Id("amount")).SendKeys("1000");
-            driver.FindElement(By.Id("percent")).SendKeys("25");
-            driver.FindElement(By.Id("term")).SendKeys("365");
-            driver.FindElement(By.Id("d365")).Click();
-            string income = driver.FindElement(By.Id("income")).GetAttribute("value");
-            string interest = driver.FindElement(By.Id("interest")).GetAttribute("value");
+            Driver.FindElement(By.Id("amount")).SendKeys("1000");
+            Driver.FindElement(By.Id("percent")).SendKeys("25");
+            Driver.FindElement(By.Id("term")).SendKeys("365");
+            Driver.FindElement(By.Id("d365")).Click();
+            string income = Driver.FindElement(By.Id("income")).GetAttribute("value");
+            string interest = Driver.FindElement(By.Id("interest")).GetAttribute("value");
 
             // Assert
             Assert.Multiple(() =>
@@ -131,10 +107,10 @@ namespace CalculatorTests
         public void Mandatory_Fields()
         {
             // Act
-            driver.FindElement(By.Id("amount")).SendKeys("1000");
-            driver.FindElement(By.Id("percent")).SendKeys("25");
-            driver.FindElement(By.Id("term")).SendKeys("365");
-            string interest = driver.FindElement(By.Id("interest")).GetAttribute("value");
+            Driver.FindElement(By.Id("amount")).SendKeys("1000");
+            Driver.FindElement(By.Id("percent")).SendKeys("25");
+            Driver.FindElement(By.Id("term")).SendKeys("365");
+            string interest = Driver.FindElement(By.Id("interest")).GetAttribute("value");
 
             // Assert
 
