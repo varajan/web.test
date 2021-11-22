@@ -46,14 +46,11 @@ namespace CalculatorTests
             // Act
             driver.FindElement(By.Id("login")).SendKeys(login);
             driver.FindElement(By.Id("password")).SendKeys(password);
-            driver.FindElements(By.Id("login"))[1].Click();
+            driver.FindElement(By.Id("loginBtn")).Click();
 
             // Assert
             IWebElement error = driver.FindElement(By.Id("errorMessage"));
             Assert.AreEqual(expectedError, error.Text);
-
-            //I won't dublicate test for incorrect login
-            //It will be good to use iterations for one test with different parameters
         }
 
         //[Test]
@@ -80,7 +77,7 @@ namespace CalculatorTests
             // Act
             driver.FindElement(By.Id("login")).SendKeys("test");
             driver.FindElement(By.Id("password")).SendKeys("newyork1");
-            driver.FindElements(By.Id("login"))[1].Click();
+            driver.FindElement(By.Id("loginBtn")).Click();
 
             // Assert
             string currentURL = driver.Url;
@@ -93,20 +90,19 @@ namespace CalculatorTests
             // Act
             driver.FindElement(By.Id("login")).SendKeys("Test");
             driver.FindElement(By.Id("password")).SendKeys("newyork1");
-            driver.FindElements(By.Id("login"))[1].Click();
+            driver.FindElement(By.Id("loginBtn")).Click();
 
             // Assert
             string currentURL = driver.Url;
             Assert.AreEqual("http://localhost:64177/Deposit", currentURL);
-
-        } // login should not be case sensitive (this is in practice)
+        } 
 
         [Test]
         public void Login_Buttons_Exist()
         {
             // Act
-            bool  remindBtn = driver.FindElement(By.Id("remind")).Displayed;
-            bool loginBtn = driver.FindElements(By.Id("login"))[1].Displayed;
+            bool  remindBtn = driver.FindElement(By.Id("remindBtn")).Displayed;
+            bool loginBtn = driver.FindElement(By.Id("loginBtn")).Displayed;
 
             // Assert
             Assert.AreEqual(true, remindBtn, "button is not displayed");  
@@ -117,7 +113,7 @@ namespace CalculatorTests
         public void Remind_Password_Success()
         {
             // Act
-            driver.FindElement(By.Id("remind")).Click();            
+            driver.FindElement(By.Id("remindBtn")).Click();            
             _ = driver.SwitchTo().Frame("remindPasswordView");
             string playerEmail = "test@test.com";
             driver.FindElement(By.Id("email")).SendKeys(playerEmail);
@@ -133,7 +129,7 @@ namespace CalculatorTests
         public void Remind_Password_Validation_Email()
         {
             // Act
-            driver.FindElement(By.Id("remind")).Click();
+            driver.FindElement(By.Id("remindBtn")).Click();
             driver.SwitchTo().Frame("remindPasswordView");
             driver.FindElement(By.Id("email")).SendKeys("test@testcom");
             driver.FindElement(By.XPath("//button[contains(text(),'Send')]")).Click();
@@ -148,7 +144,7 @@ namespace CalculatorTests
         public void Remind_Password_Email_Not_Exist()
         {
             // Act
-            driver.FindElement(By.Id("remind")).Click();
+            driver.FindElement(By.Id("remindBtn")).Click();
             driver.SwitchTo().Frame("remindPasswordView");
             driver.FindElement(By.Id("email")).SendKeys("test12@test.com");
             driver.FindElement(By.XPath("//button[contains(text(),'Send')]")).Click();
@@ -162,13 +158,13 @@ namespace CalculatorTests
         public void Remind_Password_Empty_Form()
         {
             // Act
-            driver.FindElement(By.Id("remind")).Click();
+            driver.FindElement(By.Id("remindBtn")).Click();
             driver.SwitchTo().Frame("remindPasswordView");
             driver.FindElement(By.Id("email")).SendKeys("test@test.com");
             driver.FindElement(By.XPath("//button[contains(text(),'Send')]")).Click();
             driver.SwitchTo().Alert().Accept();
             driver.SwitchTo().DefaultContent();
-            driver.FindElement(By.Id("remind")).Click();
+            driver.FindElement(By.Id("remindBtn")).Click();
             driver.SwitchTo().Frame("remindPasswordView");
             string email = driver.FindElement(By.Id("email")).GetAttribute("value");
 
