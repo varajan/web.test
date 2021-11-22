@@ -1,20 +1,33 @@
+using System.Configuration;
+using System.Reflection;
 using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
-using System;
-using System.Threading;
 
 namespace CalculatorTests
 {
     public class LoginPageTests
     {
         private IWebDriver driver;
+        private string BaseUrl => ConfigurationManager.OpenExeConfiguration(Assembly.GetExecutingAssembly().Location).AppSettings.Settings["BaseUrl"].Value;
 
         [SetUp]
         public void OpenLoginPage()
         {
-            driver = new ChromeDriver();
-            driver.Url = "http://localhost:64177/Login";
+            var chromeDriverService = ChromeDriverService.CreateDefaultService();
+            chromeDriverService.HideCommandPromptWindow = true;
+            chromeDriverService.SuppressInitialDiagnosticInformation = true;
+
+            var options = new ChromeOptions
+            {
+                UnhandledPromptBehavior = UnhandledPromptBehavior.Ignore,
+                AcceptInsecureCertificates = true
+            };
+            options.AddArgument("--silent");
+            options.AddArgument("log-level=3");
+
+            driver = new ChromeDriver(chromeDriverService, options);
+            driver.Url = BaseUrl;
         }
 
         [TearDown]
@@ -81,7 +94,7 @@ namespace CalculatorTests
 
             // Assert
             string currentURL = driver.Url;
-            Assert.AreEqual("http://localhost:64177/Deposit", currentURL);
+            Assert.AreEqual($"{BaseUrl}/Deposit", currentURL);
         }
 
         [Test]
@@ -94,8 +107,7 @@ namespace CalculatorTests
 
             // Assert
             string currentURL = driver.Url;
-            Assert.AreEqual("http://localhost:64177/Deposit", currentURL);
-        } 
+            Assert.AreEqual($"{BaseUrl}/Deposit", currentURL);
 
         [Test]
         public void Login_Buttons_Exist()
@@ -121,7 +133,7 @@ namespace CalculatorTests
             string alertText = driver.SwitchTo().Alert().Text;
 
             // Assert
-            Assert.AreEqual($"Email with instructions was sent to {playerEmail}", alertText);         
+            Assert.AreEqual($"Email with instructions was sent to {playerEmail}", alertText);
             driver.SwitchTo().Alert().Accept();
         }
 

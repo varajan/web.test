@@ -1,4 +1,6 @@
-﻿using NUnit.Framework;
+﻿using System.Configuration;
+using System.Reflection;
+using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using System;
@@ -11,6 +13,8 @@ namespace CalculatorTests
 {
     class CalculatorPageTests
     {
+        private string BaseUrl => ConfigurationManager.OpenExeConfiguration(Assembly.GetExecutingAssembly().Location).AppSettings.Settings["BaseUrl"].Value;
+
         private IWebDriver driver;
 
         [SetUp]
@@ -33,20 +37,100 @@ namespace CalculatorTests
         [Test]
         public void Logout()
         {
+            // Arrange
+            var options = new ChromeOptions
+            {
+                UnhandledPromptBehavior = UnhandledPromptBehavior.Ignore,
+                AcceptInsecureCertificates = true
+            };
+            options.AddArgument("--silent");
+            options.AddArgument("log-level=3");
+
+            IWebDriver driver = new ChromeDriver(options);
+            driver.Url = BaseUrl;
+
+            // Act
+            driver.FindElement(By.Id("login")).SendKeys("test");
+            driver.FindElement(By.Id("password")).SendKeys("newyork1");
+            driver.FindElements(By.Id("login"))[1].Click();
+            driver.FindElement(By.XPath("/html/body/div/div/div")).Click();
+            driver.FindElement(By.XPath("/html/body/div/div/div[1]")).Click();
             // Act        
             driver.FindElement(By.XPath("//div[contains (text(),'Settings')]")).Click();
             driver.FindElement(By.XPath("//div[contains (text(),'Logout')]")).Click();
 
             // Assert
             string currentURL = driver.Url;
-            Assert.AreEqual("http://localhost:64177/", currentURL);
+            Assert.AreEqual(BaseUrl, currentURL);
+
         }
-        // After Logout button is removed from Settings to "http://localhost:64177/Deposit", Test need to be update
+        // After Logout button is removed from Settings to $"{BaseUrl}/Deposit", Test need to be update
 
         [Test]
         public void Deposit_Texts(string expectedText, string actualText)
         {
+            // Arrange
+            var options = new ChromeOptions
+            {
+                UnhandledPromptBehavior = UnhandledPromptBehavior.Ignore,
+                AcceptInsecureCertificates = true
+            };
+            options.AddArgument("--silent");
+            options.AddArgument("log-level=3");
+
+            IWebDriver driver = new ChromeDriver(options);
+            driver.Url = $"{BaseUrl}/Deposit";
+
+            // Act
+
             // Assert
+            Assert.AreEqual("Deposit Amount: *", driver.FindElement(By.XPath("/html/body/div/div/table/tbody/tr[1]/td[1]")).Text);
+            Assert.AreEqual("Rate of intereset: *", driver.FindElement(By.XPath("/html/body/div/div/table/tbody/tr[2]/td[1]")).Text);
+            Assert.AreEqual("Investment Term: *", driver.FindElement(By.XPath("/html/body/div/div/table/tbody/tr[3]/td[1]")).Text);
+            Assert.AreEqual("Start date: *", driver.FindElement(By.XPath("/html/body/div/div/table/tbody/tr[4]/td[1]")).Text);
+            Assert.AreEqual("Financial year: *", driver.FindElement(By.XPath("/html/body/div/div/table/tbody/tr[5]/td[1]")).Text);
+            Assert.AreEqual("Income:", driver.FindElement(By.XPath("/html/body/div/div/table/tbody/tr[6]/th[1]")).Text);
+            Assert.AreEqual("Interest earned:", driver.FindElement(By.XPath("/html/body/div/div/table/tbody/tr[7]/th[1]")).Text);
+            Assert.AreEqual("End date:", driver.FindElement(By.XPath("/html/body/div/div/table/tbody/tr[8]/th[1]")).Text);
+            Assert.AreEqual("* - mandatory fields", driver.FindElement(By.XPath("/html/body/div/div/table/tbody/tr[9]/td")).Text);
+
+            driver.Close();
+        }
+
+        [Test]
+        public void Mandatory_Fields()
+        {
+            // Arrange
+            var options = new ChromeOptions
+            {
+                UnhandledPromptBehavior = UnhandledPromptBehavior.Ignore,
+                AcceptInsecureCertificates = true
+            };
+            options.AddArgument("--silent");
+            options.AddArgument("log-level=3");
+
+            IWebDriver driver = new ChromeDriver(options);
+            driver.Url = $"{BaseUrl}/Deposit";
+
+            // Act
+            //driver.FindElement(By.Id("login")).SendKeys("test");
+            //driver.FindElement(By.Id("password")).SendKeys("newyork1");
+            //driver.FindElements(By.Id("login"))[1].Click();
+            //driver.FindElement(By.XPath("/html/body/div/div/div")).Click();
+            //driver.FindElement(By.XPath("/html/body/div/div/div[1]")).Click();
+
+            // Assert
+            Assert.AreEqual("Deposit Amount: *", driver.FindElement(By.XPath("/html/body/div/div/table/tbody/tr[1]/td[1]")).Text);
+            Assert.AreEqual("Rate of intereset: *", driver.FindElement(By.XPath("/html/body/div/div/table/tbody/tr[2]/td[1]")).Text);
+            Assert.AreEqual("Investment Term: *", driver.FindElement(By.XPath("/html/body/div/div/table/tbody/tr[3]/td[1]")).Text);
+            Assert.AreEqual("Start date: *", driver.FindElement(By.XPath("/html/body/div/div/table/tbody/tr[4]/td[1]")).Text);
+            Assert.AreEqual("Financial year: *", driver.FindElement(By.XPath("/html/body/div/div/table/tbody/tr[5]/td[1]")).Text);
+            Assert.AreEqual("Income:", driver.FindElement(By.XPath("/html/body/div/div/table/tbody/tr[6]/th[1]")).Text);
+            Assert.AreEqual("Interest earned:", driver.FindElement(By.XPath("/html/body/div/div/table/tbody/tr[7]/th[1]")).Text);
+            Assert.AreEqual("End date:", driver.FindElement(By.XPath("/html/body/div/div/table/tbody/tr[8]/th[1]")).Text);
+            Assert.AreEqual("* - mandatory fields", driver.FindElement(By.XPath("/html/body/div/div/table/tbody/tr[9]/td")).Text);
+
+            driver.Close();
             Assert.Multiple(() =>
             {
                 Assert.AreEqual("Deposit Amount: *", driver.FindElement(By.XPath("//td[contains (text(),'Deposit')]")).Text);
@@ -69,13 +153,28 @@ namespace CalculatorTests
         [Test]
         public void Logout_pageback()
         {
+            // Arrange
+            var options = new ChromeOptions
+            {
+                UnhandledPromptBehavior = UnhandledPromptBehavior.Ignore,
+                AcceptInsecureCertificates = true
+            };
+            options.AddArgument("--silent");
+            options.AddArgument("log-level=3");
+
+            IWebDriver driver = new ChromeDriver(options);
+            driver.Url = $"{BaseUrl}/Login";
+
             // Act
             driver.FindElement(By.LinkText("Settings")).Click();
             driver.FindElement(By.LinkText("Logout")).Click();
 
             // Assert
             string currentURL = driver.Url;
-            Assert.AreEqual("http://localhost:64177/Deposit", currentURL);
+            Assert.AreEqual($"{BaseUrl}/Deposit", currentURL);
+
+
+            driver.Close();
         }
 
         [Test]
