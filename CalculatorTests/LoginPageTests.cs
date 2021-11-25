@@ -16,14 +16,12 @@ namespace CalculatorTests
         [Test]
         public void Login_Label_Text()
         {
-            // Act
-            // driver.FindElement(By.ClassName("user"));
-
             // Assert
-            IWebElement userFieldText = Driver.FindElement(By.ClassName("user"));
-            IWebElement passwordFieldText = Driver.FindElement(By.ClassName("pass"));
-            Assert.AreEqual("Password:", passwordFieldText.Text);
-            Assert.AreEqual("User:", userFieldText.Text);
+            LoginPage loginPage = new LoginPage(Driver);
+            //IWebElement userFieldText = Driver.FindElement(By.ClassName("user"));
+            //IWebElement passwordFieldText = Driver.FindElement(By.ClassName("pass"));
+            Assert.AreEqual("User:", loginPage.UserFieldText);
+            Assert.AreEqual("Password:", loginPage.PasswordFieldText);
         }
 
         [TestCase("test", "password", "Incorrect login or password!")]
@@ -35,21 +33,23 @@ namespace CalculatorTests
         {
             // Act
             LoginPage loginPage = new LoginPage(Driver);
-            loginPage.LoginFld.SendKeys(login);
-            loginPage.PasswordFld.SendKeys(password);
-            loginPage.LoginBtn.Click();
+            //Variant 1
+            //loginPage.LoginFld.SendKeys(login);
+            //loginPage.PasswordFld.SendKeys(password);
+            //loginPage.LoginBtn.Click();
 
+            //Variant 2
             loginPage.Login(login, password);
-
+            // Assert
             Assert.AreEqual(expectedError, loginPage.Error);
 
-            Driver.FindElement(By.Id("login")).SendKeys(login);
-            Driver.FindElement(By.Id("password")).SendKeys(password);
-            Driver.FindElement(By.Id("loginBtn")).Click();
-
-            // Assert
-            IWebElement error = Driver.FindElement(By.Id("errorMessage"));
-            Assert.AreEqual(expectedError, error.Text);
+            //Variant 3
+            //Driver.FindElement(By.Id("login")).SendKeys(login);
+            //Driver.FindElement(By.Id("password")).SendKeys(password);
+            //Driver.FindElement(By.Id("loginBtn")).Click();
+            //// Assert
+            //IWebElement error = Driver.FindElement(By.Id("errorMessage"));
+            //Assert.AreEqual(expectedError, error.Text);
         }
 
         //[Test]
@@ -70,37 +70,51 @@ namespace CalculatorTests
         //    // it may be necessary to add a check that the user has not logged in
         //}
 
-        [Test]
-        public void Success_Login()
+        [TestCase("test", "newyork1")]//success login
+        [TestCase("Test", "newyork1")]//Login_Not_Case_Sensitive
+        public void Success_Login(string login, string password)
         {
+            LoginPage loginPage = new LoginPage(Driver);
             // Act
-            Driver.FindElement(By.Id("login")).SendKeys("test");
-            Driver.FindElement(By.Id("password")).SendKeys("newyork1");
-            Driver.FindElement(By.Id("loginBtn")).Click();
+            loginPage.Login(login, password);
+            //Driver.FindElement(By.Id("login")).SendKeys("test");
+            //Driver.FindElement(By.Id("password")).SendKeys("newyork1");
+            //Driver.FindElement(By.Id("loginBtn")).Click();
 
             // Assert
-            string currentURL = Driver.Url;
-            Assert.AreEqual($"{BaseUrl}/Deposit", currentURL);
+            //string currentURL = Driver.Url;
+            Assert.AreEqual($"{BaseUrl}/Deposit", Driver.Url);
         }
 
-        [Test]
-        public void Login_Not_Case_Sensitive()
-        {
-            // Act
-            Driver.FindElement(By.Id("login")).SendKeys("Test");
-            Driver.FindElement(By.Id("password")).SendKeys("newyork1");
-            Driver.FindElement(By.Id("loginBtn")).Click();
+        //[Test]
+        //public void Login_Not_Case_Sensitive()
+        //{
+        //    // Act
+        //    Driver.FindElement(By.Id("login")).SendKeys("Test");
+        //    Driver.FindElement(By.Id("password")).SendKeys("newyork1");
+        //    Driver.FindElement(By.Id("loginBtn")).Click();
 
-            // Assert
-            string currentURL = Driver.Url;
-            Assert.AreEqual($"{BaseUrl}/Deposit", currentURL);
-}
+        //    // Assert
+        //    string currentURL = Driver.Url;
+        //    Assert.AreEqual($"{BaseUrl}/Deposit", currentURL);
+        //}
         [Test]
         public void Login_Buttons_Exist()
-        {
-            // Act
-            bool  remindBtn = Driver.FindElement(By.Id("remindBtn")).Displayed;
-            bool loginBtn = Driver.FindElement(By.Id("loginBtn")).Displayed;
+        {         
+            LoginPage loginPage = new LoginPage(Driver);
+            // Variant 1
+            //IWebElement loginBtn = loginPage.LoginBtn;
+            //bool loginBtnEx = loginBtn.Displayed;
+            //IWebElement remindBtn = loginPage.RemindBtn;
+            //bool remindBtnEx = remindBtn.Displayed;
+
+            //Variant 2
+            bool loginBtn = (bool)loginPage.LoginBtn.Displayed;
+            bool remindBtn = (bool)loginPage.RemindBtn.Displayed;
+
+            //Veriant 3
+            //bool  remindBtn = Driver.FindElement(By.Id("remindBtn")).Displayed;
+            //bool loginBtn = Driver.FindElement(By.Id("loginBtn")).Displayed;
 
             // Assert
             Assert.AreEqual(true, remindBtn, "button is not displayed");  
@@ -111,15 +125,17 @@ namespace CalculatorTests
         public void Remind_Password_Success()
         {
             // Act
-            Driver.FindElement(By.Id("remindBtn")).Click();            
-            _ = Driver.SwitchTo().Frame("remindPasswordView");
-            string playerEmail = "test@test.com";
-            Driver.FindElement(By.Id("email")).SendKeys(playerEmail);
-            Driver.FindElement(By.XPath("//button[contains(text(),'Send')]")).Click();
+            LoginPage loginPage = new LoginPage(Driver);
+            loginPage.OpenFrame();
+            //Driver.FindElement(By.Id("remindBtn")).Click();            
+            //_ = Driver.SwitchTo().Frame("remindPasswordView");           
+            //Driver.FindElement(By.Id("email")).SendKeys("test@test.com");
+            //Driver.FindElement(By.XPath("//button[contains(text(),'Send')]")).Click();
+            loginPage.RemindPass("test@test.com");
             string alertText = Driver.SwitchTo().Alert().Text;
 
             // Assert
-            Assert.AreEqual($"Email with instructions was sent to {playerEmail}", alertText);
+            Assert.AreEqual($"Email with instructions was sent to test@test.com", alertText);
             Driver.SwitchTo().Alert().Accept();
         }
 
