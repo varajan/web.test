@@ -29,7 +29,7 @@ Third screen: Setting.
 Let our customers to choose dates and number formats, and currency.
 
 Also add History page and show last ten calculations.
----
+
 With best regards,
 
 Serg d'Mitre
