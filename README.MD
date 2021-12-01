@@ -1,7 +1,7 @@
-FROM: serg.d.mitre@company.com
-TO: web.dev@company.com
-SUBJECT: New project - deposit calculator
----
+# FROM: serg.d.mitre@company.com
+# TO: web.dev@company.com
+# SUBJECT: New project - deposit calculator
+
 Hi all,
 
 Let's create a web calculator for our clients. All of them will be happy to have such functionality.
