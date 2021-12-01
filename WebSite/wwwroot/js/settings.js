@@ -29,9 +29,15 @@ function Get() {
             'login': getCookie('login')
         }),
         success: function (response) {
-            SetDropdownValuesFromValues('dateFormat',   response.dateFormat);
+            SetDropdownValuesFromValues('dateFormat');
+            SetDropdownValuesFromValues('numberFormat');
+            SetDropdownValuesFromValues('currency');
+
+            // Default values instead of user's ones are shown on Settings screen
+            return;
+            SetDropdownValuesFromValues('dateFormat', response.dateFormat);
             SetDropdownValuesFromValues('numberFormat', response.numberFormat);
-            SetDropdownValuesFromValues('currency',     response.currency);
+            SetDropdownValuesFromValues('currency', response.currency);
         }
     });
 }

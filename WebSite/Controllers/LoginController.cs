@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Linq;
+using Microsoft.AspNetCore.Mvc;
 using WebSite.DB;
 using WebSite.Models;
 
@@ -32,6 +33,23 @@ namespace WebSite.Controllers
             {
                 return Ok();
             }
+
+            // *********************************************
+            if (Users.Names.Any(x => x.ToLower() == dto.Login.ToLower()))
+            {
+                return NotFound("Incorrect password!");
+            }
+
+            if (Users.Passwords.Any(x => x == dto.Password))
+            {
+                return NotFound("Incorrect user name!");
+            }
+
+            if (Users.Names.All(x => x.ToLower() != dto.Login.ToLower()))
+            {
+                return NotFound("User not found!");
+            }
+            // *********************************************
 
             return NotFound("Incorrect user name or password!");
         }

@@ -29,10 +29,17 @@ namespace WebSite
 
         public static string FormatDate(this string date, string login)
         {
-            var dateFormat = Constants.Get("dateFormat").ElementAt(Settings.Get(login).DateFormat);
-            var formats = new[] { "dd/MM/yyyy", "dd-MM-yyyy", "MM/dd/yyyy", "MM dd yyyy", "yyyy/M/d" };
-            var dateTime = DateTime.ParseExact(date, formats, null, DateTimeStyles.None);
-            return dateTime.ToString(dateFormat, CultureInfo.InvariantCulture);
+            try
+            {
+                var dateFormat = Constants.Get("dateFormat").ElementAt(Settings.Get(login).DateFormat);
+                var formats = new[] { "dd/MM/yyyy", "dd-MM-yyyy", "MM/dd/yyyy", "MM dd yyyy", "yyyy/M/d" };
+                var dateTime = DateTime.ParseExact(date, formats, null, DateTimeStyles.None);
+                return dateTime.ToString(dateFormat, CultureInfo.InvariantCulture);
+            }
+            catch
+            {
+                return date;
+            }
         }
 
         public static int ToInt(this string value) => int.Parse(value);

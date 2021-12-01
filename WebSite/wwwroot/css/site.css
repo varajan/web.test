@@ -9,11 +9,11 @@
 }
 
 .settings {
-    visibility: visible
+    visibility: hidden /*visible */
 }
 
 .history {
-    visibility: visible
+    visibility: hidden /*visible */
 }
 
 .calculator {
@@ -24,6 +24,10 @@
     visibility: visible
 }
 
+.remind {
+    visibility: hidden /*visible */
+}
+
 .register {
-    visibility: visible
+    visibility: hidden /*visible */
 }

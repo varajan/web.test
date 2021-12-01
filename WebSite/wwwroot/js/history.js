@@ -3,7 +3,8 @@
     while (data[0])
         data[0].parentNode.removeChild(data[0]);
 
-    $.ajax({ type: 'POST', url: 'api/history/clear', data: { 'login': getCookie('login') } } );
+    // History is not cleared in DB
+    // $.ajax({ type: 'POST', url: 'api/history/clear', data: { 'login': getCookie('login') } } );
 }
 document.getElementById("clear").addEventListener("click", clear);
 

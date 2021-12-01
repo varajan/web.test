@@ -7,10 +7,13 @@ namespace WebSite.DB
     public static class Users
     {
         public static bool IsValid(string login, string password) =>
-            DB.GetRows($"SELECT Login FROM Users WHERE Login = '{login?.ToLower()}' AND Password = '{password}'").Any();
+            DB.GetRows($"SELECT Login FROM Users WHERE Login = '{login}' AND Password = '{password}'").Any();
+            // login is case-sensitive
+            //DB.GetRows($"SELECT Login FROM Users WHERE Login = '{login?.ToLower()}' AND Password = '{password}'").Any();
 
-        public static List<string> Names => DB.GetColumn($"SELECT Login FROM Users");
-        public static List<string> Emails => DB.GetColumn($"SELECT Email FROM Users");
+        public static List<string> Names => DB.GetColumn("SELECT Login FROM Users");
+        public static List<string> Passwords => DB.GetColumn("SELECT Password FROM Users");
+        public static List<string> Emails => DB.GetColumn("SELECT Email FROM Users");
 
         public static void Add(UserDto dto) =>
             DB.Execute($"INSERT INTO Users (Login, Password, Email) VALUES ('{dto.Login.ToLower()}', '{dto.Password}', '{dto.Email.ToLower()}')");
