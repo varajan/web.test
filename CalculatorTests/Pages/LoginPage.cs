@@ -40,7 +40,7 @@ namespace CalculatorTests.Pages
             LoginBtn.Click();
         }
 
-        public IWebDriver OpenFrame()
+        public IWebDriver OpenRemindPasswordView()
         {
             _driver.FindElement(By.Id("remindBtn")).Click();
             return _driver.SwitchTo().Frame("remindPasswordView");
@@ -50,6 +50,26 @@ namespace CalculatorTests.Pages
         {
             _driver.FindElement(By.Id("email")).SendKeys(email);
             _driver.FindElement(By.XPath("//button[contains(text(),'Send')]")).Click();
+        }
+
+        public (bool IsSuccessful, string Text) RemindPass2(string email)
+        {
+            _driver.FindElement(By.Id("email")).SendKeys(email);
+            _driver.FindElement(By.XPath("//button[contains(text(),'Send')]")).Click();
+            try
+            {
+                IAlert alert = _driver.SwitchTo().Alert();
+                string result = alert.Text;
+                alert.Accept();
+                _driver.SwitchTo().ParentFrame();
+                return (true, result);
+            }
+            catch
+            {
+                string result = _driver.FindElement(By.Id("message")).Text;
+                _driver.SwitchTo().ParentFrame();
+                return (false, result);
+            }
         }
     }
 }

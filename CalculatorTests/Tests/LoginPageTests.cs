@@ -28,7 +28,7 @@ namespace CalculatorTests
         [TestCase("", "", "User name and password cannot be empty!")]
         [TestCase("", "newyork1", "User name and password cannot be empty!")]
         [TestCase("test", "", "User name and password cannot be empty!")]
-        [TestCase("test1", "newyork", "'test1' user doesn't exist!")] //Login_Not_Existing_Account
+        [TestCase("test1", "newyork", "Incorrect login or password!")] //Login_Not_Existing_Account
         public void Failed_Login_Error_Texts(string login, string password, string expectedError)
         {
             // Act
@@ -109,16 +109,16 @@ namespace CalculatorTests
             //bool remindBtnEx = remindBtn.Displayed;
 
             //Variant 2
-            bool loginBtn = (bool)loginPage.LoginBtn.Displayed;
-            bool remindBtn = (bool)loginPage.RemindBtn.Displayed;
+            bool loginBtnIsShown = loginPage.LoginBtn.Displayed;
+            bool remindBtnIsShown = loginPage.RemindBtn.Displayed;
 
             //Veriant 3
             //bool  remindBtn = Driver.FindElement(By.Id("remindBtn")).Displayed;
             //bool loginBtn = Driver.FindElement(By.Id("loginBtn")).Displayed;
 
             // Assert
-            Assert.AreEqual(true, remindBtn, "button is not displayed");  
-            Assert.IsTrue(loginBtn); // = Assert.AreEqual(true, loginBtn);
+            Assert.AreEqual(true, remindBtnIsShown, "button is not displayed");  
+            Assert.IsTrue(loginBtnIsShown); // = Assert.AreEqual(true, loginBtn);
         }
 
         [Test]
@@ -126,7 +126,7 @@ namespace CalculatorTests
         {
             // Act
             LoginPage loginPage = new LoginPage(Driver);
-            loginPage.OpenFrame();
+            loginPage.OpenRemindPasswordView();
             //Driver.FindElement(By.Id("remindBtn")).Click();            
             //_ = Driver.SwitchTo().Frame("remindPasswordView");           
             //Driver.FindElement(By.Id("email")).SendKeys("test@test.com");
@@ -142,15 +142,24 @@ namespace CalculatorTests
         [Test]
         public void Remind_Password_Validation_Email()
         {
-            // Act
-            Driver.FindElement(By.Id("remindBtn")).Click();
-            Driver.SwitchTo().Frame("remindPasswordView");
-            Driver.FindElement(By.Id("email")).SendKeys("test@testcom");
-            Driver.FindElement(By.XPath("//button[contains(text(),'Send')]")).Click();
-            string errorText = Driver.FindElement(By.Id("message")).Text;
+            LoginPage loginPage = new LoginPage(Driver);
+            loginPage.OpenRemindPasswordView();
+            var result = loginPage.RemindPass2("test@testcom");
 
             // Assert
-            Assert.AreEqual("Invalid email", errorText);
+            Assert.IsFalse(result.IsSuccessful);
+            Assert.AreEqual("Invalid email", result.Text);
+
+            // Act
+
+            //Driver.FindElement(By.Id("remindBtn")).Click();
+            //Driver.SwitchTo().Frame("remindPasswordView");
+            //Driver.FindElement(By.Id("email")).SendKeys("test@testcom");
+            //Driver.FindElement(By.XPath("//button[contains(text(),'Send')]")).Click();
+            //string errorText = Driver.FindElement(By.Id("message")).Text;
+
+            //// Assert
+            //Assert.AreEqual("Invalid email", errorText);
 
         } //Also here I would like to add some iterations to different email validations, so as not to write a lot of code
 
