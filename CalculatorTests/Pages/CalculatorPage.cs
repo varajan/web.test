@@ -10,6 +10,8 @@ namespace CalculatorTests.Pages
     public class CalculatorPage
     {
         private IWebDriver _driver;
+        private string value;
+
         public CalculatorPage(IWebDriver driver)
         {
             _driver = driver;
@@ -43,7 +45,7 @@ namespace CalculatorTests.Pages
         {
             get
             {
-                return _driver.FindElement(By.Id("day"));
+                return _driver.FindElement(By.Id("day"));              
             }
         }
         public IWebElement DateMonthDrdwn
