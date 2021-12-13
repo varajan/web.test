@@ -163,7 +163,7 @@ namespace CalculatorTests
 
         [TestCase("1/1/2024", "60", "01/03/2024")]
         [TestCase("1/1/2023", "60", "02/03/2023")]
-        [TestCase("10/12/2023", "120", "18/04/2023")]
+        [TestCase("10/12/2023", "120", "08/04/2024")]
         public void EndDateCalculation(string date, string term, string result)
         {
             // Act
