@@ -161,14 +161,14 @@ namespace CalculatorTests
 
         //}
 
-        [TestCase("1", "January", "2024", "60", "01/03/2024")]
-        [TestCase("1", "January", "2023", "60", "02/03/2023")]
-        [TestCase("10", "December", "2023", "120", "18/04/2023")]
-        public void EndDateCalculation(string day, string month, string year, string term, string result)
+        [TestCase("1/1/2024", "60", "01/03/2024")]
+        [TestCase("1/1/2023", "60", "02/03/2023")]
+        [TestCase("10/12/2023", "120", "18/04/2023")]
+        public void EndDateCalculation(string date, string term, string result)
         {
             // Act
             calculatorPage = new CalculatorPage(Driver);
-            calculatorPage.StartDate = "1/1/2024";
+            calculatorPage.StartDate = date;
             //calculatorPage.DateDayDrdwn.SelectByText(day);
             //calculatorPage.DateMonthDrdwn.SendKeys(month);
             //calculatorPage.DateYearDrdwn.SendKeys(year);
