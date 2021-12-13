@@ -14,8 +14,4 @@
     <Folder Include="Controllers\" />
   </ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Selenium.Support" Version="4.1.0" />
-  </ItemGroup>
-
 </Project>
