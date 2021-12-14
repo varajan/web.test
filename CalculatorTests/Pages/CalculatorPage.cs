@@ -23,7 +23,7 @@ namespace CalculatorTests.Pages
         {
             get
             {
-                return _driver.FindElement(By.Id("amount"));
+                return _driver.FindElement(By.XPath($"//td[contains(text(),'Deposit Amount: *')]/ ..//input"));
             }
         }
 
@@ -31,7 +31,7 @@ namespace CalculatorTests.Pages
         {
             get
             {
-                return _driver.FindElement(By.Id("percent"));
+                return _driver.FindElement(By.XPath($"//td[contains(text(),'Rate of interest: *')]/ ..//input"));
             }
         }
 
@@ -39,7 +39,7 @@ namespace CalculatorTests.Pages
         {
             get
             {
-                return _driver.FindElement(By.Id("term"));
+                return _driver.FindElement(By.XPath($"//td[contains(text(),'Investment Term: *')]/ ..//input"));
             }
         }
 
@@ -47,21 +47,21 @@ namespace CalculatorTests.Pages
         {
             get
             {
-                return new SelectElement(_driver.FindElement(By.Id("day")));
+                return new SelectElement(_driver.FindElement(By.XPath($"//td[contains(text(),'Start date: *')]/ ..//select[@id='day']")));
             }
         }
         public SelectElement DateMonthDrdwn
         {
             get
             {
-                return new SelectElement(_driver.FindElement(By.Id("month")));
+                return new SelectElement(_driver.FindElement(By.XPath($"//td[contains(text(),'Start date: *')]/ ..//select[@id='month']")));
             }
         }
         public SelectElement DateYearDrdwn
         {
             get
             {
-                return new SelectElement(_driver.FindElement(By.Id("year")));
+                return new SelectElement(_driver.FindElement(By.XPath("//td[contains(text(),'Start date: *')]/ ..//select[@id='year']")));
             }
         }
 
@@ -71,8 +71,6 @@ namespace CalculatorTests.Pages
             get
             {
                 string day = DateDayDrdwn.SelectedOption.Text;
-                //string month = DateMonthDrdwn.Text;
-                // var month = DateTime.ParseExact(DateMonthDrdwn.SelectedOption.Text, "MMMM", CultureInfo.InvariantCulture).Month;
                 var month = DateTime.ParseExact(DateMonthDrdwn.SelectedOption.Text, "MMMM", CultureInfo.InvariantCulture).Month;
                 string year = DateYearDrdwn.SelectedOption.Text;
 
@@ -94,7 +92,7 @@ namespace CalculatorTests.Pages
             //Int x = FinancialYear
             get
             {
-                if (_driver.FindElement(By.Id("d365")).Selected)
+                if (_driver.FindElement(By.XPath($"//td[contains(text(),'Financial year: *')]/ ..//input[@id='d365']")).Selected)
                     return 365;
                 else return 360;
             }
@@ -102,43 +100,30 @@ namespace CalculatorTests.Pages
             set
             {
                 if (value == 365)
-                    _driver.FindElement(By.Id("d365")).Click();
-                else _driver.FindElement(By.Id("d360")).Click();
+                    _driver.FindElement(By.XPath($"//td[contains(text(),'Financial year: *')]/ ..//input[@id='d365']")).Click();
+                else _driver.FindElement(By.XPath($"//td[contains(text(),'Financial year: *')]/ ..//input[@id='d360']")).Click();
             }
         }
-        public IWebElement FinanceYearRBtn1
-        {
-            get
-            {
-                return _driver.FindElement(By.Id("d365"));
-            }
-        }
-        public IWebElement FinanceYearRBtn2
-        {
-            get
-            {
-                return _driver.FindElement(By.Id("d360"));
-            }
-        }
+
         public IWebElement IncomeFld
         {
             get
             {
-                return _driver.FindElement(By.Id("income"));
+                return _driver.FindElement(By.XPath($"//th[contains(text(),'Income:')]/ ..//input"));
             }
         }
         public IWebElement InterestFld
         {
             get
             {
-                return _driver.FindElement(By.Id("interest"));
+                return _driver.FindElement(By.XPath($"//th[contains(text(),'Interest earned:')]/ ..//input"));
             }
         }
         public string EndDate
         {
             get
             {
-                return _driver.FindElement(By.Id("endDate")).GetAttribute("value");
+                return _driver.FindElement(By.XPath($"//th[contains(text(),'End date:')]/ ..//input")).GetAttribute("value");
             }
         }
 

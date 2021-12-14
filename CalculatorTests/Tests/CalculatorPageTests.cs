@@ -33,11 +33,6 @@ namespace CalculatorTests
 
             // Act
             calculatorPage = new CalculatorPage(Driver);
-            //calculatorPage.DepAmountFld.SendKeys(amount);
-            //calculatorPage.RateInterestFld.SendKeys(rate);
-            //calculatorPage.InvestTermFld.SendKeys(term);
-            ////calculatorPage.FinanceYearRBtn1.Click();
-            //calculatorPage.FinancialYear = 365;
             calculatorPage.Calculate(amount,rate,term,financialYear);
             string income = calculatorPage.IncomeFld.GetAttribute("value");
             string interest = calculatorPage.InterestFld.GetAttribute("value");
@@ -49,30 +44,6 @@ namespace CalculatorTests
                 Assert.AreEqual(expectedInterest, interest);
             });
         }
-
-        //[TestCase("1000", "25", "360", "1250.00", "250.00")]
-        //[TestCase("1000", "25", "1", "1000.69", "0.69")]
-        //public void CalculateTest360(string amount, string rate, string term, string expectedIncom, string expectedInterest)
-        //{
-        //    // Arrange
-        //    // Income = Amount/100*Rate * Term/FinYear
-
-        //    // Act
-        //    calculatorPage = new CalculatorPage(Driver);
-        //    calculatorPage.DepAmountFld.SendKeys(amount);
-        //    calculatorPage.RateInterestFld.SendKeys(rate);
-        //    calculatorPage.InvestTermFld.SendKeys(term);
-        //    calculatorPage.FinanceYearRBtn2.Click();
-        //    string income = calculatorPage.IncomeFld.GetAttribute("value");
-        //    string interest = calculatorPage.InterestFld.GetAttribute("value");
-
-        //    // Assert
-        //    Assert.Multiple(() =>
-        //    {
-        //        Assert.AreEqual(expectedIncom, income);
-        //        Assert.AreEqual(expectedInterest, interest);
-        //    });
-        //}
 
         //[Test]
         //public void Logout()
@@ -93,14 +64,6 @@ namespace CalculatorTests
         //}
         // After Logout button is removed from Settings to $"{BaseUrl}/Deposit", Test need to be update
 
-        [TestCase("Deposit Amount: *", "Amount")]
-        [TestCase("Rate of interest: *", "Rate")]
-        [TestCase("Investment Term: *", "Term")]
-        [TestCase("Start date: *", "Start")]
-        [TestCase("Financial year: *", "year")]
-        [TestCase("Income:", "Income")]
-        [TestCase("Interest earned:", "Interest")]
-        [TestCase("End date:", "End")]
         [TestCase("* - mandatory fields", "mandatory")]
         public void Deposit_Texts(string expectedText, string actualText)
         {
@@ -127,39 +90,36 @@ namespace CalculatorTests
         //    Assert.AreEqual($"{BaseUrl}/Deposit", currentURL);
         //}
 
-        [TestCase("", "25", "365")]
-        [TestCase("1000","","365")]
-        [TestCase("1000", "25", "")]
-        public void MandatoryFields(string depamount, string rateinterest, string investTerm)
+        [TestCase("", "25", "365", "365")]
+        [TestCase("1000","","365", "365")]
+        [TestCase("1000", "25", "", "365")]
+        public void MandatoryFields(string depamount, string rateinterest, string investTerm, string financialYear)
         {
             // Act
             calculatorPage = new CalculatorPage(Driver);
             calculatorPage.DepAmountFld.SendKeys(depamount);
             calculatorPage.RateInterestFld.SendKeys(rateinterest);
             calculatorPage.InvestTermFld.SendKeys(investTerm);
-            calculatorPage.FinanceYearRBtn1.Click();
+            calculatorPage.FinancialYear = int.Parse(financialYear);
             string interest = calculatorPage.InterestFld.GetAttribute("value");
 
             // Assert          
             Assert.AreEqual("0.00", interest);
         }
 
-        //[TestCase("1","January","2022", "365")]
-        //[TestCase("1", "January", "2022", "360")]
-        //public void InterestCalculationDependingFromFinancialYear(string day, string month, string year)
-        //{
-        //    // Act
-        //    calculatorPage = new CalculatorPage(Driver);
-        //    calculatorPage.DateDayDrdwn.SendKeys(day);
-        //    calculatorPage.DateMonthDrdwn.SendKeys(month);
-        //    calculatorPage.DateYearDrdwn.SendKeys(year);
+        [TestCase("1/1/2022", "365")]
+        [TestCase("1/1/2022", "360")]
+        public void InterestCalculationDependingFromFinancialYear(string date, string financialYear)
+        {
+            // Act
+            calculatorPage = new CalculatorPage(Driver);
+            calculatorPage.StartDate = date;
+            string interest = calculatorPage.InterestFld.GetAttribute("value");
 
-        //    string interest = calculatorPage.InterestFld.GetAttribute("value");
+            // Assert          
+            Assert.AreEqual("0.00", interest);
 
-        //    // Assert          
-        //    Assert.AreEqual("0.00", interest);
-
-        //}
+        }
 
         [TestCase("1/1/2024", "60", "01/03/2024")]
         [TestCase("1/1/2023", "60", "02/03/2023")]
@@ -169,9 +129,6 @@ namespace CalculatorTests
             // Act
             calculatorPage = new CalculatorPage(Driver);
             calculatorPage.StartDate = date;
-            //calculatorPage.DateDayDrdwn.SelectByText(day);
-            //calculatorPage.DateMonthDrdwn.SendKeys(month);
-            //calculatorPage.DateYearDrdwn.SendKeys(year);
             calculatorPage.InvestTermFld.SendKeys(term);
 
             // Assert
@@ -189,27 +146,16 @@ namespace CalculatorTests
             Assert.AreEqual(DateTime.Today.ToString("d/M/yyyy"),defaultValue);
         }
 
-
-
-
         [Test]
         public void MandatoryFieldFinanceYear()
         {
             // Act
             calculatorPage = new CalculatorPage(Driver);
-            //calculatorPage.DepAmountFld.SendKeys("1000");
-            //calculatorPage.RateInterestFld.SendKeys("25");
-            //calculatorPage.InvestTermFld.SendKeys("365");
-            //var financeYear = calculatorPage.FinanceYearRBtn1.Selected;
-            //string interest = calculatorPage.InterestFld.GetAttribute("value");
+            int defaultFinancialYear = calculatorPage.FinancialYear;
 
             // Assert          
-            Assert.IsTrue(calculatorPage.FinanceYearRBtn1.Selected);
-
-        }// To check if field Financial Year is mandatory by checking that Interest field must be 0.00,
-         // as it is when other fields are not filled.
-         //But the better way is to make mesaages for user, and  button - after clicking show message
-         //which field need to be filled 
+            Assert.AreEqual(365, defaultFinancialYear);
+        }
 
         [Test]
         public void MaxValueValidation()
@@ -238,7 +184,7 @@ namespace CalculatorTests
             calculatorPage.DepAmountFld.SendKeys("1000");
             calculatorPage.RateInterestFld.SendKeys("25");
             calculatorPage.InvestTermFld.SendKeys("365");
-            calculatorPage.FinanceYearRBtn2.Click();
+            calculatorPage.FinancialYear = 360;
             string finalInvestTerm = calculatorPage.InvestTermFld.GetAttribute("value");
 
             // Assert
@@ -253,7 +199,7 @@ namespace CalculatorTests
             calculatorPage.DepAmountFld.SendKeys("1000");
             calculatorPage.RateInterestFld.SendKeys("25");
             calculatorPage.InvestTermFld.SendKeys("366");
-            calculatorPage.FinanceYearRBtn1.Click();
+            calculatorPage.FinancialYear = 365;
             string finalInvestTerm = calculatorPage.InvestTermFld.GetAttribute("value");
 
             // Assert
