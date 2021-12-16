@@ -12,13 +12,11 @@ namespace CalculatorTests.Pages
     public class CalculatorPage
     {
         private IWebDriver _driver;
-        private string value;
 
         public CalculatorPage(IWebDriver driver)
         {
             _driver = driver;
         }
-
         public IWebElement DepAmountFld
         {
             get
@@ -26,7 +24,6 @@ namespace CalculatorTests.Pages
                 return _driver.FindElement(By.XPath($"//td[contains(text(),'Deposit Amount: *')]/ ..//input"));
             }
         }
-
         public IWebElement RateInterestFld
         {
             get
@@ -34,7 +31,6 @@ namespace CalculatorTests.Pages
                 return _driver.FindElement(By.XPath($"//td[contains(text(),'Rate of interest: *')]/ ..//input"));
             }
         }
-
         public IWebElement InvestTermFld
         {
             get
@@ -42,7 +38,6 @@ namespace CalculatorTests.Pages
                 return _driver.FindElement(By.XPath($"//td[contains(text(),'Investment Term: *')]/ ..//input"));
             }
         }
-
         public SelectElement DateDayDrdwn
         {
             get
@@ -64,7 +59,6 @@ namespace CalculatorTests.Pages
                 return new SelectElement(_driver.FindElement(By.XPath("//td[contains(text(),'Start date: *')]/ ..//select[@id='year']")));
             }
         }
-
         //10/08/2022
         public string StartDate
         {
@@ -104,7 +98,6 @@ namespace CalculatorTests.Pages
                 else _driver.FindElement(By.XPath($"//td[contains(text(),'Financial year: *')]/ ..//input[@id='d360']")).Click();
             }
         }
-
         public IWebElement IncomeFld
         {
             get
@@ -126,18 +119,16 @@ namespace CalculatorTests.Pages
                 return _driver.FindElement(By.XPath($"//th[contains(text(),'End date:')]/ ..//input")).GetAttribute("value");
             }
         }
-
         public string GetLabelText(string actualText)
         {
             return _driver.FindElement(By.XPath($"//*[contains (text(),'{actualText}')]")).Text;
         }
-
         public void Calculate(string amount, string rate, string term, string financialYear)
         {
             DepAmountFld.SendKeys(amount);
             RateInterestFld.SendKeys(rate);
             InvestTermFld.SendKeys(term);
             FinancialYear = int.Parse(financialYear);
-            }
+        }
     }
 }

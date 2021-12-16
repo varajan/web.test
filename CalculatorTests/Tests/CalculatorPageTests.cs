@@ -118,7 +118,6 @@ namespace CalculatorTests
 
             // Assert          
             Assert.AreEqual("0.00", interest);
-
         }
 
         [TestCase("1/1/2024", "60", "01/03/2024")]
@@ -132,8 +131,7 @@ namespace CalculatorTests
             calculatorPage.InvestTermFld.SendKeys(term);
 
             // Assert
-            Assert.AreEqual(result, calculatorPage.EndDate);
-           
+            Assert.AreEqual(result, calculatorPage.EndDate);          
         }
 
         [Test]
