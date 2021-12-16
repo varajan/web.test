@@ -26,45 +26,15 @@ namespace CalculatorTests.Pages
             }
         }
 
-        public IWebElement RateInterestFld
-        {
-            get
-            {
-                return _driver.FindElement(By.XPath($"//td[contains(text(),'Rate of interest: *')]/ ..//input"));
-            }
-        }
+        public IWebElement RateInterestFld => _driver.FindElement(By.XPath($"//td[contains(text(),'Rate of interest: *')]/ ..//input"));
 
-        public IWebElement InvestTermFld
-        {
-            get
-            {
-                return _driver.FindElement(By.XPath($"//td[contains(text(),'Investment Term: *')]/ ..//input"));
-            }
-        }
+        public IWebElement InvestTermFld => _driver.FindElement(By.XPath($"//td[contains(text(),'Investment Term: *')]/ ..//input"));
 
-        public SelectElement DateDayDrdwn
-        {
-            get
-            {
-                return new SelectElement(_driver.FindElement(By.XPath($"//td[contains(text(),'Start date: *')]/ ..//select[@id='day']")));
-            }
-        }
+        public SelectElement DateDayDrdwn => new SelectElement(_driver.FindElement(By.XPath($"//td[contains(text(),'Start date: *')]/ ..//select[@id='day']")));
 
-        public SelectElement DateMonthDrdwn
-        {
-            get
-            {
-                return new SelectElement(_driver.FindElement(By.XPath($"//td[contains(text(),'Start date: *')]/ ..//select[@id='month']")));
-            }
-        }
+        public SelectElement DateMonthDrdwn => new SelectElement(_driver.FindElement(By.XPath($"//td[contains(text(),'Start date: *')]/ ..//select[@id='month']")));
 
-        public SelectElement DateYearDrdwn
-        {
-            get
-            {
-                return new SelectElement(_driver.FindElement(By.XPath("//td[contains(text(),'Start date: *')]/ ..//select[@id='year']")));
-            }
-        }
+        public SelectElement DateYearDrdwn => new SelectElement(_driver.FindElement(By.XPath("//td[contains(text(),'Start date: *')]/ ..//select[@id='year']")));
         //10/08/2022
         public string StartDate
         {
@@ -95,7 +65,9 @@ namespace CalculatorTests.Pages
             {
                 if (_driver.FindElement(By.XPath($"//td[contains(text(),'Financial year: *')]/ ..//input[@id='d365']")).Selected)
                     return 365;
-                else return 360;
+                if (_driver.FindElement(By.XPath($"//td[contains(text(),'Financial year: *')]/ ..//input[@id='d360']")).Selected) 
+                    return 360;
+                return 0;
             }
             //FinancialYear = value
             set
@@ -106,29 +78,11 @@ namespace CalculatorTests.Pages
             }
         }
 
-        public IWebElement IncomeFld
-        {
-            get
-            {
-                return _driver.FindElement(By.XPath($"//th[contains(text(),'Income:')]/ ..//input"));
-            }
-        }
+        public IWebElement IncomeFld => _driver.FindElement(By.XPath($"//th[contains(text(),'Income:')]/ ..//input"));
 
-        public IWebElement InterestFld
-        {
-            get
-            {
-                return _driver.FindElement(By.XPath($"//th[contains(text(),'Interest earned:')]/ ..//input"));
-            }
-        }
+        public IWebElement InterestFld => _driver.FindElement(By.XPath($"//th[contains(text(),'Interest earned:')]/ ..//input"));
 
-        public string EndDate
-        {
-            get
-            {
-                return _driver.FindElement(By.XPath($"//th[contains(text(),'End date:')]/ ..//input")).GetAttribute("value");
-            }
-        }
+        public string EndDate => _driver.FindElement(By.XPath($"//th[contains(text(),'End date:')]/ ..//input")).GetAttribute("value");
 
         public string GetLabelText(string actualText)
         {
