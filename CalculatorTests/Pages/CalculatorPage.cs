@@ -17,6 +17,7 @@ namespace CalculatorTests.Pages
         {
             _driver = driver;
         }
+
         public IWebElement DepAmountFld
         {
             get
@@ -24,6 +25,7 @@ namespace CalculatorTests.Pages
                 return _driver.FindElement(By.XPath($"//td[contains(text(),'Deposit Amount: *')]/ ..//input"));
             }
         }
+
         public IWebElement RateInterestFld
         {
             get
@@ -31,6 +33,7 @@ namespace CalculatorTests.Pages
                 return _driver.FindElement(By.XPath($"//td[contains(text(),'Rate of interest: *')]/ ..//input"));
             }
         }
+
         public IWebElement InvestTermFld
         {
             get
@@ -38,6 +41,7 @@ namespace CalculatorTests.Pages
                 return _driver.FindElement(By.XPath($"//td[contains(text(),'Investment Term: *')]/ ..//input"));
             }
         }
+
         public SelectElement DateDayDrdwn
         {
             get
@@ -45,6 +49,7 @@ namespace CalculatorTests.Pages
                 return new SelectElement(_driver.FindElement(By.XPath($"//td[contains(text(),'Start date: *')]/ ..//select[@id='day']")));
             }
         }
+
         public SelectElement DateMonthDrdwn
         {
             get
@@ -52,6 +57,7 @@ namespace CalculatorTests.Pages
                 return new SelectElement(_driver.FindElement(By.XPath($"//td[contains(text(),'Start date: *')]/ ..//select[@id='month']")));
             }
         }
+
         public SelectElement DateYearDrdwn
         {
             get
@@ -81,6 +87,7 @@ namespace CalculatorTests.Pages
                 DateYearDrdwn.SelectByText(year);
             }
         }
+
         public int FinancialYear
         {
             //Int x = FinancialYear
@@ -98,6 +105,7 @@ namespace CalculatorTests.Pages
                 else _driver.FindElement(By.XPath($"//td[contains(text(),'Financial year: *')]/ ..//input[@id='d360']")).Click();
             }
         }
+
         public IWebElement IncomeFld
         {
             get
@@ -105,6 +113,7 @@ namespace CalculatorTests.Pages
                 return _driver.FindElement(By.XPath($"//th[contains(text(),'Income:')]/ ..//input"));
             }
         }
+
         public IWebElement InterestFld
         {
             get
@@ -112,6 +121,7 @@ namespace CalculatorTests.Pages
                 return _driver.FindElement(By.XPath($"//th[contains(text(),'Interest earned:')]/ ..//input"));
             }
         }
+
         public string EndDate
         {
             get
@@ -119,10 +129,12 @@ namespace CalculatorTests.Pages
                 return _driver.FindElement(By.XPath($"//th[contains(text(),'End date:')]/ ..//input")).GetAttribute("value");
             }
         }
+
         public string GetLabelText(string actualText)
         {
             return _driver.FindElement(By.XPath($"//*[contains (text(),'{actualText}')]")).Text;
         }
+
         public void Calculate(string amount, string rate, string term, string financialYear)
         {
             DepAmountFld.SendKeys(amount);
