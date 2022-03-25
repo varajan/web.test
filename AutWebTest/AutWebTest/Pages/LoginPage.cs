@@ -11,7 +11,7 @@ namespace AutWebTest.Pages
             this.driver = driver;
         }
 
-        public IWebElement LoginField
+        private IWebElement LoginField
         {
             get
             {
@@ -19,8 +19,19 @@ namespace AutWebTest.Pages
             }
         }
 
-        public IWebElement PasswordField => driver.FindElement(By.Id("Password"));
-        public IWebElement LoginButton => driver.FindElement(By.Id("loginBtn"));
-        public IWebElement ErrorMessage => driver.FindElement(By.Id("errorMessage"));
+        private IWebElement PasswordField => driver.FindElement(By.Id("password"));
+        private IWebElement LoginButton => driver.FindElement(By.Id("loginBtn"));
+        public string ErrorMessage => driver.FindElement(By.Id("errorMessage")).Text;
+
+        public void Login(string login, string password)
+        {
+            //if (LoginField.GetProperty. != string.Empty)
+            //    LoginField.Clear();
+            //if (PasswordField.GetProperty. != string.Empty)
+            //    PasswordField.Clear();
+            LoginField.SendKeys(login);
+            PasswordField.SendKeys(password);
+            LoginButton.Click();
+        }
     }
 }
