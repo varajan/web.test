@@ -3,4 +3,6 @@
 */obj/*
 */bin/*
 packages/*
-
+CalculatorTests/.vs/*
+CalculatorTests/CalculatorTests/bin/*
+CalculatorTests/CalculatorTests/obj/*
