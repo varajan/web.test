@@ -249,6 +249,33 @@ namespace CalculatorTests.Tests
 
             driver.Quit();
         }
-    }
 
+        [Test]
+        public void PasswordBugTest()
+        {
+            // arrange
+            var options = new ChromeOptions { AcceptInsecureCertificates = true };
+            IWebDriver driver = new ChromeDriver(options);
+            driver.Url = "https://localhost:5001";
+
+            IWebElement passwordField = driver.FindElement(By.ClassName("pass"));
+
+            // assert
+            Assert.AreEqual("Password:", passwordField.Text);
+        }
+
+        [Test]
+        public void UserBugTest()
+        {
+            // arrange
+            var options = new ChromeOptions { AcceptInsecureCertificates = true };
+            IWebDriver driver = new ChromeDriver(options);
+            driver.Url = "https://localhost:5001";
+
+            IWebElement loginField = driver.FindElement(By.ClassName("user"));
+
+            // assert
+            Assert.AreEqual("User:", loginField.Text);
+        }
+    }
 }
