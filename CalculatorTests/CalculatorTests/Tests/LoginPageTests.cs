@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Threading;
 using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
@@ -15,7 +14,7 @@ namespace CalculatorTests.Tests
         [SetUp]
         public void SetUp()
         {
-            var options = new ChromeOptions { AcceptInsecureCertificates = true };
+            var options = new ChromeOptions { AcceptInsecureCertificates = true, UnhandledPromptBehavior = UnhandledPromptBehavior.Ignore };
             driver = new ChromeDriver(options);
             driver.Manage().Timeouts().PageLoad = TimeSpan.FromSeconds(60);
             driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
@@ -82,7 +81,7 @@ namespace CalculatorTests.Tests
 
             // assert
             Assert.AreEqual("Password:", passwordField.Text);
-            Assert.AreEqual("User:", loginField.Text); 
+            Assert.AreEqual("User:", loginField.Text);
         }
     }
 }
