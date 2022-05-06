@@ -14,8 +14,19 @@ namespace CalculatorTests.Tests
         [SetUp]
         public void SetUp()
         {
-            var options = new ChromeOptions { AcceptInsecureCertificates = true, UnhandledPromptBehavior = UnhandledPromptBehavior.Ignore };
-            driver = new ChromeDriver(options);
+            var chromeDriverService = ChromeDriverService.CreateDefaultService();
+            chromeDriverService.HideCommandPromptWindow = true;
+            chromeDriverService.SuppressInitialDiagnosticInformation = true;
+
+            var options = new ChromeOptions
+            {
+                UnhandledPromptBehavior = UnhandledPromptBehavior.Ignore,
+                AcceptInsecureCertificates = true
+            };
+            options.AddArgument("--silent");
+            options.AddArgument("log-level=3");
+
+            driver = new ChromeDriver(chromeDriverService, options);
             driver.Manage().Timeouts().PageLoad = TimeSpan.FromSeconds(60);
             driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
             driver.Url = "https://localhost:5001";
