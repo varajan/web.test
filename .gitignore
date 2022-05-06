@@ -6,3 +6,4 @@ packages/*
 CalculatorTests/.vs/*
 CalculatorTests/CalculatorTests/bin/*
 CalculatorTests/CalculatorTests/obj/*
+.DS_Store

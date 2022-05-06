@@ -1,7 +1,9 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium.Support.UI;
 
 namespace CalculatorTests.Tests
 {
@@ -15,6 +17,8 @@ namespace CalculatorTests.Tests
         {
             var options = new ChromeOptions { AcceptInsecureCertificates = true };
             driver = new ChromeDriver(options);
+            driver.Manage().Timeouts().PageLoad = TimeSpan.FromSeconds(60);
+            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
             driver.Url = "https://localhost:5001";
         }
 
@@ -43,8 +47,8 @@ namespace CalculatorTests.Tests
             loginField.SendKeys(login);
             passwordField.SendKeys(password);
             loginButton.Click();
-            Thread.Sleep(500);
-
+            new WebDriverWait(driver, TimeSpan.FromSeconds(10))
+            .Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementIsVisible(By.Id("errorMessage")));
 
             // assert
             IWebElement error = driver.FindElement(By.Id("errorMessage"));
@@ -62,7 +66,8 @@ namespace CalculatorTests.Tests
             loginField.SendKeys("test");
             passwordField.SendKeys("newyork1");
             loginButton.Click();
-            Thread.Sleep(500);
+            new WebDriverWait(driver, TimeSpan.FromSeconds(10))
+            .Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementIsVisible(By.Id("calculateBtn")));
 
             // assert
             IWebElement success = driver.FindElement(By.Id("calculateBtn"));
