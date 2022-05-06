@@ -29,7 +29,7 @@ jobs:
         run: cd ./WebSite/bin/Release/net5.0 && dotnet WebSite.dll &
         
       - name: Tests - restore dependencies
-        run: dotnet restore AutWebTest/AutWebTest.sln
+        run: dotnet restore CalculatorTests/CalculatorTests.sln
         
       - name: Tests - Build
         run: dotnet build CalculatorTests/CalculatorTests.sln --configuration Release --no-restore
