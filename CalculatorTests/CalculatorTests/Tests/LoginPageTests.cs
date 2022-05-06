@@ -8,14 +8,26 @@ namespace CalculatorTests.Tests
     [TestFixture]
     public class LoginPageTests
     {
+        private IWebDriver driver;
+
+        [SetUp]
+        public void SetUp()
+        {
+            var options = new ChromeOptions { AcceptInsecureCertificates = true };
+            driver = new ChromeDriver(options);
+            driver.Url = "https://localhost:5001";
+        }
+
+        [TearDown]
+        public void TearDown()
+        {
+            driver.Quit();
+        }
+
         [Test]
         public void LoginWithEmptyFieldsTest()
-        {
+        {           
             // arrange
-            var options = new ChromeOptions { AcceptInsecureCertificates = true };
-            IWebDriver driver = new ChromeDriver(options);
-            driver.Url = "https://localhost:5001";
-
             IWebElement loginButton = driver.FindElements(By.Id("login"))[1];
 
             // act
@@ -26,7 +38,7 @@ namespace CalculatorTests.Tests
             IWebElement error = driver.FindElement(By.Id("errorMessage"));
             Assert.AreEqual("User not found!", error.Text);
 
-            driver.Quit();
+           
         }
 
         [Test]
@@ -122,57 +134,29 @@ namespace CalculatorTests.Tests
 
         }
 
-        [Test]
-        public void InvalidLoginAndInvalidPasswordLoginTest()
+        [TestCase("12345", "67890", "User not found!")]
+        [TestCase("test", "67890", "Incorrect password!")]
+
+        public void NegativeLoginTest(string login, string password, string expectedError)
         {
             // arrange
-            var options = new ChromeOptions { AcceptInsecureCertificates = true };
-            IWebDriver driver = new ChromeDriver(options);
-            driver.Url = "https://localhost:5001";
-
             IWebElement loginField = driver.FindElements(By.Id("login"))[0];
             IWebElement passwordField = driver.FindElement(By.Id("password"));
             IWebElement loginButton = driver.FindElements(By.Id("login"))[1];
 
             // act
-            loginField.SendKeys("12345");
-            passwordField.SendKeys("67890");
+            loginField.SendKeys(login);
+            passwordField.SendKeys(password);
             loginButton.Click();
             Thread.Sleep(500);
 
 
             // assert
             IWebElement error = driver.FindElement(By.Id("errorMessage"));
-            Assert.AreEqual("User not found!", error.Text);
-
-            driver.Quit();
+            Assert.AreEqual(expectedError, error.Text);
         }
 
-        [Test]
-        public void ValidLoginAndInvalidPasswordLoginTest()
-        {
-            // arrange
-            var options = new ChromeOptions { AcceptInsecureCertificates = true };
-            IWebDriver driver = new ChromeDriver(options);
-            driver.Url = "https://localhost:5001";
-
-            IWebElement loginField = driver.FindElements(By.Id("login"))[0];
-            IWebElement passwordField = driver.FindElement(By.Id("password"));
-            IWebElement loginButton = driver.FindElements(By.Id("login"))[1];
-
-            // act
-            loginField.SendKeys("test");
-            passwordField.SendKeys("67890");
-            loginButton.Click();
-            Thread.Sleep(500);
-
-            // assert
-            IWebElement error = driver.FindElement(By.Id("errorMessage"));
-            Assert.AreEqual("Incorrect password!", error.Text);
-
-            driver.Quit();
-
-        }
+     
 
         [Test]
         public void InvalidLoginAndValidPasswordLoginTest()
@@ -193,7 +177,7 @@ namespace CalculatorTests.Tests
             Thread.Sleep(500);
 
             // assert
-            IWebElement error = driver.FindElement(By.Id("errorMesage"));
+            IWebElement error = driver.FindElement(By.Id("errorMessage"));
             Assert.AreEqual("Incorrect user name!", error.Text);
 
             driver.Quit();
