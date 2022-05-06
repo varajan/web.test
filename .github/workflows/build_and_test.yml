@@ -27,3 +27,9 @@ jobs:
         
       - name: WebSite - Launch
         run: cd ./WebSite/bin/Release/net5.0 && dotnet WebSite.dll &
+        
+      - name: Tests - Build
+        run: dotnet build CalculatorTests/CalculatorTests.sln --configuration Release --no-restore
+        
+      - name: Tests - Run
+        run: dotnet test CalculatorTests/CalculatorTests.sln --configuration Release --no-restore --verbosity Minimal
