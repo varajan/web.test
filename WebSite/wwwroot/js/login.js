@@ -23,4 +23,5 @@ Login = function () {
 
 ShowError = function(error) {
     document.getElementById('errorMessage').textContent = error;
+    document.getElementById('errorMessage').hidden = false;
 }
