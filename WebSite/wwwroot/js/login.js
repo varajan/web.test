@@ -21,6 +21,7 @@ Login = function () {
   });
 }
 
-ShowError = function (error) {
-  document.getElementById('errorMessage').textContent = error;
+ShowError = function(error) {
+    document.getElementById('error').id = 'errorMessage';
+    document.getElementById('errorMessage').textContent = error;
 }
