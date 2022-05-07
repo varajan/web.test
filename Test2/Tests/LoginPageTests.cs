@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Test2.Tests
@@ -29,5 +30,25 @@ namespace Test2.Tests
             Assert.AreEqual(expected, er.Text);
             driver.Quit();
         }
+
+        [Test]
+        public void PositiveTest()
+        {
+            var options = new ChromeOptions { AcceptInsecureCertificates = true };
+            IWebDriver driver = new ChromeDriver(options);
+            driver.Url = "https://localhost:5001/";
+            IWebElement loginFeeld = driver.FindElement(By.Id("login"));
+            IWebElement passwordFeeld = driver.FindElement(By.Id("password"));
+            IWebElement loginBut = driver.FindElements(By.Id("login"))[1];
+            //IWebElement loginBut2 = driver.FindElement(By.ClassName("btn btn-sm btn-success"));
+            loginFeeld.SendKeys("test");
+            passwordFeeld.SendKeys("newyork1");
+            loginBut.Click();
+            Thread.Sleep(500);
+            string ActualUrl = driver.Url;
+            string expectedUrl = "https://localhost:5001/Calculator";
+            Assert.AreEqual(expectedUrl, ActualUrl);
+            driver.Quit();
+            }
     }
 }
