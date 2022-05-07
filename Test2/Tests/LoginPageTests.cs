@@ -50,5 +50,24 @@ namespace Test2.Tests
             Assert.AreEqual(expectedUrl, ActualUrl);
             driver.Quit();
             }
+
+        [Test]
+        public void NegativePassword()
+        {
+            var options = new ChromeOptions { AcceptInsecureCertificates = true };
+            IWebDriver driver = new ChromeDriver(options);
+            driver.Url = "https://localhost:5001/";
+            IWebElement loginFld = driver.FindElement(By.Id("login"));
+            IWebElement passwordFld = driver.FindElement(By.Id("password"));
+            IWebElement loginBut = driver.FindElements(By.Id("login"))[1];
+            loginFld.SendKeys("test");
+            passwordFld.SendKeys("newyork");
+            loginBut.Click();
+            Thread.Sleep(500);
+            IWebElement error = driver.FindElement(By.Id("errorMessage"));
+            string exepted = "Incorrect password!";
+            Assert.AreEqual(exepted, error.Text);
+            driver.Quit();
+        }
     }
 }
