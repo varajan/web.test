@@ -69,5 +69,23 @@ namespace Test2.Tests
             Assert.AreEqual(exepted, error.Text);
             driver.Quit();
         }
+        [Test]
+        public void NewUser()
+        {
+            var options = new ChromeOptions { AcceptInsecureCertificates = true };
+            IWebDriver driver = new ChromeDriver(options);
+            driver.Url = "https://localhost:5001/";
+            IWebElement loginFld = driver.FindElement(By.Id("login"));
+            IWebElement passwFld = driver.FindElement(By.Id("password"));
+            IWebElement loginBut = driver.FindElements(By.Id("login"))[1];
+            loginFld.SendKeys("Alex");
+            passwFld.SendKeys("12345678");
+            loginBut.Click();
+            Thread.Sleep(500);
+            string ActualUrl = driver.Url;
+            string expectedUrl = "https://localhost:5001/Calculator";
+            Assert.AreEqual(expectedUrl, ActualUrl);
+            driver.Quit();
+        }
     }
 }
