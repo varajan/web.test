@@ -40,15 +40,16 @@ namespace WebSite.Controllers
                 return NotFound("Incorrect password!");
             }
 
-            if (Users.Passwords.Any(x => x == dto.Password))
-            {
-                return NotFound("Incorrect user name!");
-            }
+//             if (Users.Passwords.Any(x => x == dto.Password))
+//             {
+//                 return NotFound("Incorrect user name!");
+//             }
 
-            if (Users.Names.All(x => x.ToLower() != dto.Login.ToLower()))
-            {
-                return NotFound("User not found!");
-            }
+//             if (Users.Names.All(x => x.ToLower() != dto.Login.ToLower()))
+//             {
+//                 return NotFound("User not found!");
+//             }
+            return NotFound("User not found!");
             // *********************************************
 
             return NotFound("Incorrect user name or password!");
