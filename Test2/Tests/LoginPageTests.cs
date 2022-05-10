@@ -34,7 +34,7 @@ namespace Test2.Tests
         {
             IWebElement loginFeeld = driver.FindElement(By.Id("login"));
             IWebElement passwordFeeld = driver.FindElement(By.Id("password"));
-            IWebElement loginBut = driver.FindElements(By.Id("login"))[1];
+            IWebElement loginBut = driver.FindElement(By.Id("loginBtn"));
             //IWebElement loginBut2 = driver.FindElement(By.ClassName("btn btn-sm btn-success"));
             loginFeeld.SendKeys(login);
             passwordFeeld.SendKeys(password);
@@ -49,7 +49,7 @@ namespace Test2.Tests
         {
             IWebElement loginFld = driver.FindElement(By.Id("login"));
             IWebElement passwFld = driver.FindElement(By.Id("password"));
-            IWebElement loginBut = driver.FindElements(By.Id("login"))[1];
+            IWebElement loginBut = driver.FindElement(By.Id("loginBtn"));
             loginFld.SendKeys(login);
             passwFld.SendKeys("newyork1");
             loginBut.Click();
