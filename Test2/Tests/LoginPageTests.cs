@@ -1,6 +1,8 @@
 ﻿using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium.Support.UI;
+using SeleniumExtras.WaitHelpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,6 +21,8 @@ namespace Test2.Tests
         {
             var options = new ChromeOptions { AcceptInsecureCertificates = true };
             driver = new ChromeDriver(options);
+            driver.Manage().Timeouts().PageLoad = TimeSpan.FromSeconds(60);
+            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
             driver.Url = "https://localhost:5001/";
         }
 
@@ -40,6 +44,8 @@ namespace Test2.Tests
             passwordFeeld.SendKeys(password);
             loginBut.Click();
             IWebElement er = driver.FindElement(By.Id("errorMessage"));
+            new WebDriverWait(driver, TimeSpan.FromSeconds(10))
+                .Until(ExpectedConditions.TextToBePresentInElement(er, expected));
             Assert.AreEqual(expected, er.Text);
         }
 
@@ -53,7 +59,8 @@ namespace Test2.Tests
             loginFld.SendKeys(login);
             passwFld.SendKeys("newyork1");
             loginBut.Click();
-            Thread.Sleep(600);
+            new WebDriverWait(driver, TimeSpan.FromSeconds(2))
+              .Until(ExpectedConditions.UrlContains("Calculator"));
             string ActualUrl = driver.Url;
             string expectedUrl = "https://localhost:5001/Calculator";
             Assert.AreEqual(expectedUrl, ActualUrl);
