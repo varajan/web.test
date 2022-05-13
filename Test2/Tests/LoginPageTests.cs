@@ -51,7 +51,7 @@ namespace Test2.Tests
 
         [TestCase("test")]
         [TestCase("TEST")]
-         public void PositiveLoginTest(string login)
+        public void PositiveLoginTest(string login)
         {
             IWebElement loginFld = driver.FindElement(By.Id("login"));
             IWebElement passwFld = driver.FindElement(By.Id("password"));
@@ -73,6 +73,44 @@ namespace Test2.Tests
             Thread.Sleep(600);
             string expected = "Password:";
             Assert.AreEqual(expected, labPass.Text);
+        }
+    }
+
+    internal class CalculatorPageTests
+    {
+        public IWebDriver driver;
+
+        [Test]
+        public void SecondPageEndDate()
+        {
+            var options = new ChromeOptions { AcceptInsecureCertificates = true };
+            driver = new ChromeDriver(options);
+            driver.Manage().Timeouts().PageLoad = TimeSpan.FromSeconds(60);
+            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
+            driver.Url = "https://localhost:5001/Calculator";
+            IWebElement depAm = driver.FindElement(By.Id("day"));
+            IWebElement rateInt = driver.FindElement(By.Id("month"));
+            IWebElement term = driver.FindElement(By.Id("year"));
+            IWebElement startDay = driver.FindElement(By.Id("day"));
+            IWebElement startMonth = driver.FindElement(By.Id("month"));
+            IWebElement startYear = driver.FindElement(By.Id("year"));
+            IWebElement calcBut = driver.FindElement(By.Id("calculateBtn"));
+            IWebElement termBut = driver.FindElement(By.XPath("//input[@id='finYear']"));
+            depAm.SendKeys("100");
+            rateInt.SendKeys("100");
+            term.SendKeys("365");
+            startDay.SendKeys("01");
+            startMonth.SendKeys("January");
+            startYear.SendKeys("2022");
+            termBut.Click();
+            calcBut.Click();
+            IWebElement endDay = driver.FindElement(By.Id("endDate"));
+            Thread.Sleep(600);
+            //new WebDriverWait(driver, TimeSpan.FromSeconds(10))
+            //.Until(ExpectedConditions.TextToBePresentInElement(er, expected));
+            string expected = "01/01/2023";
+            Assert.AreEqual(expected, endDay.Text);
+            driver.Quit();
         }
     }
 }
