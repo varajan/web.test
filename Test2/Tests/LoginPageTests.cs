@@ -126,7 +126,7 @@ namespace Test2.Tests
             .Until(ExpectedConditions.TextToBePresentInElement(er, expected));*/
             string expected = "01/01/2023";
             Thread.Sleep(800);
-            Assert.AreEqual(expected, endDay);            
+            Assert.AreEqual(expected, endDay.GetAttribute("value"));            
         }
 
         [Test]
@@ -147,19 +147,19 @@ namespace Test2.Tests
 
         [Test]
 
-        public void VariY()
+        public void VarifY()
 
         {
             List<string> actuale = new List<string>();
             List<string> expected = new List<string>();
-            IWebElement startMonth = driver.FindElement(By.Id("year"));
-            SelectElement startMonthSeletct = new SelectElement(startMonth);
+            IWebElement startYear = driver.FindElement(By.Id("year"));
+            SelectElement startYearSelect = new SelectElement(startYear);
 
             for (int i = 2010; i < 2030; i++)
             {
                 expected.Add(i.ToString());
             }
-            foreach (IWebElement element in startMonthSeletct.Options)
+            foreach (IWebElement element in startYearSelect.Options)
             {
                 actuale.Add(element.Text);
             }
