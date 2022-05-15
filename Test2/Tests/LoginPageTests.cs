@@ -80,37 +80,90 @@ namespace Test2.Tests
     {
         public IWebDriver driver;
 
-        [Test]
-        public void SecondPageEndDate()
+        [SetUp] 
+        public void SetUp()
         {
             var options = new ChromeOptions { AcceptInsecureCertificates = true };
             driver = new ChromeDriver(options);
             driver.Manage().Timeouts().PageLoad = TimeSpan.FromSeconds(60);
             driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
             driver.Url = "https://localhost:5001/Calculator";
-            IWebElement depAm = driver.FindElement(By.Id("day"));
-            IWebElement rateInt = driver.FindElement(By.Id("month"));
-            IWebElement term = driver.FindElement(By.Id("year"));
+        }
+        [TearDown]
+        public void TearDown()
+        {
+            driver.Quit();
+        }
+
+
+        [Test]
+        public void SecondPageEndDate()
+        {
+            
+            IWebElement depAm = driver.FindElement(By.Id("amount"));
+            IWebElement rateInt = driver.FindElement(By.Id("percent"));
+            IWebElement term = driver.FindElement(By.Id("term"));
             IWebElement startDay = driver.FindElement(By.Id("day"));
             IWebElement startMonth = driver.FindElement(By.Id("month"));
             IWebElement startYear = driver.FindElement(By.Id("year"));
             IWebElement calcBut = driver.FindElement(By.Id("calculateBtn"));
-            IWebElement termBut = driver.FindElement(By.XPath("//input[@id='finYear']"));
+            IWebElement termBut = driver.FindElement(By.XPath("//input[@type='radio']"));
+            SelectElement startDaySelect = new SelectElement(startDay);
             depAm.SendKeys("100");
             rateInt.SendKeys("100");
             term.SendKeys("365");
-            startDay.SendKeys("01");
+            //startDay.SendKeys("01");
+            startDaySelect.SelectByText("1");
             startMonth.SendKeys("January");
             startYear.SendKeys("2022");
+            ////*[contains ( text(), '365 days' )]/input
             termBut.Click();
             calcBut.Click();
-            IWebElement endDay = driver.FindElement(By.Id("endDate"));
             Thread.Sleep(600);
-            //new WebDriverWait(driver, TimeSpan.FromSeconds(10))
-            //.Until(ExpectedConditions.TextToBePresentInElement(er, expected));
+            IWebElement endDay = driver.FindElement(By.Id("endDate"));
+                //XPath("//*[contains ( text(), 'End Date' )]/..//input"));
+            /*new WebDriverWait(driver, TimeSpan.FromSeconds(10))
+            .Until(ExpectedConditions.TextToBePresentInElement(er, expected));*/
             string expected = "01/01/2023";
-            Assert.AreEqual(expected, endDay.Text);
-            driver.Quit();
+            Thread.Sleep(800);
+            Assert.AreEqual(expected, endDay);            
+        }
+
+        [Test]
+
+        public void VerifMonth()
+
+        {
+            List<string> actuale = new List<string>();
+            List<string> expected = new List<string>() { "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" };
+            IWebElement startMonth = driver.FindElement(By.Id("month"));
+            SelectElement startMonthSeletct = new SelectElement(startMonth);    
+            foreach (IWebElement element in startMonthSeletct.Options)
+            {
+                actuale.Add(element.Text);  
+            }
+            Assert.AreEqual(expected, actuale);
+        }
+
+        [Test]
+
+        public void VariY()
+
+        {
+            List<string> actuale = new List<string>();
+            List<string> expected = new List<string>();
+            IWebElement startMonth = driver.FindElement(By.Id("year"));
+            SelectElement startMonthSeletct = new SelectElement(startMonth);
+
+            for (int i = 2010; i < 2030; i++)
+            {
+                expected.Add(i.ToString());
+            }
+            foreach (IWebElement element in startMonthSeletct.Options)
+            {
+                actuale.Add(element.Text);
+            }
+            Assert.AreEqual(expected, actuale);
         }
     }
 }
