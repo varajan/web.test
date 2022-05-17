@@ -165,5 +165,86 @@ namespace Test2.Tests
             }
             Assert.AreEqual(expected, actuale);
         }
+
+        [Test]
+        
+        public void FinfncialYearPos()
+        {
+
+            IWebElement depAm = driver.FindElement(By.Id("amount"));
+            IWebElement rateInt = driver.FindElement(By.Id("percent"));
+            IWebElement term = driver.FindElement(By.Id("term"));
+            IWebElement startDay = driver.FindElement(By.Id("day"));
+            IWebElement startMonth = driver.FindElement(By.Id("month"));
+            IWebElement startYear = driver.FindElement(By.Id("year"));
+            IWebElement calcBut = driver.FindElement(By.Id("calculateBtn"));
+            IWebElement termBut = driver.FindElement(By.XPath("//input[@type='radio']"));
+            //IWebElement termBut2 = driver.FindElement(By.XPath("//*[contains ( text(), '360 days' )]"));
+            SelectElement startDaySelect = new SelectElement(startDay);
+            depAm.SendKeys("100000");
+            rateInt.SendKeys("50");
+            term.SendKeys("365");
+            startDaySelect.SelectByText("10");
+            startMonth.SendKeys("January");
+            startYear.SendKeys("2022");
+            //int termDep = Convert.ToInt32(term);
+            termBut.Click();
+            calcBut.Click();
+            Thread.Sleep(600);
+            IWebElement income = driver.FindElement(By.Id("income"));
+            string expected = "150,000.00";
+            Thread.Sleep(800);
+            Assert.AreEqual(expected, income.GetAttribute("value"));
+        }
+
+        [Test]
+
+        public void FinancialTermN()
+        {
+            IWebElement depAm = driver.FindElement(By.Id("amount"));
+            IWebElement rateInt = driver.FindElement(By.Id("percent"));
+            IWebElement term = driver.FindElement(By.Id("term"));            
+            depAm.SendKeys("100000");
+            rateInt.SendKeys("50");
+            term.SendKeys("366");            
+            Thread.Sleep(600);
+            IWebElement term1 = driver.FindElement(By.Id("term"));
+            string expected = "0";            
+            Assert.AreEqual(expected, term1);
+        }
+
+        [Test]
+
+        public void InterestN()
+        {
+
+            IWebElement depAm = driver.FindElement(By.Id("amount"));
+            IWebElement rateInt = driver.FindElement(By.Id("percent"));
+            IWebElement term = driver.FindElement(By.Id("term"));
+            IWebElement startDay = driver.FindElement(By.Id("day"));
+            IWebElement startMonth = driver.FindElement(By.Id("month"));
+            IWebElement startYear = driver.FindElement(By.Id("year"));
+            IWebElement calcBut = driver.FindElement(By.Id("calculateBtn"));
+            IWebElement termBut = driver.FindElement(By.XPath("(//input[@type='radio'])[2]"));
+            //IWebElement termBut2 = driver.FindElement(By.XPath("//*[contains ( text(), '360 days' )]"));
+            SelectElement startDaySelect = new SelectElement(startDay);
+            depAm.SendKeys("100000");
+            rateInt.SendKeys("101");
+            /*term.SendKeys("365");
+            startDaySelect.SelectByText("10");
+            startMonth.SendKeys("January");
+            startYear.SendKeys("2022");
+            //int termDep = Convert.ToInt32(term);
+            termBut.Click();
+            calcBut.Click();*/
+            Thread.Sleep(600);
+            IWebElement rateInt1 = driver.FindElement(By.Id("percent"));
+            string expected = "0";
+            Thread.Sleep(800);
+            Assert.AreEqual(expected, rateInt1));
+        }
     }
+
+
+    
 }
