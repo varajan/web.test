@@ -57,7 +57,7 @@ namespace Test2.Tests
             .Until(ExpectedConditions.TextToBePresentInElement(er, expected));*/
             string expected = "Deposit amount: *";
             Thread.Sleep(500);
-            Assert.AreEqual(expected, depAm);
+            Assert.AreEqual(expected, depAm.Text);
 
         }
         [Test]
@@ -174,8 +174,13 @@ namespace Test2.Tests
             Thread.Sleep(600);
             IWebElement term1 = driver.FindElement(By.Id("term"));
             string expected = "0";
-            Assert.AreEqual(expected, term1);
+            Assert.AreEqual(expected, term1.GetAttribute("value"));
+            //Assert.AreEqual(false, term1.Enabled);
+            IWebElement butCalc = driver.FindElement(By.Id("calculateBtn"));
+            Assert.IsFalse(butCalc.Enabled); // кращщий варіант - перевірка що кнопка не активна
         }
+        //input[@id='percent']/../../td[1]
+        //td[contains(text(), 'Deposit')]/..//input
 
         [Test]
 
@@ -202,10 +207,12 @@ namespace Test2.Tests
             termBut.Click();
             calcBut.Click();*/
             Thread.Sleep(600);
-            IWebElement rateInt1 = driver.FindElement(By.Id("percent"));
+            //IWebElement rateInt1 = driver.FindElement(By.Id("percent"));
             string expected = "0";
             Thread.Sleep(800);
-            Assert.AreEqual(expected, rateInt1);
+            IWebElement butCalc = driver.FindElement(By.Id("calculateBtn"));
+            Assert.IsTrue(butCalc.Enabled);
+            //Assert.AreEqual(expected, rateInt1.GetAttribute("value"));
         }
     }
        
