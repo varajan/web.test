@@ -199,20 +199,69 @@ namespace Test2.Tests
             SelectElement startDaySelect = new SelectElement(startDay);
             depAm.SendKeys("100000");
             rateInt.SendKeys("101");
-            /*term.SendKeys("365");
-            startDaySelect.SelectByText("10");
-            startMonth.SendKeys("January");
-            startYear.SendKeys("2022");
-            //int termDep = Convert.ToInt32(term);
-            termBut.Click();
-            calcBut.Click();*/
             Thread.Sleep(600);
-            //IWebElement rateInt1 = driver.FindElement(By.Id("percent"));
+            IWebElement rateInt1 = driver.FindElement(By.Id("percent"));
             string expected = "0";
             Thread.Sleep(800);
             IWebElement butCalc = driver.FindElement(By.Id("calculateBtn"));
-            Assert.IsTrue(butCalc.Enabled);
-            //Assert.AreEqual(expected, rateInt1.GetAttribute("value"));
+            Assert.IsFalse(butCalc.Enabled);
+            Assert.AreEqual(expected, rateInt1.GetAttribute("value"));
+        }
+
+        [Test]
+        public void NamesLabel()
+        {
+            IWebElement depAm = driver.FindElement(By.XPath("(*//td[contains ( text(), 'Deposit' )])"));
+            IWebElement rateInt = driver.FindElement(By.XPath("//input[@id='percent']/../../td[1]"));
+            IWebElement term = driver.FindElement(By.XPath("//input[@id='term']/../../td[1]"));
+            IWebElement startDate = driver.FindElement(By.XPath("//select[@id='day']/../../td[1]"));
+            IWebElement finansYear = driver.FindElement(By.XPath("//input[@type='radio']/../../td[1]"));
+            //IWebElement calcBut = driver.FindElement(By.Id("calculateBtn"));
+            //IWebElement termBut = driver.FindElement(By.XPath("//input[@type='radio']"));
+            IWebElement enterEar = driver.FindElement(By.XPath("//input[@id='interest']/../../th[1]"));
+            IWebElement incom = driver.FindElement(By.XPath("//input[@id='income']/../../th[1]"));
+            IWebElement endDay = driver.FindElement(By.XPath("//input[@id='endDate']/../../th[1]"));
+            //XPath("//*[contains ( text(), 'End Date' )]/..//input"));
+            /*new WebDriverWait(driver, TimeSpan.FromSeconds(10))
+            .Until(ExpectedConditions.TextToBePresentInElement(er, expected));*/
+            //string expected = "Deposit amount: *";
+            Thread.Sleep(500);
+            //Assert.AreEqual("Deposit amount: *", depAm.Text);
+            Assert.Multiple(() => {
+                Assert.AreEqual("Interest rate: *", rateInt.Text);
+                Assert.AreEqual("Investment Term: *", term.Text);
+                Assert.AreEqual("Start Date: *", startDate.Text);
+                Assert.AreEqual("Financial Year: *", finansYear.Text);
+                Assert.AreEqual("Interest Earned: *", enterEar.Text);
+                Assert.AreEqual("Income: *", incom.Text);
+                Assert.AreEqual("End Date: *", endDay.Text);
+            });
+            
+        }
+
+        [Test]
+        public void TermMore360()
+        {
+            IWebElement depAm = driver.FindElement(By.Id("amount"));
+            IWebElement rateInt = driver.FindElement(By.Id("percent"));
+            IWebElement term = driver.FindElement(By.Id("term"));
+            IWebElement startDay = driver.FindElement(By.Id("day"));
+            IWebElement startMonth = driver.FindElement(By.Id("month"));
+            IWebElement startYear = driver.FindElement(By.Id("year"));
+            IWebElement termBut1 = driver.FindElement(By.XPath("//*[contains ( text (), '365 days')]/./input"));
+            IWebElement termBut2 = driver.FindElement(By.XPath("//*[contains ( text (), '360 days')]/./input"));
+            depAm.SendKeys("100");
+            rateInt.SendKeys("100");
+            term.SendKeys("361");
+            SelectElement startDaySelect = new SelectElement(startDay);
+            startDaySelect.SelectByText("1");
+            startMonth.SendKeys("January");
+            startYear.SendKeys("2022");
+            ////*[contains ( text(), '365 days' )]/input
+            Thread.Sleep(600);
+            Assert.IsTrue(termBut1.Enabled);
+            Assert.IsFalse(termBut2.Enabled);
+
         }
     }
        
