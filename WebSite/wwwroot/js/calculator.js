@@ -20,6 +20,11 @@ VerifyTerm = function (id, min) {
     SetCalculateButtonState();
 }
 
+SetFinYearState = function () {
+    var investmentTerm = Number(document.getElementById("term").value);
+    document.querySelector('#finYear :nth-child(3) input').disabled = investmentTerm > 360;
+}
+
 Date.prototype.yyyymmdd = function () {
     var dd = this.getDate();
     var mm = this.getMonth() + 1;
