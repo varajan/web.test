@@ -2,6 +2,7 @@
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Support.UI;
+using SeleniumExtras.WaitHelpers;
 using System;
 using System.Collections.Generic;
 using System.Threading;
@@ -27,43 +28,15 @@ namespace Test2.Tests
             driver.Quit();
         }
 
-
-        [Test]
-        public void Names()
+        private void WaitForReady()
         {
-            IWebElement depAm = driver.FindElement(By.XPath("(*//td[contains ( text(), 'Deposit' )])"));
-            IWebElement rateInt = driver.FindElement(By.Id("percent"));
-            IWebElement term = driver.FindElement(By.Id("term"));
-            IWebElement startDay = driver.FindElement(By.Id("day"));
-            IWebElement startMonth = driver.FindElement(By.Id("month"));
-            IWebElement startYear = driver.FindElement(By.Id("year"));
-            IWebElement calcBut = driver.FindElement(By.Id("calculateBtn"));
-            IWebElement termBut = driver.FindElement(By.XPath("//input[@type='radio']"));
-            SelectElement startDaySelect = new SelectElement(startDay);
-
-            rateInt.SendKeys("100");
-            term.SendKeys("365");
-            //startDay.SendKeys("01");
-            startDaySelect.SelectByText("1");
-            startMonth.SendKeys("January");
-            startYear.SendKeys("2022");
-            ////*[contains ( text(), '365 days' )]/input
-            termBut.Click();
-            calcBut.Click();
-            Thread.Sleep(600);
-            IWebElement endDay = driver.FindElement(By.Id("endDate"));
-            //XPath("//*[contains ( text(), 'End Date' )]/..//input"));
-            /*new WebDriverWait(driver, TimeSpan.FromSeconds(10))
-            .Until(ExpectedConditions.TextToBePresentInElement(er, expected));*/
-            string expected = "Deposit amount: *";
-            Thread.Sleep(500);
-            Assert.AreEqual(expected, depAm.Text);
-
+            WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
+            wait.Until(ExpectedConditions.ElementToBeClickable(By.Id("calculateBtn")));
         }
+
         [Test]
         public void SecondPageEndDate()
         {
-
             IWebElement depAm = driver.FindElement(By.Id("amount"));
             IWebElement rateInt = driver.FindElement(By.Id("percent"));
             IWebElement term = driver.FindElement(By.Id("term"));
@@ -82,21 +55,18 @@ namespace Test2.Tests
             startYear.SendKeys("2022");
             ////*[contains ( text(), '365 days' )]/input
             termBut.Click();
+            WaitForReady();
             calcBut.Click();
-            Thread.Sleep(600);
+            WaitForReady();
             IWebElement endDay = driver.FindElement(By.Id("endDate"));
-            //XPath("//*[contains ( text(), 'End Date' )]/..//input"));
-            /*new WebDriverWait(driver, TimeSpan.FromSeconds(10))
-            .Until(ExpectedConditions.TextToBePresentInElement(er, expected));*/
-            string expected = "01/01/2023";
-            Thread.Sleep(800);
-            Assert.AreEqual(expected, endDay.GetAttribute("value"));
+            Assert.AreEqual("01/01/2023", endDay.GetAttribute("value"));
         }
+
+       
 
         [Test]
 
         public void VerifMonth()
-
         {
             List<string> actuale = new List<string>();
             List<string> expected = new List<string>() { "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" };
@@ -112,7 +82,6 @@ namespace Test2.Tests
         [Test]
 
         public void VarifY()
-
         {
             List<string> actuale = new List<string>();
             List<string> expected = new List<string>();
@@ -134,7 +103,6 @@ namespace Test2.Tests
 
         public void FinfncialYearPos()
         {
-
             IWebElement depAm = driver.FindElement(By.Id("amount"));
             IWebElement rateInt = driver.FindElement(By.Id("percent"));
             IWebElement term = driver.FindElement(By.Id("term"));
@@ -216,8 +184,6 @@ namespace Test2.Tests
             IWebElement term = driver.FindElement(By.XPath("//input[@id='term']/../../td[1]"));
             IWebElement startDate = driver.FindElement(By.XPath("//select[@id='day']/../../td[1]"));
             IWebElement finansYear = driver.FindElement(By.XPath("//input[@type='radio']/../../td[1]"));
-            //IWebElement calcBut = driver.FindElement(By.Id("calculateBtn"));
-            //IWebElement termBut = driver.FindElement(By.XPath("//input[@type='radio']"));
             IWebElement enterEar = driver.FindElement(By.XPath("//input[@id='interest']/../../th[1]"));
             IWebElement incom = driver.FindElement(By.XPath("//input[@id='income']/../../th[1]"));
             IWebElement endDay = driver.FindElement(By.XPath("//input[@id='endDate']/../../th[1]"));
@@ -228,6 +194,7 @@ namespace Test2.Tests
             Thread.Sleep(500);
             //Assert.AreEqual("Deposit amount: *", depAm.Text);
             Assert.Multiple(() => {
+                Assert.AreEqual("Deposit amount: *", depAm.Text);
                 Assert.AreEqual("Interest rate: *", rateInt.Text);
                 Assert.AreEqual("Investment Term: *", term.Text);
                 Assert.AreEqual("Start Date: *", startDate.Text);
