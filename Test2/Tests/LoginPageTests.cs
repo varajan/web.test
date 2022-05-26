@@ -51,7 +51,7 @@ namespace Test2.Tests
 
         [TestCase("test")]
         [TestCase("TEST")]
-         public void PositiveLoginTest(string login)
+        public void PositiveLoginTest(string login)
         {
             IWebElement loginFld = driver.FindElement(By.Id("login"));
             IWebElement passwFld = driver.FindElement(By.Id("password"));
@@ -75,4 +75,9 @@ namespace Test2.Tests
             Assert.AreEqual(expected, labPass.Text);
         }
     }
+
+   
+
+
+    
 }

@@ -13,27 +13,27 @@
 
                 <table>
                     <tr>
-                        <td>Deposit Ammount: *</td>
+                        <td>Deposit amount: *</td>
                         @*<td><input id="amount" oninput="VerifyNumber('amount', 0, 100000);"></td>*@
                         <td><input id="amount" oninput="VerifyNumber('amount', 0, 100001);"></td>
                         <td id="currency">$</td>
                     </tr>
                     <tr>
-                        <td>Rate of interest: *</td>
+                        <td>Interest rate: *</td>
                         <td><input id="percent" oninput="VerifyNumber('percent', 0, 100);"></td>
                         <td>%</td>
                     </tr>
                     <tr>
-                        <td>Investment Term: *</td>
-                        <td colspan="2"><input id="term" oninput="VerifyTerm('term', 0);" /></td>
-                    </tr>
-                    <tr>
-                        <td>Start Date:</td>
+                        <td>Start Date: *</td>
                         <td colspan="2">
                             <select id="day" onchange="CalculateDate()"></select>
                             <select id="month" onchange="ResetMonth();CalculateDate();"></select>
                             <select id="year" onchange="ResetMonth();CalculateDate();"></select>
                         </td>
+                    </tr>
+                    <tr>
+                        <td>Investment Term: *</td>
+                        <td colspan="2"><input id="term" oninput="VerifyTerm('term', 0); SetFinYearState();" /></td>
                     </tr>
                     <tr id="finYear">
                         <td>Financial Year: *</td>
@@ -46,12 +46,12 @@
                         <td><button class="btn btn-sm btn-primary" id="calculateBtn" onclick="Calculate().then(Save)">Calculate</button></td>
                     </tr>
                     <tr>
-                        <th>Intereset Earned: *</th>
-                        <th><input id="interest" readonly /></th>
+                        <th>Income: *</th>
+                        <th><input id="income" readonly /></th>
                     </tr>
                     <tr>
-                        <th>lncome: *</th>
-                        <th><input id="income" readonly /></th>
+                        <th>Interest Earned: *</th>
+                        <th><input id="interest" readonly /></th>
                     </tr>
                     <tr>
                         <th>End Date: *</th>
