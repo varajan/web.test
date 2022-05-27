@@ -122,10 +122,10 @@ namespace Test2.Tests
             //int termDep = Convert.ToInt32(term);
             termBut.Click();
             calcBut.Click();
-            Thread.Sleep(600);
+            WaitForReady();
             IWebElement income = driver.FindElement(By.Id("income"));
             string expected = "150,000.00";
-            Thread.Sleep(800);
+            WaitForReady();
             Assert.AreEqual(expected, income.GetAttribute("value"));
         }
 
@@ -139,7 +139,7 @@ namespace Test2.Tests
             depAm.SendKeys("100000");
             rateInt.SendKeys("50");
             term.SendKeys("366");
-            Thread.Sleep(600);
+            WaitForReady();
             IWebElement term1 = driver.FindElement(By.Id("term"));
             string expected = "0";
             Assert.AreEqual(expected, term1.GetAttribute("value"));
@@ -167,10 +167,10 @@ namespace Test2.Tests
             SelectElement startDaySelect = new SelectElement(startDay);
             depAm.SendKeys("100000");
             rateInt.SendKeys("101");
-            Thread.Sleep(600);
+            WaitForReady();
             IWebElement rateInt1 = driver.FindElement(By.Id("percent"));
             string expected = "0";
-            Thread.Sleep(800);
+            WaitForReady();
             IWebElement butCalc = driver.FindElement(By.Id("calculateBtn"));
             Assert.IsFalse(butCalc.Enabled);
             Assert.AreEqual(expected, rateInt1.GetAttribute("value"));
@@ -191,7 +191,7 @@ namespace Test2.Tests
             /*new WebDriverWait(driver, TimeSpan.FromSeconds(10))
             .Until(ExpectedConditions.TextToBePresentInElement(er, expected));*/
             //string expected = "Deposit amount: *";
-            Thread.Sleep(500);
+            WaitForReady();
             //Assert.AreEqual("Deposit amount: *", depAm.Text);
             Assert.Multiple(() => {
                 Assert.AreEqual("Deposit amount: *", depAm.Text);
@@ -203,7 +203,6 @@ namespace Test2.Tests
                 Assert.AreEqual("Income: *", incom.Text);
                 Assert.AreEqual("End Date: *", endDay.Text);
             });
-            
         }
 
         [Test]
@@ -225,11 +224,15 @@ namespace Test2.Tests
             startMonth.SendKeys("January");
             startYear.SendKeys("2022");
             ////*[contains ( text(), '365 days' )]/input
-            Thread.Sleep(600);
+            WaitForReady();
             Assert.IsTrue(termBut1.Enabled);
             Assert.IsFalse(termBut2.Enabled);
 
         }
     }
-       
+
 }
+
+
+
+
